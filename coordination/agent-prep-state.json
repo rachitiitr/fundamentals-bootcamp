@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-04-29T00:00:00Z",
+  "updatedAt": "2026-04-29T18:30:00Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -32,7 +32,13 @@
     {
       "id": "meta",
       "label": "Syllabus, hubs, VitePress nav, editorial passes",
-      "pathHints": ["reference-site/topics/interview-syllabus/", "reference-site/.vitepress/", "reference-site/topics/javascript/", "reference-site/topics/python/"]
+      "pathHints": [
+        "reference-site/topics/interview-syllabus/",
+        "reference-site/.vitepress/",
+        "reference-site/topics/javascript/",
+        "reference-site/topics/python/",
+        "reference-site/topics/cpp/"
+      ]
     }
   ],
   "items": [
@@ -181,5 +187,20 @@
     }
   ],
   "activeClaims": [],
-  "sessions": []
+  "sessions": [
+    {
+      "id": "sess-2026-04-29-vm-cpp-struct-docs",
+      "endedAt": "2026-04-29T18:30:00Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": [],
+      "summary": "Interactive VM teaching → extended existing virtual-memory topic (CR3, RSS/VIRT, backing file vs swap, user/kernel, matrix locality for TLB+cache, anchors). Added cpp-struct-layout topic (padding/alignment). Updated interview-syllabus checkboxes, C++ hub, VitePress sidebar. No backlog item was claimed at chat start (ad-hoc doc pass).",
+      "artifactPaths": [
+        "reference-site/topics/virtual-memory/index.md",
+        "reference-site/topics/cpp-struct-layout/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/.vitepress/config.ts"
+      ]
+    }
+  ]
 }

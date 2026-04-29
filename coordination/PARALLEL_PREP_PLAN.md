@@ -51,6 +51,10 @@ If two agents must merge JSON: **re-read the file**, append your session, apply 
 - “Read `coordination/agent-prep-state.json` and `coordination/PARALLEL_PREP_PLAN.md`. Claim item `<id>`. Produce topic page + syllabus link; then update JSON session log.”
 - “Same as above but **only** improve `<path>` to meet the concrete-examples rule; one session log entry.”
 
+### Ad-hoc chats (no `items[]` row)
+
+If the chat did **not** claim an `itemId` (e.g. Q&A only, then docs landed anyway), still **append one `sessions[]` object**: set **`itemIdsTouched`** to **`[]`**, write **`summary`** + **`artifactPaths`**, bump **`updatedAt`**. Future chats then see what shipped without a false `items[].status` change.
+
 ## Relationship to LeetCode 75
 
 You already did ~40–50 problems (LC75-style). Use **`dsa`** workstream for **gaps**: heap patterns, graph templates, binary search on answer, interval merging, union-find — each as a **short topic page** with 1–2 LC links, not a dump of solutions.
