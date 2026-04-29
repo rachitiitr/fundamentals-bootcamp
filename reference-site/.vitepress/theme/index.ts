@@ -1,5 +1,6 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import Layout from './Layout.vue'
 
 function isLearningsNavigation(href: string): boolean {
   const pathOnly = href.split('#')[0]?.split('?')[0] ?? ''
@@ -12,6 +13,7 @@ function isLearningsNavigation(href: string): boolean {
  */
 export default {
   extends: DefaultTheme,
+  Layout,
   enhanceApp({ router }) {
     if (typeof window === 'undefined' || !router) return
     const prev = router.onBeforeRouteChange
