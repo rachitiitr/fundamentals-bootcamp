@@ -436,4 +436,4 @@ The push→pull bridge from this lesson reappears in v2+ as the bridge between *
 
 ---
 
-**See also:** A shorter cross-language iterator overview (JS / Python / C++) lives in `reference-site/topics/iterators-and-generators/` — run `npm run dev:reference` from the repo root after `npm install`.
+**See also:** A shorter cross-language iterator overview (JS / Python / C++) lives in the handbook at **`/topics/iterators-and-generators/`** (run `npm run dev:reference` from the repo root after `npm install`).

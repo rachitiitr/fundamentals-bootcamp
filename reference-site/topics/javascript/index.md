@@ -8,9 +8,9 @@ Language-specific topics and links to the main lesson track.
 
 ## Lesson track
 
-- [Async generators — full notes](../../../learnings/javascript/lessons/01-async-generators/NOTES.md)
-- [Web Workers exercises](../../../learnings/javascript/lessons/02-workers/README.md)
-- [v0 app — shared RPC ticker](../../../apps/shared-rpc-ticker/)
+- [Async generators — full notes](/lessons/javascript/01-async-generators/NOTES) (VitePress page — sidebar stays)
+- [Web Workers exercises](/lessons/javascript/02-workers/README)
+- v0 app — clone repo and run `apps/shared-rpc-ticker` (not mounted on this site)
 
 ## Good candidates for JS-only pages
 

@@ -2,14 +2,14 @@
 
 VitePress-powered **topic index** for the prep-bootcamp monorepo: cross-language comparisons, language hubs, and optional LeetCode pointers. Hands-on lesson tracks stay under `learnings/`.
 
-## Commands
-
 ```bash
 npm install
-npm run dev      # local preview
+npm run dev      # local preview (port 5180 by default — see .vitepress/config.ts)
 npm run build    # static output in .vitepress/dist
 npm run preview  # serve built site
 ```
+
+Lesson **Markdown** is mirrored into this package via [`lessons/javascript`](./lessons/javascript) (symlink → `../learnings/javascript/lessons`) so VitePress can render **`/lessons/javascript/...`** with the **normal sidebar**. **Worker HTML/JS** still lives under **`/learnings/javascript/lessons/...`** (middleware static).
 
 ## Content conventions
 
@@ -24,7 +24,8 @@ npm run preview  # serve built site
 ### File location
 
 - Put topic pages under [`topics/`](./topics/) — one folder per topic with `index.md`, or a single `topic-name.md` at the top level.
-- Register every page in [`.vitepress/config.ts`](./.vitepress/config.ts) `themeConfig.sidebar` (or it will not appear in the sidebar).
+- Register topic pages in [`.vitepress/config.ts`](./.vitepress/config.ts) `themeConfig.sidebar` (under `/`) when they should appear in the default sidebar.
+- **JavaScript lesson tree** under `/lessons/javascript/...` is generated in [`.vitepress/lesson-sidebar.ts`](./.vitepress/lesson-sidebar.ts) from the symlinked folder [`lessons/javascript/`](./lessons/javascript).
 
 ### Frontmatter (recommended)
 
@@ -62,10 +63,18 @@ Use the [Python hub](./topics/python/index.md) pattern: motivation, minimal exam
 
 ### Linking to lesson sources
 
-Markdown links that point **outside** `reference-site/` (for example into `learnings/` or `apps/`) are **not** VitePress routes. Options:
+- **Markdown (NOTES, README)** — link to **`/lessons/javascript/<lesson>/NOTES`** (or `README`). Same VitePress app: sidebar, search, and nav stay.
+- **Worker exercises (`index.html`, `.js`)** — link to **`/learnings/javascript/lessons/<lesson>/<exercise>/index.html`** on the same dev/preview port. Those URLs use the [static middleware](./.vitepress/learnings-static-plugin.ts); `router.onBeforeRouteChange` in [`.vitepress/theme/index.ts`](./.vitepress/theme/index.ts) forces a **full page load** for `/learnings/...` so the dev server can answer.
+- **Legacy `/learnings/javascript/lessons/.../*.md` URLs** — redirected with **302** to the matching `/lessons/javascript/...` page.
+- **`?raw=1`** on other `/learnings/**/*.md` (if any) still returns raw `text/markdown`.
 
-- Use **backticks** for repo paths so readers jump from the IDE: `` `learnings/javascript/lessons/02-workers/README.md` ``.
-- Or keep markdown links for convenience in the GitHub file view; the site sets `ignoreDeadLinks: true` in [`.vitepress/config.ts`](./.vitepress/config.ts) so builds do not fail on those paths.
+Examples:
+
+- [Async generators NOTES](/lessons/javascript/01-async-generators/NOTES)
+- [Workers README](/lessons/javascript/02-workers/README)
+- [Exercise 1 HTML](/learnings/javascript/lessons/02-workers/01-hello/index.html)
+
+`ignoreDeadLinks` stays on for any legacy `../../../learnings/...` links in markdown.
 
 ### LeetCode link pattern
 
@@ -77,4 +86,5 @@ Prefer named links in prose plus the structured `leetcode` frontmatter list for 
 
 ## Sidebar
 
-Configured explicitly in [`.vitepress/config.ts`](./.vitepress/config.ts). When you add a topic folder, append an entry under **Cross-language topics** or the appropriate **Language hub** child list.
+- **Topics & home** — edit the `/` entry in [`config.ts`](./.vitepress/config.ts) `themeConfig.sidebar`.
+- **JavaScript lessons** — auto-built from the repo tree in [`.vitepress/lesson-sidebar.ts`](./.vitepress/lesson-sidebar.ts) (shown whenever the path starts with `/lessons/`).

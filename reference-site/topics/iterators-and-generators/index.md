@@ -17,7 +17,7 @@ Short mental model: an **iterator** yields values one-at-a-time; a **generator**
 
 Deep dive (event loop, WebSocket pull bridge): full lesson notes in the repo:
 
-- [`learnings/javascript/lessons/01-async-generators/NOTES.md`](../../../learnings/javascript/lessons/01-async-generators/NOTES.md)
+- [Lesson 1 notes — async generators](/lessons/javascript/01-async-generators/NOTES)
 
 ```js
 function* countTo(n) {

@@ -35,7 +35,7 @@ Hands-on worker exercises: [`learnings/javascript/lessons/02-workers/`](./learni
 ```bash
 npm install
 npm run dev:ticker      # v0 app → http://localhost:5173
-npm run dev:reference   # reference site (VitePress; another port if 5173 is busy)
+npm run dev:reference   # reference handbook → http://localhost:5180 (see reference-site/.vitepress/config.ts)
 ```
 
 Or run installs inside `apps/shared-rpc-ticker` or `reference-site` only if you are not using the root workspace.

@@ -26,7 +26,7 @@ features:
 
 | What | Repo path |
 |------|-----------|
-| JS lesson modules | `learnings/javascript/lessons/` |
+| JS lesson modules | In-handbook tree: [`/lessons/javascript/…`](/lessons/javascript/02-workers/README); worker HTML still under [`/learnings/…`](/learnings/javascript/lessons/02-workers/01-hello/index.html) |
 | v0 SharedWorker bootcamp app | `apps/shared-rpc-ticker/` |
 | This site (source) | `reference-site/` |
 

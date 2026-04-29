@@ -35,7 +35,9 @@ npm install
 npm run dev
 ```
 
-Worker exercises need HTTP (not `file://`); see `learnings/javascript/lessons/02-workers/serve.sh`.
+The handbook defaults to **port 5180** (see `reference-site/.vitepress/config.ts`) so it does not collide with the v0 ticker on **5173**. Lesson **Markdown** is part of the site at **`/lessons/javascript/...`** (with sidebar). **`/learnings/...`** is only for **worker HTML/JS** on the same dev/preview process — if you open `http://localhost:5173/learnings/...` while the ticker is on 5173, you will get 404. When the dev server starts, check the **`[learnings]`** log lines for the correct port.
+
+Worker exercises need HTTP (not `file://`). With the reference dev server running, open them under **`/learnings/...`** on **that** host and port (e.g. `…/learnings/javascript/lessons/02-workers/01-hello/index.html`), or keep using `learnings/javascript/lessons/02-workers/serve.sh` on port 8080 if you prefer.
 
 ## Conventions for new topic pages
 
