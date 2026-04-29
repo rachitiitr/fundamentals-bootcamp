@@ -16,6 +16,8 @@ Under `learnings/<language>/lessons/` you build **sequences** — e.g. async gen
 This VitePress app under `reference-site/` is for **refresh by concept**:
 
 - One page ≈ one main idea (multiset, iterators, `with` / context managers, …).
+- The [**Interview syllabus (master list)**](/topics/interview-syllabus/) is the full backlog of Python, JS/TS, C++, and systems topics to turn into pages over time.
+- Topic pages should add **concrete numbers, traced scenarios, or before/after** wherever a section would still feel abstract after a diagram (see `reference-site/README.md` — “Concrete examples”). Use **several small examples** when they clarify different ideas — not a single example deep in the page while other sections stay vague.
 - Cross-language pages use **sections per language** and call out **stdlib gaps** (JavaScript has no `std::multiset`).
 - Optional **LeetCode** (or other) links when a pattern shows up in interviews.
 
@@ -38,6 +40,19 @@ npm run dev
 The handbook defaults to **port 5180** (see `reference-site/.vitepress/config.ts`) so it does not collide with the v0 ticker on **5173**. Lesson **Markdown** is part of the site at **`/lessons/javascript/...`** (with sidebar). **`/learnings/...`** is only for **worker HTML/JS** on the same dev/preview process — if you open `http://localhost:5173/learnings/...` while the ticker is on 5173, you will get 404. When the dev server starts, check the **`[learnings]`** log lines for the correct port.
 
 Worker exercises need HTTP (not `file://`). With the reference dev server running, open them under **`/learnings/...`** on **that** host and port (e.g. `…/learnings/javascript/lessons/02-workers/01-hello/index.html`), or keep using `learnings/javascript/lessons/02-workers/serve.sh` on port 8080 if you prefer.
+
+## Diagrams (Mermaid)
+
+Topic and lesson Markdown can include **Mermaid** diagrams using a fenced code block labeled `mermaid`:
+
+````md
+```mermaid
+flowchart LR
+  A --> B
+```
+````
+
+The reference site enables this in `.vitepress/config.ts` via `vitepress-plugin-mermaid` (wrapped with `withMermaid`). Run `npm run dev` or `npm run build` inside `reference-site/` to render them.
 
 ## Conventions for new topic pages
 

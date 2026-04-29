@@ -1,0 +1,47 @@
+---
+description: >-
+  Reference-site topics: problem-first tutorials, Mermaid, code, interview Q&A,
+  VitePress wiring (matches AGENTS.md)
+alwaysApply: true
+---
+
+# Reference topics (`reference-site/topics/`)
+
+**Structure & links:** Follow [`reference-site/README.md`](../../reference-site/README.md) (frontmatter, `config.ts`, lesson URLs `/lessons/` vs worker HTML `/learnings/`). **Body:** this rule + repo-root [`AGENTS.md`](../../AGENTS.md). Prefer **problem-first** openings; add **interview Q&A** at the end. Cross-link lessons ↔ topics when useful — see [`how-to-use-this-repo.md`](../../reference-site/how-to-use-this-repo.md).
+
+When **adding or substantially editing** reference pages, make them **self-contained tutorials** for interviews—not glossaries.
+
+## Structure
+
+1. **Problem first** — What pain does this remove? When do you need it? Avoid leading with a bare definition unless the topic is purely definitional.
+2. **Mechanics** — Mental model and terminology in dependency order (simple → nuanced). Wherever a diagram or definition would still leave a reader guessing **what actually happens on one step**, add a **concrete worked example** (numbers, a short scenario, before/after). That includes bit splits and formulas, but also **lifecycles** (fault → kernel → retry), **comparisons** (two processes, two mappings), and **resource math** (frames vs working set). Prefer **several small examples** in different sections when each clarifies a distinct idea — not only one example for the whole page.
+3. **Practice** — LeetCode / exercises when relevant; **working** minimal snippets.
+4. **Interview Q&A** — Dedicated section: common questions, tradeoffs, UB / failure modes, complexity, **when not to use** X, **X vs Y**, and “how would you implement…?” where it fits.
+
+Cross-language: say **when each approach wins**; no strawmen.
+
+## Mermaid
+
+Use Mermaid when it beats prose: **flowcharts** (flow, dispatch, algorithms), **sequence** (call chains), **state** (lifecycles), **small graphs** (structures, layout). Keep diagrams **small**; prefer two focused diagrams over one huge chart.
+
+Use standard **triple-backtick `mermaid`** fenced blocks (this repo’s VitePress build enables Mermaid).
+
+## Code
+
+- Short, copy-pasteable snippets; correct fence language (`cpp`, `python`, etc.).
+- One **minimal** example before a heavier one when the topic is dense.
+- At least one **whiteboard-sized** fragment (pseudocode or tiny real code) for interview prep.
+- Match **tone and depth** of existing sibling pages unless the user asks otherwise.
+
+## New topic checklist
+
+1. `reference-site/topics/<slug>/index.md` with frontmatter like sibling pages (`title`, optional `sidebar_order`, `languages`, …).
+2. Register in **`reference-site/.vitepress/config.ts`** (correct sidebar group).
+3. Link from the **hub** (`topics/cpp/`, `topics/python/`, …) and optionally **`reference-site/index.md`** for flagship explainers.
+4. Run **`npm run build`** in `reference-site/` and fix errors. From repo root you can use **`npm run dev:reference`** to verify Mermaid and pages (see root `README.md`).
+
+## Skip unless asked
+
+Long standards archaeology, unrelated refactors, replacing clear diagrams/code with vague prose.
+
+**Summary:** Problem → mechanics (with **concrete examples** where they help) → practice → **interview Q&A**; enrich with **Mermaid + code**; wire **VitePress** + hubs.

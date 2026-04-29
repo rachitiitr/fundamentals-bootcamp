@@ -4,7 +4,13 @@ title: C++ hub
 
 # C++
 
+Master backlog: [**Interview syllabus (master list)**](../interview-syllabus/) — C++ section.
+
 Use this hub for **C++-only** notes (RAII, move semantics, STL implementation angles) and pointers into your future `learnings/cpp/lessons/` track.
+
+## Topics
+
+- [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
 
 ## Ideas for dedicated pages
 

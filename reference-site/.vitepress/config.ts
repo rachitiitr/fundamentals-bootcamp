@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import { buildJavascriptLessonSidebar } from './lesson-sidebar'
 import { learningsStaticPlugin } from './learnings-static-plugin'
 
@@ -12,6 +13,10 @@ const mainSidebar = [
     text: 'Start here',
     items: [
       { text: 'Home', link: '/' },
+      {
+        text: 'Interview syllabus (master list)',
+        link: '/topics/interview-syllabus/',
+      },
       { text: 'How to use this repo', link: '/how-to-use-this-repo' },
       {
         text: 'JavaScript lessons (sidebar)',
@@ -28,6 +33,24 @@ const mainSidebar = [
     ],
   },
   {
+    text: 'Python topics',
+    items: [
+      {
+        text: 'with & context managers',
+        link: '/topics/python-context-managers/',
+      },
+    ],
+  },
+  {
+    text: 'C++ topics',
+    items: [
+      {
+        text: 'Virtual tables (vtables)',
+        link: '/topics/cpp-vtables/',
+      },
+    ],
+  },
+  {
     text: 'Cross-language topics',
     items: [
       {
@@ -37,14 +60,29 @@ const mainSidebar = [
       { text: 'Multiset & ordered duplicates', link: '/topics/multiset/' },
     ],
   },
+  {
+    text: 'Systems & OS',
+    items: [
+      {
+        text: 'Virtual memory, paging & segmentation',
+        link: '/topics/virtual-memory/',
+      },
+    ],
+  },
 ]
 
-export default defineConfig({
+export default withMermaid(
+  defineConfig({
   title: 'Prep Bootcamp — Reference',
   description:
     'Quick refresh notes across JavaScript, Python, and C++ — topics, comparisons, and interview patterns.',
   cleanUrls: true,
   ignoreDeadLinks: true,
+  /** Optional Mermaid defaults for all ```mermaid``` blocks in Markdown */
+  mermaid: {
+    theme: 'neutral',
+    securityLevel: 'loose',
+  },
   vite: {
     resolve: {
       preserveSymlinks: true,
@@ -61,6 +99,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Syllabus', link: '/topics/interview-syllabus/' },
       { text: 'Topics', link: '/topics/iterators-and-generators/' },
       { text: 'JS lessons', link: '/lessons/javascript/01-async-generators/NOTES' },
     ],
@@ -76,4 +115,5 @@ export default defineConfig({
       provider: 'local',
     },
   },
-})
+  })
+)

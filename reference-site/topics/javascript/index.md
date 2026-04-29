@@ -4,6 +4,8 @@ title: JavaScript hub
 
 # JavaScript
 
+Master backlog: [**Interview syllabus (master list)**](../interview-syllabus/) — JavaScript & TypeScript sections.
+
 Language-specific topics and links to the main lesson track.
 
 ## Lesson track

@@ -21,9 +21,12 @@ Lesson **Markdown** is mirrored into this package via [`lessons/javascript`](./l
 | Parallel snippets across languages | One primary language / environment |
 | Short “interview refresh” | Long `NOTES.md`, runnable HTML/JS, etc. |
 
+**Concrete examples:** Use **worked numbers, short scenarios, or before/after** wherever they make the next step obvious — addressing and bit layouts, but also **protocols, faults, concurrency, and comparisons**. Multiple smaller examples across a long page are fine when each serves a different idea; avoid one thin example deep in the doc while other sections stay purely abstract.
+
 ### File location
 
 - Put topic pages under [`topics/`](./topics/) — one folder per topic with `index.md`, or a single `topic-name.md` at the top level.
+- The [**Interview syllabus (master list)**](./topics/interview-syllabus/) (`topics/interview-syllabus/index.md`) tracks Python, JS/TS, C++, and systems interview topics; check items off and link new pages as you add tutorials.
 - Register topic pages in [`.vitepress/config.ts`](./.vitepress/config.ts) `themeConfig.sidebar` (under `/`) when they should appear in the default sidebar.
 - **JavaScript lesson tree** under `/lessons/javascript/...` is generated in [`.vitepress/lesson-sidebar.ts`](./.vitepress/lesson-sidebar.ts) from the symlinked folder [`lessons/javascript/`](./lessons/javascript).
 
@@ -51,11 +54,13 @@ leetcode:
 
 ### Page body template — cross-language topic
 
-1. **One sentence** — what the concept is.
+1. **One sentence** — what the concept is (or **the problem** it solves — see repo-root [`AGENTS.md`](../AGENTS.md) for interview-oriented “problem first” pages).
 2. **When to use** — 2–4 bullets.
 3. **Practice** — link out to LeetCode / docs (HTTPS links are always fine).
 4. **Per-language sections** — `### C++`, `### Python`, `### JavaScript` with fenced code blocks.
 5. **Language caveats** — short table or bullets where stdlib lies (e.g. JS has no `multiset`).
+
+For **interview prep** pages, add a closing **common interview questions** section and keep **Mermaid** + code where they clarify the idea (same as `AGENTS.md`).
 
 ### Page body template — language-only topic (e.g. Python)
 
