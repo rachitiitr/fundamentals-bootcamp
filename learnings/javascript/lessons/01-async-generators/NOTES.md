@@ -184,7 +184,7 @@ Your `<script>` (or `node script.js`) is **macrotask 0** — runs top-to-bottom 
 
 ## 10. Push→Pull Bridge (the killer pattern)
 
-Bridges any push source (timer, WebSocket, DOM events) to a pull-based async generator. The whole HRT/RPC framework rests on this.
+Bridges any push source (timer, WebSocket, DOM events) to a pull-based async generator. The whole worker/RPC framework in this bootcamp rests on this.
 
 ### Core idea: deferred Promise
 

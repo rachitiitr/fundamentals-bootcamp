@@ -1,8 +1,8 @@
 # Prep Bootcamp
 
 A hands-on bootcamp for learning the foundational concepts behind a
-SharedWorker-based RPC framework — inspired by HRT's "HRTWorker" blog
-post, but rebuilt from scratch with neutral naming.
+SharedWorker-based RPC framework — inspired by public engineering
+write-ups on browser-side worker RPC, but rebuilt from scratch with neutral naming.
 
 This repo is a small **monorepo**: per-language learnings, the v0 demo app, and a **static reference site** for cross-language notes (see [`learnings/`](./learnings/README.md) and [`reference-site/`](./reference-site/README.md)).
 
@@ -73,3 +73,12 @@ This bootcamp builds that fix one tiny step at a time, each step
 introducing exactly one new concept on top of a working app.
 
 **See also:** [How to use this repo](./reference-site/how-to-use-this-repo.md) in the reference site for linking lessons ↔ topic pages.
+
+## Interview prep & parallel agent chats
+
+If you are using **multiple Cursor chats** to build tutorials without stepping on the same files, start from:
+
+- **[`coordination/PARALLEL_PREP_PLAN.md`](./coordination/PARALLEL_PREP_PLAN.md)** — workstreams, end-of-chat ritual, how to merge JSON safely.
+- **[`coordination/agent-prep-state.json`](./coordination/agent-prep-state.json)** — machine-readable backlog: claim items, log sessions, record `artifactPaths`.
+
+The long-form concept backlog remains [`reference-site/topics/interview-syllabus/`](./reference-site/topics/interview-syllabus/index.md); the JSON tracks **execution** and **which chat touched what**.

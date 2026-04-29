@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-04-29T00:00:00Z",
+  "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
+  "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
+  "workstreams": [
+    {
+      "id": "dsa",
+      "label": "Data structures & algorithms (meta + gaps post-LC75)",
+      "pathHints": ["reference-site/topics/", "learnings/python/exercises/"]
+    },
+    {
+      "id": "py",
+      "label": "Python internals, stdlib, concurrency",
+      "pathHints": ["reference-site/topics/", "learnings/python/"]
+    },
+    {
+      "id": "react-ts",
+      "label": "React, TypeScript, browser semantics",
+      "pathHints": ["reference-site/topics/", "apps/shared-rpc-ticker/"]
+    },
+    {
+      "id": "sysdesign",
+      "label": "System design (real-time, fan-out, reliability)",
+      "pathHints": ["reference-site/topics/"]
+    },
+    {
+      "id": "workers",
+      "label": "Workers, SharedWorker, RPC lesson track",
+      "pathHints": ["learnings/javascript/lessons/", "apps/shared-rpc-ticker/", "reference-site/topics/javascript/"]
+    },
+    {
+      "id": "meta",
+      "label": "Syllabus, hubs, VitePress nav, editorial passes",
+      "pathHints": ["reference-site/topics/interview-syllabus/", "reference-site/.vitepress/", "reference-site/topics/javascript/", "reference-site/topics/python/"]
+    }
+  ],
+  "items": [
+    {
+      "id": "dsa-heap-patterns",
+      "workstreamId": "dsa",
+      "title": "Heap / priority-queue interview patterns (Python heapq + when not to)",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → heapq, heaps / priority queues (meta)",
+      "targetArtifacts": ["reference-site/topics/heap-patterns/index.md"],
+      "artifactPaths": [],
+      "notes": "Link 2–3 LeetCode problems; compare to sorted list / bisect tradeoffs."
+    },
+    {
+      "id": "dsa-graph-templates",
+      "workstreamId": "dsa",
+      "title": "Graph BFS/DFS templates + topological sort sketch",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → graphs",
+      "targetArtifacts": ["reference-site/topics/graph-algorithms-interview/index.md"],
+      "artifactPaths": [],
+      "notes": "Adjacency list in Python; complexity; one grid BFS example."
+    },
+    {
+      "id": "dsa-binary-search-variants",
+      "workstreamId": "dsa",
+      "title": "Binary search variants + binary search on answer",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus → binary search variants",
+      "targetArtifacts": ["reference-site/topics/binary-search-variants/index.md"],
+      "artifactPaths": [],
+      "notes": "Pair with bisect stdlib sidebar."
+    },
+    {
+      "id": "py-asyncio-core",
+      "workstreamId": "py",
+      "title": "asyncio: loop, tasks, gather, cancellation (interview depth)",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → asyncio",
+      "targetArtifacts": ["reference-site/topics/python-asyncio/index.md"],
+      "artifactPaths": [],
+      "notes": "Contrast with threads; when asyncio misleads."
+    },
+    {
+      "id": "py-gil-story",
+      "workstreamId": "py",
+      "title": "GIL: what it does/does not guarantee + I/O vs CPU",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus → GIL",
+      "targetArtifacts": ["reference-site/topics/python-gil/index.md"],
+      "artifactPaths": [],
+      "notes": "Short; link to multiprocessing pitfalls if page exists later."
+    },
+    {
+      "id": "react-hooks-rendering",
+      "workstreamId": "react-ts",
+      "title": "React: render batching, stale closures, useEffect deps (interview Q&A)",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → hooks implied under JS/React sections",
+      "targetArtifacts": ["reference-site/topics/react-hooks-interview/index.md"],
+      "artifactPaths": [],
+      "notes": "Tie to event loop microtasks at high level; optional link to ticker app."
+    },
+    {
+      "id": "ts-generics-narrowing",
+      "workstreamId": "react-ts",
+      "title": "TypeScript: generics constraints, discriminated unions, exhaustiveness",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → TypeScript section",
+      "targetArtifacts": ["reference-site/topics/typescript-interview-patterns/index.md"],
+      "artifactPaths": [],
+      "notes": "unknown vs any; one small API-typing example."
+    },
+    {
+      "id": "browser-event-loop-dom",
+      "workstreamId": "react-ts",
+      "title": "Browser: event loop, microtasks, rAF, layout thrashing (DOM 'when it updates')",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus → event loop & asynchrony",
+      "targetArtifacts": ["reference-site/topics/browser-event-loop/index.md"],
+      "artifactPaths": [],
+      "notes": "Connect to stock tick / high-frequency UI updates."
+    },
+    {
+      "id": "sysdesign-stock-notifications",
+      "workstreamId": "sysdesign",
+      "title": "System design: stock / price notification service (fan-out, WS, backpressure, SLAs)",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "distributed + WebSockets sections",
+      "targetArtifacts": ["reference-site/topics/system-design-stock-notifications/index.md"],
+      "artifactPaths": [],
+      "notes": "Include rough QPS, dedup, idempotency, at-least-once delivery story."
+    },
+    {
+      "id": "sysdesign-idempotency-retries",
+      "workstreamId": "sysdesign",
+      "title": "Idempotency keys, retries, jitter — applied mini-page",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus → distributed systems",
+      "targetArtifacts": ["reference-site/topics/distributed-retries-idempotency/index.md"],
+      "artifactPaths": [],
+      "notes": "Keep under ~200 lines; heavy on Q&A."
+    },
+    {
+      "id": "workers-v1-dedicated-worker",
+      "workstreamId": "workers",
+      "title": "Lesson track v1: dedicated Worker + postMessage RPC (per README roadmap)",
+      "status": "backlog",
+      "priority": 1,
+      "syllabusHint": "README lessons table v1",
+      "targetArtifacts": ["learnings/javascript/lessons/02-workers/", "apps/shared-rpc-ticker/", "README.md"],
+      "artifactPaths": [],
+      "notes": "Coordinate with any active work on same app paths."
+    },
+    {
+      "id": "workers-sharedworker-industry-notes",
+      "workstreamId": "workers",
+      "title": "SharedWorker: onconnect, MessagePort, multi-tab dedup — reference topic page",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus → Web Workers",
+      "targetArtifacts": ["reference-site/topics/sharedworker-multitab/index.md"],
+      "artifactPaths": [],
+      "notes": "Neutral naming; optional \"further reading\" links only, not source of truth."
+    },
+    {
+      "id": "meta-syllabus-priority-strip",
+      "workstreamId": "meta",
+      "title": "Add interview-prep priority strip to interview-syllabus linking new pages + JSON items",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus/index.md",
+      "targetArtifacts": ["reference-site/topics/interview-syllabus/index.md"],
+      "artifactPaths": [],
+      "notes": "Run after first wave of topic pages exist to avoid dead links."
+    }
+  ],
+  "activeClaims": [],
+  "sessions": []
+}
