@@ -2,6 +2,7 @@
 /**
  * Read aloud: per-heading Listen, optional selection (FAB + ⌃⇧L / ⌘⇧L),
  * browser Speech Synthesis or voice-playground POST /api/synthesize.
+ * While playing: fixed toolbar — Pause/Resume, slower/faster (same prefs rate), Stop.
  */
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { inBrowser, onContentUpdated, useRoute } from 'vitepress'
@@ -13,9 +14,16 @@ const DOC_SELECTOR = 'main .vp-doc'
 const LS_USE_VOICE_API = 'prep-read-aloud-use-voice-api'
 const LS_VOICE_API_BASE = 'prep-read-aloud-voice-api-base'
 const LS_VOICE_ENGINE = 'prep-read-aloud-voice-engine'
+const LS_SPEECH_RATE = 'prep-read-aloud-speech-rate'
 
 const DEFAULT_VOICE_API_BASE = 'http://localhost:8321'
 const MAX_SYNTH_CHARS = 5000
+
+/** Browser `SpeechSynthesisUtterance.rate` and `<audio>.playbackRate` (applied on play; audio updates live). */
+const RATE_MIN = 0.5
+const RATE_MAX = 2
+const RATE_DEFAULT = 1
+const RATE_STEP = 0.1
 
 const BTN_CLASS = 'read-aloud-section-btn'
 const HEADING_CLASS = 'vp-heading-with-read-aloud'
@@ -58,6 +66,18 @@ function readVoiceEngine(): string {
   return 'piper'
 }
 
+function clampSpeechRate(n: number): number {
+  const r = Math.round(n * 10) / 10
+  return Math.min(RATE_MAX, Math.max(RATE_MIN, r))
+}
+
+function readSpeechRateFromStorage(): number {
+  if (!inBrowser) return RATE_DEFAULT
+  const v = parseFloat(localStorage.getItem(LS_SPEECH_RATE) || '')
+  if (!Number.isFinite(v)) return RATE_DEFAULT
+  return clampSpeechRate(v)
+}
+
 const mounted = ref(false)
 const prefsOpen = ref(false)
 /** Shown in prefs hint for selection shortcut */
@@ -72,10 +92,12 @@ const useVoiceApi = computed({
 
 const voiceApiBaseInput = ref(DEFAULT_VOICE_API_BASE)
 const voiceEngine = ref('piper')
+const speechRate = ref(RATE_DEFAULT)
 
 function syncPrefsFromStorage() {
   voiceApiBaseInput.value = readVoiceApiBase()
   voiceEngine.value = readVoiceEngine()
+  speechRate.value = readSpeechRateFromStorage()
 }
 
 function persistVoiceApiBase() {
@@ -91,6 +113,14 @@ function persistVoiceEngine() {
 watch(voiceEngine, () => {
   persistVoiceEngine()
 })
+
+function bumpSpeechRate(delta: number) {
+  speechRate.value = clampSpeechRate(speechRate.value + delta)
+}
+
+function resetSpeechRate() {
+  speechRate.value = RATE_DEFAULT
+}
 
 function headingLevel(el: Element): number {
   const m = /^H([1-6])$/i.exec(el.tagName)
@@ -207,6 +237,43 @@ const selectionPlaybackActive = ref(false)
 /** Non-empty speakable text selected inside .vp-doc */
 const hasSelectableText = ref(false)
 
+/** Vue-visible browser TTS session (speechSynthesis.* is not reactive). */
+const browserPlaybackActive = ref(false)
+/** Last browser utterance text + UI binding (for rate changes mid-play). */
+const lastBrowserCtx = ref<{ text: string; sectionButton: HTMLButtonElement | null } | null>(null)
+/** Invalidates in-flight browser utterance onend handlers after cancel / new speak. */
+let browserUtterGen = 0
+
+/** Voice API: audio is playing (or paused), not just fetching. */
+const voiceApiPlaybackActive = ref(false)
+
+/** Bumped so toolbar Pause label tracks <audio>.paused and speechSynthesis.paused. */
+const playbackUiTick = ref(0)
+
+function persistSpeechRate() {
+  const c = clampSpeechRate(speechRate.value)
+  if (c !== speechRate.value) speechRate.value = c
+  localStorage.setItem(LS_SPEECH_RATE, String(c))
+  if (activeAudio) activeAudio.playbackRate = c
+}
+
+let rateRestartTimer: ReturnType<typeof setTimeout> | undefined
+
+watch(speechRate, () => {
+  persistSpeechRate()
+  clearTimeout(rateRestartTimer)
+  rateRestartTimer = setTimeout(() => {
+    if (
+      lastBrowserCtx.value &&
+      browserPlaybackActive.value &&
+      !readUseVoiceApi() &&
+      (speechSynthesis.speaking || speechSynthesis.pending || speechSynthesis.paused)
+    ) {
+      restartBrowserUtteranceWithCurrentRate()
+    }
+  }, 140)
+})
+
 let selectionDebounce: ReturnType<typeof setTimeout> | undefined
 
 function scheduleSelectionUiUpdate() {
@@ -221,6 +288,18 @@ function scheduleSelectionUiUpdate() {
 const showSelectionFab = computed(
   () => hasSelectableText.value || selectionPlaybackActive.value
 )
+
+const showPlaybackToolbar = computed(() => {
+  if (!mounted.value || !inBrowser) return false
+  return apiInFlight.value || browserPlaybackActive.value || voiceApiPlaybackActive.value
+})
+
+const playbackPaused = computed(() => {
+  void playbackUiTick.value
+  if (!inBrowser) return false
+  if (activeAudio && !activeAudio.ended) return activeAudio.paused
+  return speechSynthesis.paused
+})
 
 function resetButtonToListen(btn: HTMLButtonElement) {
   btn.textContent = LABEL_LISTEN
@@ -239,29 +318,75 @@ function setButtonToStop(btn: HTMLButtonElement) {
 }
 
 function clearSpeakingState() {
-  if (activeSectionButton) resetButtonToListen(activeSectionButton)
-  activeSectionButton = null
-  selectionPlaybackActive.value = false
-}
-
-function stopSpeech() {
-  speechSynthesis.cancel()
-  fetchAbort?.abort()
-  fetchAbort = null
-  apiInFlight.value = false
   if (activeAudio) {
     activeAudio.pause()
     activeAudio.removeAttribute('src')
     activeAudio.load()
     activeAudio = null
   }
+  if (activeSectionButton) resetButtonToListen(activeSectionButton)
+  activeSectionButton = null
+  selectionPlaybackActive.value = false
+  browserPlaybackActive.value = false
+  lastBrowserCtx.value = null
+  voiceApiPlaybackActive.value = false
+}
+
+function stopSpeech() {
+  browserUtterGen++
+  speechSynthesis.cancel()
+  fetchAbort?.abort()
+  fetchAbort = null
+  apiInFlight.value = false
   clearSpeakingState()
+  playbackUiTick.value++
 }
 
 function isSpeakingOrQueued(): boolean {
+  if (!inBrowser) return false
   if (apiInFlight.value) return true
-  if (activeAudio && !activeAudio.paused && !activeAudio.ended) return true
-  return speechSynthesis.speaking || speechSynthesis.pending
+  if (activeAudio && !activeAudio.ended) return true
+  return speechSynthesis.speaking || speechSynthesis.pending || speechSynthesis.paused
+}
+
+function togglePauseResume() {
+  if (!inBrowser) return
+  if (activeAudio && !activeAudio.ended) {
+    if (activeAudio.paused) void activeAudio.play()
+    else activeAudio.pause()
+    playbackUiTick.value++
+    return
+  }
+  if (speechSynthesis.speaking || speechSynthesis.pending || speechSynthesis.paused) {
+    if (speechSynthesis.paused) speechSynthesis.resume()
+    else speechSynthesis.pause()
+    playbackUiTick.value++
+  }
+}
+
+function restartBrowserUtteranceWithCurrentRate() {
+  const ctx = lastBrowserCtx.value
+  if (!ctx || readUseVoiceApi()) return
+
+  browserUtterGen++
+  const gen = browserUtterGen
+  speechSynthesis.cancel()
+
+  const utter = new SpeechSynthesisUtterance(ctx.text)
+  utter.lang = 'en-US'
+  utter.rate = clampSpeechRate(speechRate.value)
+  const voice = pickEnVoice()
+  if (voice) utter.voice = voice
+
+  utter.onend = () => {
+    if (gen !== browserUtterGen) return
+    clearSpeakingState()
+    playbackUiTick.value++
+  }
+  utter.onerror = utter.onend
+
+  browserPlaybackActive.value = true
+  speechSynthesis.speak(utter)
 }
 
 function resolveAudioUrl(base: string, audioUrl: string): string {
@@ -327,26 +452,29 @@ async function speakTextThroughApi(text: string, sectionButton: HTMLButtonElemen
 
     const url = resolveAudioUrl(base, data.audio_url)
     const audio = new Audio(url)
+    audio.playbackRate = clampSpeechRate(speechRate.value)
     activeAudio = audio
+    voiceApiPlaybackActive.value = true
+
+    audio.addEventListener('play', () => {
+      playbackUiTick.value++
+    })
+    audio.addEventListener('pause', () => {
+      playbackUiTick.value++
+    })
 
     const doneIfStillThisSession = () => {
-      activeAudio = null
-      if (sectionButton) {
-        if (activeSectionButton === sectionButton) clearSpeakingState()
-      } else if (selectionPlaybackActive.value) {
-        clearSpeakingState()
-      }
+      clearSpeakingState()
+      playbackUiTick.value++
     }
 
     audio.onended = doneIfStillThisSession
     audio.onerror = () => {
-      activeAudio = null
       if (sectionButton && activeSectionButton === sectionButton) {
         sectionButton.title = 'Audio playback failed'
-        clearSpeakingState()
-      } else if (!sectionButton && selectionPlaybackActive.value) {
-        clearSpeakingState()
       }
+      clearSpeakingState()
+      playbackUiTick.value++
     }
 
     try {
@@ -380,8 +508,13 @@ function speakTextBrowser(text: string, sectionButton: HTMLButtonElement | null)
 
   if (!text) return
 
+  const gen = ++browserUtterGen
+  lastBrowserCtx.value = { text, sectionButton }
+  browserPlaybackActive.value = true
+
   const utter = new SpeechSynthesisUtterance(text)
   utter.lang = 'en-US'
+  utter.rate = clampSpeechRate(speechRate.value)
   const voice = pickEnVoice()
   if (voice) utter.voice = voice
 
@@ -393,19 +526,11 @@ function speakTextBrowser(text: string, sectionButton: HTMLButtonElement | null)
   }
 
   utter.onend = () => {
-    if (sectionButton) {
-      if (activeSectionButton === sectionButton) clearSpeakingState()
-    } else if (selectionPlaybackActive.value) {
-      clearSpeakingState()
-    }
+    if (gen !== browserUtterGen) return
+    clearSpeakingState()
+    playbackUiTick.value++
   }
-  utter.onerror = () => {
-    if (sectionButton) {
-      if (activeSectionButton === sectionButton) clearSpeakingState()
-    } else if (selectionPlaybackActive.value) {
-      clearSpeakingState()
-    }
-  }
+  utter.onerror = utter.onend
 
   speechSynthesis.speak(utter)
 }
@@ -540,6 +665,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   clearTimeout(selectionDebounce)
+  clearTimeout(rateRestartTimer)
   if (inBrowser) {
     window.removeEventListener('keydown', onGlobalKeydown)
     document.removeEventListener('selectionchange', scheduleSelectionUiUpdate)
@@ -579,6 +705,52 @@ onUnmounted(() => {
         <strong>Selection:</strong> select text in the article, then use the floating button or
         <kbd>{{ selectionShortcutLabel }}</kbd> to listen or stop.
       </p>
+      <div class="read-aloud-prefs__rate">
+        <label class="read-aloud-prefs__label" for="read-aloud-rate">Speaking speed</label>
+        <div class="read-aloud-prefs__rate-row">
+          <button
+            type="button"
+            class="read-aloud-prefs__rate-btn"
+            aria-label="Slower"
+            :disabled="speechRate <= RATE_MIN + 0.001"
+            @click="bumpSpeechRate(-RATE_STEP)"
+          >
+            Slower
+          </button>
+          <input
+            id="read-aloud-rate"
+            v-model.number="speechRate"
+            class="read-aloud-prefs__rate-slider"
+            type="range"
+            :min="RATE_MIN"
+            :max="RATE_MAX"
+            :step="RATE_STEP"
+          />
+          <button
+            type="button"
+            class="read-aloud-prefs__rate-btn"
+            aria-label="Faster"
+            :disabled="speechRate >= RATE_MAX - 0.001"
+            @click="bumpSpeechRate(RATE_STEP)"
+          >
+            Faster
+          </button>
+        </div>
+        <div class="read-aloud-prefs__rate-foot">
+          <span class="read-aloud-prefs__rate-value">{{ speechRate.toFixed(1) }}×</span>
+          <button
+            v-if="Math.abs(speechRate - RATE_DEFAULT) > 0.001"
+            type="button"
+            class="read-aloud-prefs__rate-reset"
+            @click="resetSpeechRate"
+          >
+            Reset to 1×
+          </button>
+        </div>
+        <p class="read-aloud-prefs__hint read-aloud-prefs__hint--rate">
+          Voice API: speed changes apply while audio plays. Browser: applies the next time you start Listen.
+        </p>
+      </div>
       <template v-if="useVoiceApi">
         <label class="read-aloud-prefs__label" for="read-aloud-base">API base URL</label>
         <input
@@ -603,6 +775,43 @@ onUnmounted(() => {
         </select>
       </template>
     </div>
+  </div>
+
+  <div
+    v-show="showPlaybackToolbar"
+    class="read-aloud-playback-toolbar"
+    role="toolbar"
+    aria-label="Read aloud playback"
+  >
+    <button
+      type="button"
+      class="read-aloud-toolbar__btn read-aloud-toolbar__btn--primary"
+      @click="togglePauseResume"
+    >
+      {{ playbackPaused ? 'Resume' : 'Pause' }}
+    </button>
+    <div class="read-aloud-toolbar__rate" aria-label="Speaking speed">
+      <button
+        type="button"
+        class="read-aloud-toolbar__btn"
+        aria-label="Slower"
+        :disabled="speechRate <= RATE_MIN + 0.001"
+        @click="bumpSpeechRate(-RATE_STEP)"
+      >
+        −
+      </button>
+      <span class="read-aloud-toolbar__rate-label">{{ speechRate.toFixed(1) }}×</span>
+      <button
+        type="button"
+        class="read-aloud-toolbar__btn"
+        aria-label="Faster"
+        :disabled="speechRate >= RATE_MAX - 0.001"
+        @click="bumpSpeechRate(RATE_STEP)"
+      >
+        +
+      </button>
+    </div>
+    <button type="button" class="read-aloud-toolbar__btn" @click="stopSpeech">Stop</button>
   </div>
 
   <button
@@ -675,8 +884,75 @@ onUnmounted(() => {
   line-height: 1.45;
 }
 
-.read-aloud-prefs__hint code {
-  font-size: 11px;
+.read-aloud-prefs__hint--rate {
+  margin-top: 6px;
+}
+
+.read-aloud-prefs__rate {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.read-aloud-prefs__rate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.read-aloud-prefs__rate-btn {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+}
+
+.read-aloud-prefs__rate-btn:hover:not(:disabled) {
+  border-color: var(--vp-c-brand-1);
+}
+
+.read-aloud-prefs__rate-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.read-aloud-prefs__rate-slider {
+  flex: 1 1 auto;
+  min-width: 0;
+  accent-color: var(--vp-c-brand-1);
+}
+
+.read-aloud-prefs__rate-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.read-aloud-prefs__rate-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.read-aloud-prefs__rate-reset {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: none;
+  background: transparent;
+  color: var(--vp-c-brand-1);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.read-aloud-prefs__rate-reset:hover {
+  color: var(--vp-c-brand-2);
 }
 
 .read-aloud-prefs__hint--kbd kbd {
@@ -707,6 +983,67 @@ onUnmounted(() => {
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
   font-size: 13px;
+}
+
+.read-aloud-playback-toolbar {
+  position: fixed;
+  z-index: 2147483645;
+  bottom: 112px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  box-shadow: var(--vp-shadow-3);
+  max-width: calc(100vw - 24px);
+}
+
+.read-aloud-toolbar__btn {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+}
+
+.read-aloud-toolbar__btn:hover:not(:disabled) {
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-bg-soft-up);
+}
+
+.read-aloud-toolbar__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.read-aloud-toolbar__btn--primary {
+  min-width: 5.5rem;
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.read-aloud-toolbar__rate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.read-aloud-toolbar__rate-label {
+  min-width: 2.75rem;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--vp-c-text-1);
 }
 
 .read-aloud-selection-fab {
