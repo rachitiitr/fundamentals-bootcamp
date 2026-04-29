@@ -685,6 +685,30 @@ function onGlobalKeydown(ev: KeyboardEvent) {
     return
   }
 
+  if (
+    activeAudio &&
+    !activeAudio.ended &&
+    !mod &&
+    !ev.shiftKey &&
+    !ev.altKey &&
+    (ev.key === 'h' || ev.key === 'l')
+  ) {
+    if (isEditableKeyboardTarget(ev)) return
+    ev.preventDefault()
+    if (ev.key === 'h') {
+      activeAudio.currentTime = Math.max(0, activeAudio.currentTime - 5)
+    } else {
+      const dur = activeAudio.duration
+      if (Number.isFinite(dur)) {
+        activeAudio.currentTime = Math.min(dur, activeAudio.currentTime + 5)
+      } else {
+        activeAudio.currentTime = activeAudio.currentTime + 5
+      }
+    }
+    playbackUiTick.value++
+    return
+  }
+
   if (ev.shiftKey && !mod && !ev.altKey) {
     let delta = 0
     if (ev.key === '>') delta = RATE_STEP
@@ -763,7 +787,9 @@ onUnmounted(() => {
         <strong>Keys:</strong> <kbd>{{ modKeyLabel }}B</kbd> toggle sidebar · while audio or speech is
         active: <kbd>Enter</kbd> pause/resume (not in inputs), <kbd>{{ modKeyLabel }}Enter</kbd> stop,
         <kbd>Shift</kbd>+<kbd>&lt;</kbd> / <kbd>Shift</kbd>+<kbd>&gt;</kbd> slower / faster (same as
-        <kbd>Shift</kbd>+<kbd>,</kbd> / <kbd>Shift</kbd>+<kbd>.</kbd> on US keyboards).
+        <kbd>Shift</kbd>+<kbd>,</kbd> / <kbd>Shift</kbd>+<kbd>.</kbd> on US keyboards). During
+        <strong>voice API</strong> playback only: plain <kbd>h</kbd> / <kbd>l</kbd> (lowercase, no
+        modifiers) skip back / forward 5s — not <kbd>H</kbd>/<kbd>L</kbd> (e.g. Caps Lock).
       </p>
       <div class="read-aloud-prefs__rate">
         <label class="read-aloud-prefs__label" for="read-aloud-rate">Speaking speed</label>

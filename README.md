@@ -8,25 +8,25 @@ This repo is a small **monorepo**: per-language learnings, the v0 demo app, and 
 
 ## Repo layout
 
-| Area | Path | Purpose |
-|------|------|---------|
-| JavaScript lessons | [`learnings/javascript/lessons/`](./learnings/javascript/lessons/) | Ordered modules (async generators, Web Workers, …) |
-| Python / C++ | [`learnings/python/`](./learnings/python/), [`learnings/cpp/`](./learnings/cpp/) | Placeholder trees for future tracks |
-| v0 app | [`apps/shared-rpc-ticker/`](./apps/shared-rpc-ticker/) | Async generators, `useAsyncGenerator`, WebSocket per tab |
-| Quick reference | [`reference-site/`](./reference-site/) | VitePress site: topics, comparisons, LeetCode links |
+| Area               | Path                                                                               | Purpose                                                  |
+| ------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| JavaScript lessons | [`learnings/javascript/lessons/`](./learnings/javascript/lessons/)                 | Ordered modules (async generators, Web Workers, …)       |
+| Python / C++       | [`learnings/python/`](./learnings/python/), [`learnings/cpp/`](./learnings/cpp/) | Placeholder trees for future tracks                      |
+| v0 app             | [`apps/shared-rpc-ticker/`](./apps/shared-rpc-ticker/)                             | Async generators, `useAsyncGenerator`, WebSocket per tab |
+| Quick reference    | [`reference-site/`](./reference-site/)                                             | VitePress site: topics, comparisons, LeetCode links      |
 
 ## Lessons (JavaScript track)
 
-| # | Folder | What you learn |
-|---|---|---|
-| **v0** ✅ | [`apps/shared-rpc-ticker`](./apps/shared-rpc-ticker) | Async generators, `useAsyncGenerator` React hook, direct WebSocket per component (the "before" picture) |
-| v1 (next) | _coming_ | Move WS into a dedicated `Worker`. Manual `postMessage` proto-RPC. |
-| v2 | _coming_ | Switch to `SharedWorker`. Multi-tab dedup. `onconnect`, `MessagePort`. |
-| v3 | _coming_ | Generalized message protocol. UUIDs, conversations, multiplexing. |
-| v4 | _coming_ | Cancel + error propagation. Robust state machine. |
-| v5 | _coming_ | Base class + mixins (Connection / HostCall / ClientCall). |
-| v6 | _coming_ | TypeScript experimental decorators (`@rpc` / `@remoteExecute`). |
-| v7 | _coming_ | Fallback when SharedWorker is unavailable. Host/Client duality. |
+| #         | Folder                                                 | What you learn                                                                                            |
+| --------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| **v0** ✅ | [`apps/shared-rpc-ticker`](./apps/shared-rpc-ticker)   | Async generators, `useAsyncGenerator` React hook, direct WebSocket per component (the "before" picture) |
+| v1 (next) | _coming_                                               | Move WS into a dedicated `Worker`. Manual `postMessage` proto-RPC.                                        |
+| v2        | _coming_                                               | Switch to `SharedWorker`. Multi-tab dedup. `onconnect`, `MessagePort`.                                    |
+| v3        | _coming_                                               | Generalized message protocol. UUIDs, conversations, multiplexing.                                         |
+| v4        | _coming_                                               | Cancel + error propagation. Robust state machine.                                                         |
+| v5        | _coming_                                               | Base class + mixins (Connection / HostCall / ClientCall).                                                 |
+| v6        | _coming_                                               | TypeScript experimental decorators (`@rpc` / `@remoteExecute`).                                           |
+| v7        | _coming_                                               | Fallback when SharedWorker is unavailable. Host/Client duality.                                           |
 
 Hands-on worker exercises: [`learnings/javascript/lessons/02-workers/`](./learnings/javascript/lessons/02-workers/README.md).
 
@@ -78,7 +78,7 @@ introducing exactly one new concept on top of a working app.
 
 If you are using **multiple Cursor chats** to build tutorials without stepping on the same files, start from:
 
-- **[`coordination/PARALLEL_PREP_PLAN.md`](./coordination/PARALLEL_PREP_PLAN.md)** — workstreams, end-of-chat ritual, how to merge JSON safely.
-- **[`coordination/agent-prep-state.json`](./coordination/agent-prep-state.json)** — machine-readable backlog: claim items, log sessions, record `artifactPaths`.
+- **[coordination/PARALLEL_PREP_PLAN.md](./coordination/PARALLEL_PREP_PLAN.md)** — workstreams, end-of-chat ritual, how to merge JSON safely.
+- **[coordination/agent-prep-state.json](./coordination/agent-prep-state.json)** — machine-readable backlog: claim items, log sessions, record `artifactPaths`.
 
 The long-form concept backlog remains [`reference-site/topics/interview-syllabus/`](./reference-site/topics/interview-syllabus/index.md); the JSON tracks **execution** and **which chat touched what**.

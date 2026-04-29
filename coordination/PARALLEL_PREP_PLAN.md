@@ -7,18 +7,18 @@ This document pairs with **`agent-prep-state.json`**. Multiple Cursor chats (or 
 - **Interview target:** Python, React, TypeScript, system design, data structures, plus this repo’s **workers / real-time** spine (SharedWorker, WebSocket fan-out, low-latency UI patterns, etc.) — typical of **quant / trading-platform** and similar frontend+systems loops.
 - **Repo goal:** After each chat, turn the conversation into **one durable artifact**: a new or materially improved tutorial (prefer `reference-site/topics/<slug>/index.md`) or an ordered lesson under `learnings/`, not a pile of low-signal markdown.
 
-**Master backlog of concepts** (not execution state): [`reference-site/topics/interview-syllabus/`](../reference-site/topics/interview-syllabus/index.md).
+**Master backlog of concepts** (not execution state): [reference-site/topics/interview-syllabus/](../reference-site/topics/interview-syllabus/index.md).
 
 ## Workstreams (assign one primary per chat)
 
-| ID | Focus | Typical outputs | Touch paths (prefer these) |
-|----|--------|-----------------|----------------------------|
-| `dsa` | LeetCode patterns beyond LC75; complexity; “why this DS” | Problem walkthroughs, links in topic pages | `reference-site/topics/*`, small code in `learnings/python/exercises` if needed |
-| `py` | Python internals, stdlib, asyncio, GIL, testing story | `reference-site/topics/python-*` | `reference-site/topics/`, `learnings/python/` |
-| `react-ts` | Hooks, reconciliation, TS generics, DOM/event loop | `reference-site/topics/javascript-*` or new `topics/ts-*` | `reference-site/topics/`, `apps/shared-rpc-ticker/` for demos |
-| `sysdesign` | Stock/notification style; distributed primitives; numbers | Design notes + **interview Q&A** section on topic pages | `reference-site/topics/` (new slugs like `system-design-notifications`) |
-| `workers` | SharedWorker, dedicated Worker, RPC, multi-tab | Lessons + exercises | `learnings/javascript/lessons/`, `apps/shared-rpc-ticker/`, `reference-site/topics/javascript/` |
-| `meta` | Syllabus index, hub pages, VitePress nav, quality passes | Update interview-syllabus checkboxes, hub links | `reference-site/.vitepress/config.ts`, `reference-site/topics/interview-syllabus/` |
+| ID          | Focus                                                     | Typical outputs                                             | Touch paths (prefer these)                                                                       |
+| ----------- | --------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `dsa`       | LeetCode patterns beyond LC75; complexity; “why this DS”  | Problem walkthroughs, links in topic pages                  | `reference-site/topics/*`, small code in `learnings/python/exercises` if needed                  |
+| `py`        | Python internals, stdlib, asyncio, GIL, testing story     | `reference-site/topics/python-*`                            | `reference-site/topics/`, `learnings/python/`                                                    |
+| `react-ts`  | Hooks, reconciliation, TS generics, DOM/event loop        | `reference-site/topics/javascript-*` or new `topics/ts-*`   | `reference-site/topics/`, `apps/shared-rpc-ticker/` for demos                                    |
+| `sysdesign` | Stock/notification style; distributed primitives; numbers | Design notes + **interview Q&A** section on topic pages     | `reference-site/topics/` (new slugs like `system-design-notifications`)                          |
+| `workers`   | SharedWorker, dedicated Worker, RPC, multi-tab            | Lessons + exercises                                         | `learnings/javascript/lessons/`, `apps/shared-rpc-ticker/`, `reference-site/topics/javascript/` |
+| `meta`      | Syllabus index, hub pages, VitePress nav, quality passes  | Update interview-syllabus checkboxes, hub links             | `reference-site/.vitepress/config.ts`, `reference-site/topics/interview-syllabus/`               |
 
 **Parallelism rule:** One chat should set **`items[].status`** to **`in_progress`** for at most **one** item `id` in a workstream at a time, and should **not** edit the same **target file paths** as another active session. If two chats need the same file, **sequence** them or split scope (e.g. one chat = outline + Q&A, next = code blocks + Mermaid).
 
