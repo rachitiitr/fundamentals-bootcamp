@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ex 4 — Tiny RPC over Worker</title>
+  <style>
+    body { font-family: ui-monospace, monospace; max-width: 720px; margin: 40px auto; padding: 0 20px; }
+    button { padding: 6px 12px; margin-right: 6px; cursor: pointer; }
+    pre { background: #f4f4f4; padding: 12px; border-radius: 6px; min-height: 120px; }
+  </style>
+</head>
+<body>
+  <h1>Exercise 4 — Tiny RPC over Worker</h1>
+
+  <p><strong>Goal:</strong> wrap <code>postMessage</code> in a Promise-returning <code>call(method, args)</code> helper. Multiple in-flight calls must not get mixed up.</p>
+
+  <h3>Protocol you'll design</h3>
+  <pre>Page → Worker:   { id, method, args }
+Worker → Page:   { id, ok: true,  result }
+                 { id, ok: false, error }</pre>
+
+  <ol>
+    <li>In <code>worker.js</code>: implement two methods — <code>add(a, b)</code> (sync) and <code>delayedHello(name, ms)</code> (async). Reply with the right shape based on the request.</li>
+    <li>In <code>rpc.js</code>: write <code>createRpc(worker)</code> returning <code>{ call(method, ...args) }</code> where <code>call</code> returns a Promise that resolves with the result (or rejects with the error). Use a <code>Map&lt;id, {resolve, reject}&gt;</code> to correlate replies.</li>
+    <li>In <code>page.js</code>: try <code>add(2,3)</code>, <code>delayedHello('alice', 1000)</code>, and a parallel <code>Promise.all</code> with multiple in-flight calls. Verify nothing crosses wires.</li>
+    <li>Bonus: handle errors. Make worker throw on <code>add('a','b')</code> (when args aren't numbers) and confirm the page Promise rejects.</li>
+  </ol>
+
+  <button id="add">add(2,3)</button>
+  <button id="hello">delayedHello('alice', 1000)</button>
+  <button id="parallel">3 parallel calls</button>
+  <button id="errOnArgs">add('a','b') (should reject)</button>
+
+  <h3>Log</h3>
+  <pre id="log"></pre>
+
+  <script src="rpc.js"></script>
+  <script src="page.js"></script>
+</body>
+</html>

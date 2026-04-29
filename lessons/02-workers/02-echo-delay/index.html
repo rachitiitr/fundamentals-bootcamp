@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ex 2 — Echo with Delay</title>
+  <style>
+    body { font-family: ui-monospace, monospace; max-width: 720px; margin: 40px auto; padding: 0 20px; }
+    input { padding: 6px 12px; width: 60%; }
+    button { padding: 6px 12px; cursor: pointer; }
+    pre { background: #f4f4f4; padding: 12px; border-radius: 6px; min-height: 100px; }
+  </style>
+</head>
+<body>
+  <h1>Exercise 2 — Echo with Delay</h1>
+
+  <p><strong>Goal:</strong> the worker echoes back whatever you send it, but only after waiting <code>delayMs</code> milliseconds.</p>
+
+  <ol>
+    <li>In <code>worker.js</code>: when you receive <code>{text, delayMs}</code>, wait <code>delayMs</code> using <code>setTimeout</code>, then post back <code>{echoed: text, after: delayMs}</code>.</li>
+    <li>In <code>page.js</code>: send the input text with a 1000ms delay. Append replies to log.</li>
+    <li><strong>Concurrency test:</strong> rapidly click "Send" 5 times. Notice all 5 replies come back roughly together after 1 second — proving the worker handled them concurrently (setTimeout doesn't block the worker thread either).</li>
+  </ol>
+
+  <input id="text" placeholder="type something" value="hello" />
+  <button id="send">Send (1000ms delay)</button>
+  <button id="sendBurst">Send burst of 5</button>
+
+  <h3>Log</h3>
+  <pre id="log"></pre>
+
+  <script src="page.js"></script>
+</body>
+</html>
