@@ -226,7 +226,7 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Object model & polymorphism
 
-- [ ] Object layout, padding, alignment (`alignof`, `alignas`)
+- [x] [Object layout, padding, alignment (`alignof`, `alignas`)](../cpp-struct-layout/)
 - [ ] Virtual functions, dynamic dispatch, vptr/vtable  
   - [x] [Virtual tables (vtables)](../cpp-vtables/)
 - [ ] Pure virtual, abstract classes, interfaces
@@ -268,10 +268,9 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 - [ ] Processes vs threads — address space sharing, creation cost
 - [ ] `fork`, `exec`, copy-on-write after fork
-- [ ] Virtual memory, paging, page faults, demand paging  
-  - [x] [Virtual memory, paging & segmentation](../virtual-memory/)
-- [ ] Page tables, multi-level tables, TLB — translation path
-- [ ] Swapping / thrashing, working set (definitions)
+- [x] [Virtual memory, paging, page faults, demand paging, TLB vs cache, RSS/VIRT, backing store, `CR3`](../virtual-memory/)
+- [x] [Page tables, multi-level tables, TLB — translation path](../virtual-memory/#multi-level-page-tables) (same page — [TLB vs data cache](../virtual-memory/#tlb-vs-data-cache))
+- [x] [Swapping / thrashing, working set](../virtual-memory/#thrashing-and-working-set) — definitions on [virtual memory](../virtual-memory/#locality-and-working-set)
 - [ ] `mmap` — file-backed vs anonymous memory
 - [ ] Stack vs heap — growth direction concept, guard pages (high level)
 - [ ] Dynamic linking, shared libraries, PLT/GOT (conceptual)
@@ -293,7 +292,7 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 ### Computer architecture (short list)
 
 - [ ] CPU pipeline concept, branch prediction (high level)
-- [ ] Cache hierarchy L1/L2/L3 — locality, cache lines
+- [ ] Cache hierarchy L1/L2/L3 — locality, cache lines (see also [matrix + cache line story](../virtual-memory/#matrix-locality-tlb-cache))
 - [ ] False sharing — two cores write different variables on same cache line
 - [ ] Memory barriers — why atomics and lock-free talk about “ordering”
 

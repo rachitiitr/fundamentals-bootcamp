@@ -48,6 +48,10 @@ const mainSidebar = [
         text: 'Virtual tables (vtables)',
         link: '/topics/cpp-vtables/',
       },
+      {
+        text: 'Struct layout, padding & alignment',
+        link: '/topics/cpp-struct-layout/',
+      },
     ],
   },
   {

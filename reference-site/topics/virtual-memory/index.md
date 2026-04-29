@@ -56,6 +56,22 @@ flowchart LR
 - **TLB hit:** translation is already cached → fast path to DRAM.
 - **TLB miss:** MMU **walks** page tables in memory → slower, then fills TLB.
 
+## Per-process translations: page table root and `CR3` {#cr3-and-per-process-tables}
+
+Each runnable process has its **own page tables** (same virtual page **number** can map to **different physical frames** in different processes).
+
+On x86‑64, **`CR3`** holds the **physical address of the top-level page table** while a process is running. A **context switch** updates **`CR3`** (and other state) so the MMU walks the **new** process’s tables.
+
+The **TLB** caches translations. Without **per‑address‑space tags** (e.g. PCID / ASID‑style mechanisms) or careful invalidation, stale TLB entries after a switch would let the CPU use **another process’s mapping** for the “same” VPN — so kernels **flush or tag** entries on switch.
+
+---
+
+### Example: same VPN, two processes
+
+Process **A** and process **B** both use virtual page index **`0x1234`**. After switching `CR3`, **VPN `0x1234` → PFN** for A is unrelated to B’s mapping. Isolation holds because **the active table root changed**, not because virtual numbers are globally unique.
+
+---
+
 ### Example: same virtual page, two byte offsets
 
 Take the [worked virtual address](#concrete-example-4-kib-pages) `0x12345678` (VPN `0x12345`, offset `0x678`). Another access to **`0x12345ABC`** uses the **same VPN** `0x12345` with a **different offset** `0xABC`. After the first miss, the TLB often holds **VPN `0x12345` → PFN `0xABCDE`**, so the second access is usually a **TLB hit** — the MMU reuses the cached translation and only combines PFN with the new offset. That is why “hot” loops in one page pay translation cost once.
@@ -130,6 +146,15 @@ sequenceDiagram
   MMU->>P: Data succeeds
 ```
 
+### RSS vs VIRT (what `top` is trying to tell you) {#rss-vs-virt}
+
+| Metric (common names) | Rough meaning | `malloc(1 GiB)` you barely touch |
+|------------------------|---------------|----------------------------------|
+| **VIRT / VSZ** | How large your **mappings and reservations** are | Can jump ~**+1 GiB** quickly |
+| **RSS** (resident set) | **Physical DRAM pages** currently mapped in for this process | Grows ~**4 KiB per touched page** (demand paging) |
+
+**Interview line:** **virtual big ≠ DRAM big** until you **fault in** or otherwise populate pages.
+
 ### Example: first read after `mmap`
 
 You `mmap` a 64 KiB file read-only. The kernel may create PTEs with **“not in RAM yet”** instead of copying the whole file up front. The first `load` at virtual **`0x70001000`** faults; the handler reads the corresponding **4 KiB** file chunk into a free frame (say PFN **`0x2000`**), marks the PTE **present** with that PFN, and resumes. The faulting instruction runs again — this time **no fault** — and the load returns the file byte. Later loads in the same page usually avoid even that first fault’s work.
@@ -164,7 +189,26 @@ Short labels only; exact bit names differ by CPU.
 
 ---
 
-## Why page tables are often “multi-level”
+## User vs kernel mappings (high level) {#user-vs-kernel}
+
+**User mode** instructions may only access pages marked **user-accessible** in the PTEs. **Kernel-only** mappings trap if touched from user code — this is part of **user/kernel isolation** (syscalls enter **kernel mode** with privilege to use kernel mappings).
+
+**Interview line:** your `read(fd, buf, n)` path is **kernel code** copying into **`buf` only after** validating `buf` lies in **legal user memory**.
+
+---
+
+## Backing store: program file vs swap (disk, two jobs) {#backing-file-vs-swap}
+
+| Kind | Typical contents | If evicted from DRAM, refill often comes from… |
+|------|------------------|-----------------------------------------------|
+| **File-backed** | Code / `mmap` of a file | The **same file offset** (executable or data file) |
+| **Anonymous** | Heap, stack growth, `mmap(MAP_ANONYMOUS)` | **Swap** (there is no “pre-baked” copy in your `.exe`) |
+
+Your **`malloc` contents** are **runtime state** — not stored as heap bytes in the binary before run — so evicted anonymous pages are **swap-shaped**, not “reload from `.exe`.”
+
+---
+
+## Why page tables are often “multi-level” {#multi-level-page-tables}
 
 A single huge flat table for a large address space would waste enormous memory for **holes** (unused regions). **Tree-shaped** tables only allocate sub-tables for ranges that actually exist — **sparse** address spaces.
 
@@ -176,7 +220,7 @@ When the kernel **changes** mappings (`munmap`, `mprotect`, context switch in so
 
 ---
 
-## TLB vs data cache (common “gotcha” question)
+## TLB vs data cache (common “gotcha” question) {#tlb-vs-data-cache}
 
 ```mermaid
 flowchart TB
@@ -196,6 +240,45 @@ flowchart TB
 They sit at different layers; both reduce latency.
 
 **Same walkthrough, two questions:** Using the [translation above](#concrete-example-4-kib-pages), the **TLB** answers: “Virtual `0x12345678` → which PFN?” The **L1 data cache** answers: “What is the **value** at physical address **`0xABCDE678`**?” Translation first, then data fetch — two different caches.
+
+---
+
+## Matrix traversal: one story for TLB **and** data cache {#matrix-locality-tlb-cache}
+
+Assume **4 KiB pages** and **`double` = 8 bytes** → **512 doubles per page**.
+
+Take **`A` as `512 × 512`** row-major (`A[i][j]`). Then **one full row** is \(512 \times 8 = 4096\) bytes → **exactly one virtual page** per row.
+
+**Good inner loop** (walk along a row — high **spatial locality**):
+
+```cpp
+for (int i = 0; i < 512; i++)
+  for (int j = 0; j < 512; j++)
+    sum += A[i][j];
+```
+
+For fixed `i`, you stay in **one VPN** for the whole inner loop → **TLB friendly**. Consecutive `double`s share **cache lines** (~64 B typical) → **L1/L2 friendly**.
+
+**Bad inner loop** (walk down a column in row-major storage — **huge stride**):
+
+```cpp
+for (int j = 0; j < 512; j++)
+  for (int i = 0; i < 512; i++)
+    sum += A[i][j];
+```
+
+Row `i` starts at `base + i * 4096`. For fixed `j`, each `i++` jumps **4096 bytes** → **a new virtual page every iteration** → **TLB pressure** (many distinct VPNs per inner loop). You also **miss cache lines** constantly.
+
+**Physical frames** for adjacent virtual pages need **not** be adjacent in DRAM; that does not break correctness. Within **one** mapped page, offsets map linearly inside **one frame**, so row‑major inner `j` still gets **contiguous physical bytes** for that row’s page.
+
+---
+
+## Locality and working set {#locality-and-working-set}
+
+- **Temporal locality:** reuse soon what you used recently (loops, hot variables).
+- **Spatial locality:** use addresses **near** what you used recently (arrays, sequential scan).
+
+**Working set (informal):** the set of pages your program **keeps hot** in a short window. If the **combined** working sets of runnable things **exceed DRAM**, you spend time **evicting and faulting** — path to **thrashing**.
 
 ---
 
@@ -249,7 +332,7 @@ Right after `fork`, suppose **parent and child** each have a PTE for **VPN `0x40
 
 ---
 
-## Thrashing (sound smart in one sentence)
+## Thrashing {#thrashing-and-working-set}
 
 If the process keeps **touching more pages than fit in RAM**, the kernel **evicts** pages constantly, then **faults** them back in — disk and table work dominate; CPU progress **stalls**. That is **thrashing**. Fixes: more RAM, fewer competing processes, smarter **replacement**, or tuning what the program touches (**working set**).
 
@@ -276,6 +359,15 @@ Simple hardware, simple **swap I/O**, and no **external fragmentation** of physi
 **Does 64-bit mean giant page tables?**  
 No — **multi-level sparse** tables only allocate structure for used regions.
 
+**What does `CR3` do?**  
+Holds the **physical address of the current process’s page table root** on x86‑64; changing it on context switch is how the same VPN can map to **different** frames in different processes.
+
+**Why can VIRT be huge while RSS stays small?**  
+**Virtual reservations** can be large; **RSS** grows as pages are **actually resident** in DRAM (often **on demand**).
+
+**Why is column-major inner loops slow on row-major matrices?**  
+Huge **stride** → many **distinct VPNs** per inner loop (**TLB misses**) plus poor **cache locality**.
+
 ---
 
 ## Whiteboard sanity check
@@ -292,4 +384,4 @@ With **4 KiB** pages, the offset uses **12 bits** (because \(2^{12} = 4096\)). T
 
 ## Recap
 
-**Virtual memory** gives each program its own address labels and strong **isolation**. **Paging** maps **fixed-size** virtual pages to physical **frames** using **page tables**; the **TLB** speeds repeat lookups; **page faults** let the OS **load**, **allocate**, or **copy-on-write** on demand. **Segmentation** is the variable-sized **logical** view; modern OSes still **talk** about segments, but **paging** carries most of the load.
+**Virtual memory** gives each program its own address labels and strong **isolation**. **Paging** maps **fixed-size** virtual pages to physical **frames** using **page tables**; **`CR3`** selects the active root on x86‑64; the **TLB** speeds repeat translations; **RSS vs VIRT** separates reservation from DRAM residency; **file vs swap** explains refills; **page faults** load, allocate, or **copy-on-write** on demand; **locality** ties **TLB** and **data cache** behavior (see the [matrix example](#matrix-locality-tlb-cache)). **Segmentation** is the variable-sized **logical** view; modern OSes still **talk** about segments, but **paging** carries most of the load.

@@ -11,6 +11,7 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 ## Topics
 
 - [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
+- [Struct layout, padding & alignment — `sizeof`, `alignof`, reordering, interview Q&A](../cpp-struct-layout/)
 
 ## Ideas for dedicated pages
 
