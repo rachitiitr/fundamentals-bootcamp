@@ -224,3 +224,9 @@ Often **more than one** vptr; **thunks** adjust pointers. High-level answer for 
 - C++ standard defines **semantics** of virtual calls; **layout** is platform ABI (e.g. **Itanium C++ ABI**).
 
 When studying for interviews, focus on: **vptr + vtable**, **virtual destructor**, **C analog (ops table)**, and **hand-rolled dispatch** — not every platform detail.
+
+---
+
+## See also (cross-language)
+
+- [Dynamic dispatch & object models (C++, Python, JavaScript)](../dynamic-dispatch-and-object-model/) — compares **vtable** dispatch with **Python MRO** lookup and **JavaScript prototype** chains on the same “polymorphic call” problem.

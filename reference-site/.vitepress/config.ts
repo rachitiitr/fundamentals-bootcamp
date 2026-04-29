@@ -61,6 +61,10 @@ const mainSidebar = [
         text: 'Iterators & generators',
         link: '/topics/iterators-and-generators/',
       },
+      {
+        text: 'Dynamic dispatch & object models',
+        link: '/topics/dynamic-dispatch-and-object-model/',
+      },
       { text: 'Multiset & ordered duplicates', link: '/topics/multiset/' },
     ],
   },

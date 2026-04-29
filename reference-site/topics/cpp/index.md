@@ -12,6 +12,7 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 
 - [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
 - [Struct layout, padding & alignment — `sizeof`, `alignof`, reordering, interview Q&A](../cpp-struct-layout/)
+- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — vtables vs Python MRO vs JS prototypes (cross-language)
 
 ## Ideas for dedicated pages
 

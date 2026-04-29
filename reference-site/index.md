@@ -20,7 +20,7 @@ features:
   - title: Lessons
     details: Ordered, runnable tracks live under learnings/javascript (and future python/cpp).
   - title: Topics
-    details: Sidebar pages for concepts like multiset, iterators, [virtual memory & paging](/topics/virtual-memory/), [C++ vtables](/topics/cpp-vtables/), or [Python `with` & context managers](/topics/python-context-managers/).
+    details: Sidebar pages for concepts like multiset, iterators, [dynamic dispatch & object models](/topics/dynamic-dispatch-and-object-model/), [virtual memory & paging](/topics/virtual-memory/), [C++ vtables](/topics/cpp-vtables/), or [Python `with` & context managers](/topics/python-context-managers/).
   - title: Comparisons
     details: Parallel snippets and optional LeetCode links on one page — honest caveats per language.
 ---

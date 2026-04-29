@@ -14,6 +14,10 @@ Language-specific topics and links to the main lesson track.
 - [Web Workers exercises](/lessons/javascript/02-workers/README)
 - v0 app — clone repo and run `apps/shared-rpc-ticker` (not mounted on this site)
 
+Cross-language:
+
+- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — prototypes, `class` / `extends`, `super`, `this`, vs Python/C++
+
 ## Good candidates for JS-only pages
 
 - Module graphs, ESM vs CJS

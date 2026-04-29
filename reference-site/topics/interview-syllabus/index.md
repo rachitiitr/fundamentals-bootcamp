@@ -37,7 +37,8 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Object model & OOP
 
-- [ ] Classes, instances, `self`, class vs instance attributes
+- [ ] Classes, instances, `self`, class vs instance attributes  
+  - See [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — tables + Python class-attribute gotcha
 - [ ] Dunder methods: `__str__`, `__repr__`, `__eq__`, `__hash__` (consistency), `__lt__` and ordering
 - [ ] `__getattr__` vs `__getattribute__` — infinite recursion pitfall
 - [ ] Properties, `@property`, setters, deleters
@@ -45,8 +46,8 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [ ] `__slots__` — memory vs flexibility tradeoff
 - [ ] Dataclasses (`@dataclass`) — `frozen`, `field`, `__post_init__`
 - [ ] `abc.ABC`, abstract methods — interface-style design
-- [ ] Multiple inheritance, **MRO** (`mro()`, C3 linearization) — diamond problem
-- [ ] `super()` — cooperative multiple inheritance
+- [x] Multiple inheritance, **MRO** (`mro()`, C3 linearization) — diamond problem — [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/)
+- [x] `super()` — cooperative multiple inheritance — same page (Chapter 2)
 - [ ] Protocols & structural subtyping (`typing.Protocol`) — “duck typing with teeth”
 - [ ] Enums (`enum.Enum`) — identity vs value, `IntEnum` caveats
 
@@ -123,8 +124,8 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [ ] Hoisting — functions vs `var`; `let`/`const` not hoisted like `var`
 - [ ] Closures — lexical environment, common loop/callback bugs, fixes
 - [ ] `this` — default, implicit, explicit (`call`/`apply`/`bind`), arrow functions
-- [ ] `new`, constructors, `class`, `extends`, `super`
-- [ ] Prototypes — `__proto__` vs `prototype` (conceptual); delegation
+- [ ] `new`, constructors, `class`, `extends`, `super` — see [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) Chapter 2–4
+- [x] Prototypes — `__proto__` vs `prototype` (conceptual); delegation — [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/)
 - [ ] Private fields (`#`), static blocks
 - [ ] Destructuring, rest/spread, default values
 - [ ] `Array` methods — `map`/`filter`/`reduce`, mutating vs non-mutating
@@ -229,6 +230,7 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [x] [Object layout, padding, alignment (`alignof`, `alignas`)](../cpp-struct-layout/)
 - [ ] Virtual functions, dynamic dispatch, vptr/vtable  
   - [x] [Virtual tables (vtables)](../cpp-vtables/)
+  - [x] [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — C++ vs Python vs JavaScript
 - [ ] Pure virtual, abstract classes, interfaces
 - [ ] `override` / `final` — catch errors at compile time
 - [ ] Slicing — why polymorphism + value semantics hurts

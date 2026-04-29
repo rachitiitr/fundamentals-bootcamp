@@ -12,6 +12,10 @@ Use this hub for **Python-only** reference pages (stdlib idioms that do not map 
 
 - [with & context managers (`contextlib`)](../python-context-managers/) — `__enter__` / `__exit__`, `@contextmanager`, `ExitStack`, `async with`
 
+Cross-language (includes Python sections):
+
+- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — MRO, `super()`, instance vs class attributes, vs C++/JS
+
 ## Ideas for dedicated pages
 
 - dunder methods for iteration (`__iter__` / `__next__`)
