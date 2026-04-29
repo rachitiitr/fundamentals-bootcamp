@@ -3,11 +3,15 @@
  * Read aloud: per-heading Listen, optional selection (FAB + ⌃⇧L / ⌘⇧L),
  * browser Speech Synthesis or voice-playground POST /api/synthesize.
  * While playing: fixed toolbar — Pause/Resume, slower/faster (same prefs rate), Stop.
+ * Shortcuts: ⌘/Ctrl+B sidebar, ⌘/Ctrl+⇧L selection, while playing ⌘/Ctrl+Enter stop, Enter pause/resume,
+ * Shift+< / Shift+> (or Shift+, / Shift+.) speed down/up.
  */
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { inBrowser, onContentUpdated, useRoute } from 'vitepress'
+import { useSidebar } from 'vitepress/theme'
 
 const route = useRoute()
+const sidebar = useSidebar()
 
 const DOC_SELECTOR = 'main .vp-doc'
 
@@ -82,6 +86,8 @@ const mounted = ref(false)
 const prefsOpen = ref(false)
 /** Shown in prefs hint for selection shortcut */
 const selectionShortcutLabel = ref('Ctrl+Shift+L')
+/** Modifier glyph for hints (Cmd vs Ctrl). */
+const modKeyLabel = ref('Ctrl+')
 
 const useVoiceApi = computed({
   get: () => readUseVoiceApi(),
@@ -289,11 +295,6 @@ const showSelectionFab = computed(
   () => hasSelectableText.value || selectionPlaybackActive.value
 )
 
-const showPlaybackToolbar = computed(() => {
-  if (!mounted.value || !inBrowser) return false
-  return apiInFlight.value || browserPlaybackActive.value || voiceApiPlaybackActive.value
-})
-
 const playbackPaused = computed(() => {
   void playbackUiTick.value
   if (!inBrowser) return false
@@ -348,6 +349,19 @@ function isSpeakingOrQueued(): boolean {
   if (activeAudio && !activeAudio.ended) return true
   return speechSynthesis.speaking || speechSynthesis.pending || speechSynthesis.paused
 }
+
+function isEditableKeyboardTarget(ev: KeyboardEvent): boolean {
+  const t = ev.target
+  if (!t || !(t instanceof HTMLElement)) return false
+  if (t.isContentEditable) return true
+  const tag = t.tagName
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true
+  return !!t.closest('input, textarea, select, [contenteditable="true"]')
+}
+
+const showPlaybackToolbar = computed(
+  () => mounted.value && inBrowser && isSpeakingOrQueued()
+)
 
 function togglePauseResume() {
   if (!inBrowser) return
@@ -638,17 +652,56 @@ watch(
 )
 
 function onGlobalKeydown(ev: KeyboardEvent) {
+  if (!inBrowser) return
+
+  const mod = ev.metaKey || ev.ctrlKey
+
   if (ev.key === 'Escape') {
     if (!isSpeakingOrQueued() && !activeSectionButton && !selectionPlaybackActive.value) return
     stopSpeech()
     return
   }
 
-  const mod = ev.metaKey || ev.ctrlKey
+  if (mod && !ev.shiftKey && !ev.altKey && (ev.key === 'b' || ev.key === 'B')) {
+    if (ev.repeat) return
+    if (!sidebar.hasSidebar.value) return
+    ev.preventDefault()
+    sidebar.toggle()
+    return
+  }
+
   if (mod && ev.shiftKey && (ev.key === 'l' || ev.key === 'L')) {
     if (ev.repeat) return
     ev.preventDefault()
     triggerSelectionShortcut()
+    return
+  }
+
+  if (!isSpeakingOrQueued()) return
+
+  if (mod && ev.key === 'Enter') {
+    ev.preventDefault()
+    stopSpeech()
+    return
+  }
+
+  if (ev.shiftKey && !mod && !ev.altKey) {
+    let delta = 0
+    if (ev.key === '>') delta = RATE_STEP
+    else if (ev.key === '<') delta = -RATE_STEP
+    else if (ev.code === 'Period') delta = RATE_STEP
+    else if (ev.code === 'Comma') delta = -RATE_STEP
+    if (delta !== 0) {
+      ev.preventDefault()
+      bumpSpeechRate(delta)
+      return
+    }
+  }
+
+  if (ev.key === 'Enter' && !mod && !ev.shiftKey && !ev.altKey) {
+    if (isEditableKeyboardTarget(ev)) return
+    ev.preventDefault()
+    togglePauseResume()
   }
 }
 
@@ -659,6 +712,7 @@ onMounted(() => {
   selectionShortcutLabel.value = /Mac|iPhone|iPod/i.test(navigator.userAgent)
     ? '⌘⇧L'
     : 'Ctrl+Shift+L'
+  modKeyLabel.value = /Mac|iPhone|iPod/i.test(navigator.userAgent) ? '⌘' : 'Ctrl+'
   window.addEventListener('keydown', onGlobalKeydown)
   document.addEventListener('selectionchange', scheduleSelectionUiUpdate)
 })
@@ -704,6 +758,12 @@ onUnmounted(() => {
       <p class="read-aloud-prefs__hint read-aloud-prefs__hint--kbd">
         <strong>Selection:</strong> select text in the article, then use the floating button or
         <kbd>{{ selectionShortcutLabel }}</kbd> to listen or stop.
+      </p>
+      <p class="read-aloud-prefs__hint read-aloud-prefs__hint--kbd">
+        <strong>Keys:</strong> <kbd>{{ modKeyLabel }}B</kbd> toggle sidebar · while audio or speech is
+        active: <kbd>Enter</kbd> pause/resume (not in inputs), <kbd>{{ modKeyLabel }}Enter</kbd> stop,
+        <kbd>Shift</kbd>+<kbd>&lt;</kbd> / <kbd>Shift</kbd>+<kbd>&gt;</kbd> slower / faster (same as
+        <kbd>Shift</kbd>+<kbd>,</kbd> / <kbd>Shift</kbd>+<kbd>.</kbd> on US keyboards).
       </p>
       <div class="read-aloud-prefs__rate">
         <label class="read-aloud-prefs__label" for="read-aloud-rate">Speaking speed</label>
