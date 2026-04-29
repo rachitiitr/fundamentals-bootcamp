@@ -1,12 +1,14 @@
 <script setup lang="ts">
 /**
- * Per-heading Listen: browser Speech Synthesis, or optional local voice-playground
- * POST /api/synthesize + GET /api/audio/*. Preference stored in localStorage.
+ * Read aloud: per-heading Listen, optional selection (FAB + ⌃⇧L / ⌘⇧L),
+ * browser Speech Synthesis or voice-playground POST /api/synthesize.
  */
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { inBrowser, onContentUpdated, useRoute } from 'vitepress'
 
 const route = useRoute()
+
+const DOC_SELECTOR = 'main .vp-doc'
 
 const LS_USE_VOICE_API = 'prep-read-aloud-use-voice-api'
 const LS_VOICE_API_BASE = 'prep-read-aloud-voice-api-base'
@@ -25,6 +27,10 @@ const ARIA_LISTEN =
 const ARIA_STOP = 'Stop reading aloud'
 const TITLE_LISTEN = 'Read this section aloud (skips code blocks)'
 const TITLE_STOP = 'Stop speech (Escape also stops)'
+
+const LABEL_SELECTION_LISTEN = 'Listen to selection'
+const ARIA_SELECTION_LISTEN = 'Read the selected text aloud'
+const TITLE_SELECTION_LISTEN = 'Uses the same voice settings as section Listen'
 
 function normalizeBase(url: string): string {
   const t = url.trim().replace(/\/+$/, '')
@@ -54,6 +60,8 @@ function readVoiceEngine(): string {
 
 const mounted = ref(false)
 const prefsOpen = ref(false)
+/** Shown in prefs hint for selection shortcut */
+const selectionShortcutLabel = ref('Ctrl+Shift+L')
 
 const useVoiceApi = computed({
   get: () => readUseVoiceApi(),
@@ -148,6 +156,38 @@ function sectionPlainText(startHeading: HTMLElement): string {
   return cleanSpeechText(chunks.filter(Boolean).join('\n\n'))
 }
 
+function getDocRoot(): HTMLElement | null {
+  return document.querySelector(DOC_SELECTOR) as HTMLElement | null
+}
+
+function selectionFullyInsideDoc(sel: Selection): boolean {
+  const doc = getDocRoot()
+  if (!doc || !sel.anchorNode || !sel.focusNode) return false
+  return doc.contains(sel.anchorNode) && doc.contains(sel.focusNode)
+}
+
+function extractTextFromSelection(sel: Selection): string {
+  if (!sel.rangeCount || sel.isCollapsed) return ''
+  const range = sel.getRangeAt(0)
+  const frag = range.cloneContents()
+  const wrap = document.createElement('div')
+  wrap.appendChild(frag)
+  stripNonSpeakableFromClone(wrap)
+  return cleanSpeechText(
+    (wrap.innerText ?? wrap.textContent ?? '')
+      .split(/\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .join('\n')
+  )
+}
+
+function getSelectionSpeechText(): string {
+  const sel = window.getSelection()
+  if (!sel || !selectionFullyInsideDoc(sel)) return ''
+  return extractTextFromSelection(sel)
+}
+
 function pickEnVoice(): SpeechSynthesisVoice | null {
   const voices = speechSynthesis.getVoices()
   return (
@@ -158,10 +198,29 @@ function pickEnVoice(): SpeechSynthesisVoice | null {
   )
 }
 
-let activeButton: HTMLButtonElement | null = null
+let activeSectionButton: HTMLButtonElement | null = null
 let activeAudio: HTMLAudioElement | null = null
 let fetchAbort: AbortController | null = null
 const apiInFlight = ref(false)
+/** True while selection (not section heading) is playing or fetching */
+const selectionPlaybackActive = ref(false)
+/** Non-empty speakable text selected inside .vp-doc */
+const hasSelectableText = ref(false)
+
+let selectionDebounce: ReturnType<typeof setTimeout> | undefined
+
+function scheduleSelectionUiUpdate() {
+  if (!inBrowser) return
+  clearTimeout(selectionDebounce)
+  selectionDebounce = setTimeout(() => {
+    const t = getSelectionSpeechText().slice(0, MAX_SYNTH_CHARS).trim()
+    hasSelectableText.value = t.length > 0
+  }, 120)
+}
+
+const showSelectionFab = computed(
+  () => hasSelectableText.value || selectionPlaybackActive.value
+)
 
 function resetButtonToListen(btn: HTMLButtonElement) {
   btn.textContent = LABEL_LISTEN
@@ -180,8 +239,9 @@ function setButtonToStop(btn: HTMLButtonElement) {
 }
 
 function clearSpeakingState() {
-  if (activeButton) resetButtonToListen(activeButton)
-  activeButton = null
+  if (activeSectionButton) resetButtonToListen(activeSectionButton)
+  activeSectionButton = null
+  selectionPlaybackActive.value = false
 }
 
 function stopSpeech() {
@@ -210,24 +270,24 @@ function resolveAudioUrl(base: string, audioUrl: string): string {
   return `${base}${path}`
 }
 
-async function speakSectionViaApi(
-  heading: HTMLElement,
-  button: HTMLButtonElement,
-  base: string,
-  engine: string
-) {
+async function speakTextThroughApi(text: string, sectionButton: HTMLButtonElement | null) {
   stopSpeech()
 
-  const raw = sectionPlainText(heading)
-  const text = raw.slice(0, MAX_SYNTH_CHARS).trim()
   if (!text) return
 
-  activeButton = button
-  setButtonToStop(button)
+  if (sectionButton) {
+    activeSectionButton = sectionButton
+    setButtonToStop(sectionButton)
+  } else {
+    selectionPlaybackActive.value = true
+  }
 
   const ac = new AbortController()
   fetchAbort = ac
   apiInFlight.value = true
+
+  const base = readVoiceApiBase()
+  const engine = readVoiceEngine()
 
   try {
     const fd = new FormData()
@@ -269,14 +329,22 @@ async function speakSectionViaApi(
     const audio = new Audio(url)
     activeAudio = audio
 
-    audio.onended = () => {
+    const doneIfStillThisSession = () => {
       activeAudio = null
-      if (activeButton === button) clearSpeakingState()
+      if (sectionButton) {
+        if (activeSectionButton === sectionButton) clearSpeakingState()
+      } else if (selectionPlaybackActive.value) {
+        clearSpeakingState()
+      }
     }
+
+    audio.onended = doneIfStillThisSession
     audio.onerror = () => {
       activeAudio = null
-      if (activeButton === button) {
-        button.title = 'Audio playback failed'
+      if (sectionButton && activeSectionButton === sectionButton) {
+        sectionButton.title = 'Audio playback failed'
+        clearSpeakingState()
+      } else if (!sectionButton && selectionPlaybackActive.value) {
         clearSpeakingState()
       }
     }
@@ -294,8 +362,11 @@ async function speakSectionViaApi(
       return
     }
     console.warn('[read-aloud] voice API failed:', e)
-    if (activeButton === button) {
-      button.title = `Voice API error: ${(e as Error).message ?? String(e)}`
+    const msg = (e as Error).message ?? String(e)
+    if (sectionButton && activeSectionButton === sectionButton) {
+      sectionButton.title = `Voice API error: ${msg}`
+      clearSpeakingState()
+    } else if (!sectionButton) {
       clearSpeakingState()
     }
   } finally {
@@ -304,10 +375,9 @@ async function speakSectionViaApi(
   }
 }
 
-function speakSectionBrowser(heading: HTMLElement, button: HTMLButtonElement) {
+function speakTextBrowser(text: string, sectionButton: HTMLButtonElement | null) {
   stopSpeech()
 
-  const text = sectionPlainText(heading)
   if (!text) return
 
   const utter = new SpeechSynthesisUtterance(text)
@@ -315,34 +385,71 @@ function speakSectionBrowser(heading: HTMLElement, button: HTMLButtonElement) {
   const voice = pickEnVoice()
   if (voice) utter.voice = voice
 
-  activeButton = button
-  setButtonToStop(button)
+  if (sectionButton) {
+    activeSectionButton = sectionButton
+    setButtonToStop(sectionButton)
+  } else {
+    selectionPlaybackActive.value = true
+  }
 
   utter.onend = () => {
-    if (activeButton === button) clearSpeakingState()
+    if (sectionButton) {
+      if (activeSectionButton === sectionButton) clearSpeakingState()
+    } else if (selectionPlaybackActive.value) {
+      clearSpeakingState()
+    }
   }
   utter.onerror = () => {
-    if (activeButton === button) clearSpeakingState()
+    if (sectionButton) {
+      if (activeSectionButton === sectionButton) clearSpeakingState()
+    } else if (selectionPlaybackActive.value) {
+      clearSpeakingState()
+    }
   }
 
   speechSynthesis.speak(utter)
 }
 
-function speakSection(heading: HTMLElement, button: HTMLButtonElement) {
+/** `sectionButton` null = selection listen (floating UI). */
+function speakPlainText(raw: string, sectionButton: HTMLButtonElement | null) {
+  const text = cleanSpeechText(raw).slice(0, MAX_SYNTH_CHARS).trim()
+  if (!text) return
+
   if (readUseVoiceApi()) {
-    const base = readVoiceApiBase()
-    const engine = readVoiceEngine()
-    void speakSectionViaApi(heading, button, base, engine)
+    void speakTextThroughApi(text, sectionButton)
     return
   }
-
   if (speechSynthesis.getVoices().length === 0) {
-    speechSynthesis.addEventListener('voiceschanged', () => speakSectionBrowser(heading, button), {
+    speechSynthesis.addEventListener('voiceschanged', () => speakTextBrowser(text, sectionButton), {
       once: true
     })
     return
   }
-  speakSectionBrowser(heading, button)
+  speakTextBrowser(text, sectionButton)
+}
+
+function speakSection(heading: HTMLElement, button: HTMLButtonElement) {
+  speakPlainText(sectionPlainText(heading), button)
+}
+
+function onSelectionFabClick() {
+  if (selectionPlaybackActive.value && isSpeakingOrQueued()) {
+    stopSpeech()
+    return
+  }
+  const t = getSelectionSpeechText().slice(0, MAX_SYNTH_CHARS).trim()
+  if (!t) return
+  speakPlainText(t, null)
+}
+
+function triggerSelectionShortcut() {
+  if (selectionPlaybackActive.value && isSpeakingOrQueued()) {
+    stopSpeech()
+    return
+  }
+  const t = getSelectionSpeechText().slice(0, MAX_SYNTH_CHARS).trim()
+  if (!t) return
+  speakPlainText(t, null)
 }
 
 function detachAll(doc: HTMLElement) {
@@ -356,7 +463,7 @@ function detachAll(doc: HTMLElement) {
 
 function attachButtons() {
   if (!inBrowser) return
-  const doc = document.querySelector('main .vp-doc') as HTMLElement | null
+  const doc = getDocRoot()
   if (!doc) return
 
   detachAll(doc)
@@ -377,7 +484,7 @@ function attachButtons() {
 
     btn.addEventListener('click', (e) => {
       e.preventDefault()
-      if (activeButton === btn && isSpeakingOrQueued()) {
+      if (activeSectionButton === btn && isSpeakingOrQueued()) {
         stopSpeech()
         return
       }
@@ -401,24 +508,42 @@ watch(
   () => route.path,
   () => {
     stopSpeech()
+    hasSelectableText.value = false
   }
 )
 
-function onEscapeKey(ev: KeyboardEvent) {
-  if (ev.key !== 'Escape') return
-  if (!isSpeakingOrQueued() && !activeButton) return
-  stopSpeech()
+function onGlobalKeydown(ev: KeyboardEvent) {
+  if (ev.key === 'Escape') {
+    if (!isSpeakingOrQueued() && !activeSectionButton && !selectionPlaybackActive.value) return
+    stopSpeech()
+    return
+  }
+
+  const mod = ev.metaKey || ev.ctrlKey
+  if (mod && ev.shiftKey && (ev.key === 'l' || ev.key === 'L')) {
+    if (ev.repeat) return
+    ev.preventDefault()
+    triggerSelectionShortcut()
+  }
 }
 
 onMounted(() => {
   mounted.value = true
   syncPrefsFromStorage()
   if (!inBrowser) return
-  window.addEventListener('keydown', onEscapeKey)
+  selectionShortcutLabel.value = /Mac|iPhone|iPod/i.test(navigator.userAgent)
+    ? '⌘⇧L'
+    : 'Ctrl+Shift+L'
+  window.addEventListener('keydown', onGlobalKeydown)
+  document.addEventListener('selectionchange', scheduleSelectionUiUpdate)
 })
 
 onUnmounted(() => {
-  if (inBrowser) window.removeEventListener('keydown', onEscapeKey)
+  clearTimeout(selectionDebounce)
+  if (inBrowser) {
+    window.removeEventListener('keydown', onGlobalKeydown)
+    document.removeEventListener('selectionchange', scheduleSelectionUiUpdate)
+  }
   stopSpeech()
 })
 </script>
@@ -450,6 +575,10 @@ onUnmounted(() => {
         <code>POST /api/synthesize</code>
         on your server (default {{ DEFAULT_VOICE_API_BASE }}). Stored in this browser only.
       </p>
+      <p class="read-aloud-prefs__hint read-aloud-prefs__hint--kbd">
+        <strong>Selection:</strong> select text in the article, then use the floating button or
+        <kbd>{{ selectionShortcutLabel }}</kbd> to listen or stop.
+      </p>
       <template v-if="useVoiceApi">
         <label class="read-aloud-prefs__label" for="read-aloud-base">API base URL</label>
         <input
@@ -475,6 +604,18 @@ onUnmounted(() => {
       </template>
     </div>
   </div>
+
+  <button
+    v-show="showSelectionFab"
+    type="button"
+    class="read-aloud-selection-fab"
+    :aria-label="selectionPlaybackActive && isSpeakingOrQueued() ? ARIA_STOP : ARIA_SELECTION_LISTEN"
+    :aria-pressed="selectionPlaybackActive && isSpeakingOrQueued() ? 'true' : 'false'"
+    :title="selectionPlaybackActive && isSpeakingOrQueued() ? TITLE_STOP : TITLE_SELECTION_LISTEN"
+    @click="onSelectionFabClick"
+  >
+    {{ selectionPlaybackActive && isSpeakingOrQueued() ? LABEL_STOP : LABEL_SELECTION_LISTEN }}
+  </button>
 </template>
 
 <style scoped>
@@ -538,6 +679,16 @@ onUnmounted(() => {
   font-size: 11px;
 }
 
+.read-aloud-prefs__hint--kbd kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 11px;
+  border-radius: 4px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  font-family: var(--vp-font-family-mono);
+}
+
 .read-aloud-prefs__label {
   display: block;
   margin-top: 10px;
@@ -556,6 +707,34 @@ onUnmounted(() => {
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
   font-size: 13px;
+}
+
+.read-aloud-selection-fab {
+  position: fixed;
+  z-index: 2147483645;
+  bottom: 56px;
+  right: 12px;
+  max-width: min(220px, calc(100vw - 24px));
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--vp-shadow-3);
+}
+
+.read-aloud-selection-fab:hover {
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-bg-soft-up);
+}
+
+.read-aloud-selection-fab[aria-pressed='true'] {
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-2);
 }
 </style>
 
