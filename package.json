@@ -1,0 +1,14 @@
+{
+  "name": "prep-bootcamp",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "reference-site"
+  ],
+  "scripts": {
+    "dev:ticker": "npm run dev -w shared-rpc-ticker",
+    "dev:reference": "npm run dev -w reference-site",
+    "build:ticker": "npm run build -w shared-rpc-ticker",
+    "build:reference": "npm run build -w reference-site"
+  }
+}

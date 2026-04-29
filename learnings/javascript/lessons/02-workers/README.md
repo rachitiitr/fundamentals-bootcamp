@@ -32,7 +32,7 @@ Re-load the page each time you change worker code (DevTools → disable cache wh
 | 4 | `04-rpc/` | Build a tiny `call(method, args)` helper that returns a Promise | Correlation IDs, promise-based wrapper over postMessage |
 | 5 | `05-streaming-ticker/` | Move Binance WS into a worker, page subscribes via async generator | Streaming protocol, push-to-pull bridge across thread boundary |
 
-By exercise 5 you'll have written essentially the same code that lesson v1 of `shared-rpc-ticker` will become — just without the React/Vite overhead.
+By exercise 5 you'll have written essentially the same code that lesson v1 of [`apps/shared-rpc-ticker`](../../../../apps/shared-rpc-ticker) will become — just without the React/Vite overhead.
 
 ## Cheat sheet — Web Worker primitives
 

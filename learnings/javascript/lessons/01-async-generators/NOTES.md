@@ -1,6 +1,6 @@
 # Lesson 1 — Async Generators, the Event Loop, and Push→Pull Bridges
 
-> Foundations needed before we touch Workers. By the end of this you can read every line of `shared-rpc-ticker/src/data/binanceTradeStream.ts` and explain why it works.
+> Foundations needed before we touch Workers. By the end of this you can read every line of [`apps/shared-rpc-ticker/src/data/binanceTradeStream.ts`](../../../../apps/shared-rpc-ticker/src/data/binanceTradeStream.ts) and explain why it works.
 
 ---
 
@@ -433,3 +433,7 @@ async function* merge(a, b) {
 | v7 | Fallback when SharedWorker unavailable. Host/Client duality. |
 
 The push→pull bridge from this lesson reappears in v2+ as the bridge between **MessagePort.onmessage** and our consumer-facing async generators across worker boundaries. Same pattern, different transport.
+
+---
+
+**See also:** A shorter cross-language iterator overview (JS / Python / C++) lives in `reference-site/topics/iterators-and-generators/` — run `npm run dev:reference` from the repo root after `npm install`.

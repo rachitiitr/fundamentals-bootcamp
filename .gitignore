@@ -26,4 +26,5 @@ yarn-error.log*
 
 # Vite cache
 .vite/
-shared-rpc-ticker/node_modules/.vite/
+apps/shared-rpc-ticker/node_modules/.vite/
+reference-site/.vitepress/cache/
