@@ -8,6 +8,8 @@ languages: [python]
 
 The **`with`** statement runs setup and **guaranteed teardown** around a block, even when the block exits via `return`, `break`, or an exception. That pairing is a **context manager**.
 
+**See also:** [Dunder methods (hook map)](../python-dunder-methods/) for `__enter__` / `__exit__` in the full special-method context; this page goes deeper on `contextlib` and async.
+
 ## Why this shows up in prep
 
 - **Take-home / work-sample code:** files, DB connections, locks, timers — interviewers expect you to **not leak** resources.

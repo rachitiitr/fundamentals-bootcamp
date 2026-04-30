@@ -39,8 +39,10 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 - [ ] Classes, instances, `self`, class vs instance attributes  
   - See [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — tables + Python class-attribute gotcha
-- [ ] Dunder methods: `__str__`, `__repr__`, `__eq__`, `__hash__` (consistency), `__lt__` and ordering
-- [ ] `__getattr__` vs `__getattribute__` — infinite recursion pitfall
+- [ ] Dunder methods: `__str__`, `__repr__`, `__eq__`, `__hash__` (consistency), `__lt__` and ordering  
+  - [x] [Dunder methods (hooks) — full map + JS / C++](../python-dunder-methods/) — construction, `[]`, iteration, `with`, `__call__`, `__radd__`, …
+- [ ] `__getattr__` vs `__getattribute__` — infinite recursion pitfall  
+  - Covered briefly on [Dunder methods](../python-dunder-methods/); deep dives on descriptors / `__slots__` live on [Dynamic dispatch](../dynamic-dispatch-and-object-model/) and follow-up pages.
 - [ ] Properties, `@property`, setters, deleters
 - [ ] Descriptors — how `@property` and methods work under the hood
 - [ ] `__slots__` — memory vs flexibility tradeoff
@@ -53,7 +55,8 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Iteration & generators
 
-- [ ] `__iter__` / `__next__`, iterator protocol, `StopIteration`
+- [ ] `__iter__` / `__next__`, iterator protocol, `StopIteration`  
+  - [x] Protocol + parallels — [Dunder methods](../python-dunder-methods/) § iteration; generators — [Iterators & generators](../iterators-and-generators/)
 - [ ] Generator functions, `yield`, generator objects, `send` / `throw` / `close` (awareness)
 - [ ] `yield from` — delegation to another iterable or generator
 - [ ] `itertools` — `chain`, `cycle`, `islice`, `groupby`, `tee`, `product`, `permutations`, `combinations`

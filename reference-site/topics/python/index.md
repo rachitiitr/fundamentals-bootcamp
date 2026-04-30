@@ -10,6 +10,7 @@ Use this hub for **Python-only** reference pages (stdlib idioms that do not map 
 
 ## Topic pages
 
+- [Dunder methods — hooks & cross-language parallels](../python-dunder-methods/) — `__init__`/`__new__`, `str`/`repr`, `eq`/`hash`, `len`, `[]`, iteration, `with`, `__call__`, operators (`__radd__`)
 - [with & context managers (`contextlib`)](../python-context-managers/) — `__enter__` / `__exit__`, `@contextmanager`, `ExitStack`, `async with`
 
 Cross-language (includes Python sections):
@@ -18,7 +19,6 @@ Cross-language (includes Python sections):
 
 ## Ideas for dedicated pages
 
-- dunder methods for iteration (`__iter__` / `__next__`)
 - generators and `yield from`
 
 Cross-language iteration concepts often live on [Iterators & generators](../iterators-and-generators/) instead.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-04-30T14:00:00Z",
+  "updatedAt": "2026-04-30T16:30:00Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -189,16 +189,43 @@
       "id": "py-dunder-methods-cross-lang",
       "workstreamId": "py",
       "title": "Python dunder methods (top hooks) + JS / C++ parallels — reference topic page",
-      "status": "backlog",
+      "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → Python / OOP hooks",
       "targetArtifacts": ["reference-site/topics/python-dunder-methods/index.md"],
-      "artifactPaths": [],
-      "notes": "Interactive chat covered __init__/__new__, str/repr, eq/hash, len, getitem, iter/next, enter/exit, call, getattr/setattr, add/radd; capture as tutorial + hubs when picked up."
+      "artifactPaths": [
+        "reference-site/topics/python-dunder-methods/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/python-context-managers/index.md",
+        "reference-site/topics/iterators-and-generators/index.md"
+      ],
+      "lastSessionId": "sess-2026-04-30-python-dunder-methods-topic",
+      "notes": "Full tutorial: problem-first, per-hook JS/C++ table, Mermaid, interview Q&A. Syllabus + Python hub + sidebar wired."
     }
   ],
   "activeClaims": [],
   "sessions": [
+    {
+      "id": "sess-2026-04-30-python-dunder-methods-topic",
+      "endedAt": "2026-04-30T16:30:00Z",
+      "workstreamId": "py",
+      "itemIdsTouched": ["py-dunder-methods-cross-lang"],
+      "topicsCovered": [
+        "reference: python-dunder-methods page (full chat summary as tutorial)"
+      ],
+      "summary": "Added reference-site/topics/python-dunder-methods/index.md: ten hook areas, JS/C++ parallels, Mermaid, cheat table, interview Q&A. Registered in VitePress sidebar, Python hub, interview-syllabus checkboxes. Marked backlog item done.",
+      "artifactPaths": [
+        "reference-site/topics/python-dunder-methods/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/python-context-managers/index.md",
+        "reference-site/topics/iterators-and-generators/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
     {
       "id": "sess-2026-04-30-interactive-teaching-dunders-coord",
       "endedAt": "2026-04-30T14:00:00Z",

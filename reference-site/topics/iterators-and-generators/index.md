@@ -15,6 +15,8 @@ leetcode:
 
 You reach for iterators and generators when **materializing the whole sequence up front** is wrong or impossible: streams are unbounded, files are huge, or you want **lazy** work so the consumer can stop early. The shared idea is **pull**: each step asks “what’s next?” instead of building a giant list.
 
+**Python hook names:** [Dunder methods](../python-dunder-methods/) documents `__iter__` / `__next__` and the exhausted-iterator gotcha; this page focuses on the **cross-language** protocol and **generators** (`yield`).
+
 - **Iterable / range** — “I can start iteration” (`for…of`, `for x in …`, `for (auto x : v)`).
 - **Iterator** — the object that actually answers **next** until exhausted.
 - **Generator** — language sugar that **pauses** a function at `yield` and resumes on the next pull, so you write iterator logic like normal control flow.

@@ -36,6 +36,10 @@ const mainSidebar = [
     text: 'Python topics',
     items: [
       {
+        text: 'Dunder methods (hooks, JS & C++ parallels)',
+        link: '/topics/python-dunder-methods/',
+      },
+      {
         text: 'with & context managers',
         link: '/topics/python-context-managers/',
       },
