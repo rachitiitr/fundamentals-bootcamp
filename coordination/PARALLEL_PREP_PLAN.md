@@ -2,6 +2,13 @@
 
 This document pairs with **`agent-prep-state.json`**. Multiple Cursor chats (or other agents) should **read both first**, then claim work in JSON so sessions stay parallel-safe and tutorials stay consistent.
 
+## Cursor rules (repo root)
+
+- **[`.cursor/rules/reference-topics.mdc`](../.cursor/rules/reference-topics.mdc)** — Shape of **VitePress** topic pages (`reference-site/topics/`): problem-first, Mermaid, interview Q&A, wiring.
+- **[`.cursor/rules/interactive-teaching.mdc`](../.cursor/rules/interactive-teaching.mdc)** — **In-chat** teaching style (roadmap, one beat at a time, check-in questions). Pair with **[`AGENTS.md`](../AGENTS.md)** so agents know **written tutorials** vs **live explanations**.
+
+Learn-only chats that update **rules** or **this coordination folder** should still append **`sessions[]`** in **`agent-prep-state.json`** (use **`topicsCovered`** + **`artifactPaths`**).
+
 ## Goal
 
 - **Interview target:** Python, React, TypeScript, system design, data structures, plus this repo’s **workers / real-time** spine (SharedWorker, WebSocket fan-out, low-latency UI patterns, etc.) — typical of **quant / trading-platform** and similar frontend+systems loops.

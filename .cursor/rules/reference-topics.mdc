@@ -7,6 +7,8 @@ alwaysApply: true
 
 # Reference topics (`reference-site/topics/`)
 
+**Chat teaching** (“teach me…”) in Cursor follows sibling rule **[`interactive-teaching.mdc`](interactive-teaching.mdc)** (roadmap, paced beats, check-ins)—this rule is for **committed** tutorial pages under `reference-site/topics/`.
+
 **Structure & links:** Follow [`reference-site/README.md`](../../reference-site/README.md) (frontmatter, `config.ts`, lesson URLs `/lessons/` vs worker HTML `/learnings/`). **Body:** this rule + repo-root [`AGENTS.md`](../../AGENTS.md). Prefer **problem-first** openings; add **interview Q&A** at the end. Cross-link lessons ↔ topics when useful — see [`how-to-use-this-repo.md`](../../reference-site/how-to-use-this-repo.md).
 
 When **adding or substantially editing** reference pages, make them **self-contained tutorials** for interviews—not glossaries.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-04-29T19:00:00Z",
+  "updatedAt": "2026-04-30T14:00:00Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -184,10 +184,48 @@
       "targetArtifacts": ["reference-site/topics/interview-syllabus/index.md"],
       "artifactPaths": [],
       "notes": "Run after first wave of topic pages exist to avoid dead links."
+    },
+    {
+      "id": "py-dunder-methods-cross-lang",
+      "workstreamId": "py",
+      "title": "Python dunder methods (top hooks) + JS / C++ parallels — reference topic page",
+      "status": "backlog",
+      "priority": 2,
+      "syllabusHint": "interview-syllabus → Python / OOP hooks",
+      "targetArtifacts": ["reference-site/topics/python-dunder-methods/index.md"],
+      "artifactPaths": [],
+      "notes": "Interactive chat covered __init__/__new__, str/repr, eq/hash, len, getitem, iter/next, enter/exit, call, getattr/setattr, add/radd; capture as tutorial + hubs when picked up."
     }
   ],
   "activeClaims": [],
   "sessions": [
+    {
+      "id": "sess-2026-04-30-interactive-teaching-dunders-coord",
+      "endedAt": "2026-04-30T14:00:00Z",
+      "workstreamId": "py",
+      "itemIdsTouched": [],
+      "topicsCovered": [
+        "python: __init__ vs __new__, self vs JS this",
+        "python: __str__ vs __repr__; JS toString / toStringTag; C++ operator<<",
+        "python: __eq__ / __hash__; JS equality + Map keys; C++ operator== / hash",
+        "python: __len__; JS length/size; C++ size()",
+        "python: __iter__ / __next__, StopIteration; JS Symbol.iterator; exhausted iterator + reset / Symbol.iterator fresh iterator",
+        "python: __getitem__ / __setitem__ / __delitem__; JS Proxy/Map; C++ operator[]",
+        "python: __enter__ / __exit__; JS try-finally / using+dispose; C++ RAII / smart pointers vs RAII",
+        "python: __call__; C++ operator(); JS closures",
+        "python: __getattr__ / __setattr__ (brief); JS Proxy",
+        "python: __add__ / __radd__ / NotImplemented",
+        "meta: .cursor/rules/interactive-teaching.mdc + AGENTS + coordination docs"
+      ],
+      "summary": "Added interactive-teaching Cursor rule; documented it in AGENTS.md, reference-topics.mdc, PARALLEL_PREP_PLAN.md. Logged session; backlog item py-dunder-methods-cross-lang for a future VitePress page from this thread.",
+      "artifactPaths": [
+        ".cursor/rules/interactive-teaching.mdc",
+        ".cursor/rules/reference-topics.mdc",
+        "AGENTS.md",
+        "coordination/PARALLEL_PREP_PLAN.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
     {
       "id": "sess-2026-04-29-vm-cpp-struct-docs",
       "endedAt": "2026-04-29T18:30:00Z",

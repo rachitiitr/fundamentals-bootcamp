@@ -140,9 +140,70 @@ class Dog extends Animal {
 
 **Python — explicit `self`, methods on class**
 
+The **function object** for `speak` lives on **`Dog`** (the class). Instance lookup **`rex.speak`** wraps it in a **bound method** that passes **`rex`** as the first argument automatically. Calling **`Dog.speak(rex)`** is the same idea written out: **you** supply **`self`**.
+
 ```python
-Dog.speak(rex)   # same spirit as rex.speak()
+class Dog:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def speak(self) -> None:
+        print(f"{self.name} says woof")
+
+
+rex = Dog("Rex")
+
+rex.speak()              # bound method: implicit first arg = rex
+Dog.speak(rex)          # unbound from class: you pass rex explicitly
+
+# Bound methods carry the instance they were retrieved from:
+assert rex.speak.__self__ is rex
 ```
+
+**Why `__slots__` shows up in the same chapter**
+
+Without **`__slots__`**, **every instance** gets its own **`__dict__`**: a **mapping** (hash table) from attribute names to values. That is flexible — any assignment **`rex.foo = ...`** adds or updates a key — but it costs **extra structure per object** (the dict object + bookkeeping). Methods still live on the **class**; only **where instance fields live** changes.
+
+```python
+class Dog:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+
+rex = Dog("Rex")
+rex.__dict__                      # {'name': 'Rex'} — per-instance namespace
+
+rex.age = 7                       # OK: mutates rex.__dict__, adds key "age"
+
+rex.nmae = "typo"                 # Still OK: creates a *wrong* attribute silently
+assert hasattr(rex, "nmae")       # True — dict never rejects unknown names
+```
+
+With **`__slots__`**, the type declares **exactly** which attributes exist. **CPython** stores those values in **fixed slots** on the instance struct instead of putting them in a **`__dict__`**. You usually **drop** the per-instance dict — **that** is where **“fewer bytes per object”** comes from: **no separate dict object per row** when you have millions of small records.
+
+```python
+class LeanDog:
+    __slots__ = ("name",)
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def speak(self) -> None:
+        print(f"{self.name} says woof")
+
+
+rex = LeanDog("Rex")
+LeanDog.speak(rex)  # method still on class; explicit self = rex
+
+# Without __dict__, these fail instead of adding stray attributes:
+# rex.__dict__
+# rex.age = 7
+# rex.nmae = "typo"
+```
+
+Calling **`Dog.speak(rex)`** vs **`LeanDog.speak(rex)`** is the same idea: **`speak`** still lives on the **class**; **`__slots__`** only changes **how fields like `name` are stored** on the instance (fixed slots vs per-instance **`__dict__`**).
+
+**Interview-sized caveat:** savings and behavior are **implementation-specific** (this is **CPython’s** story); **`sys.getsizeof`** on an instance **does not** always include every indirect cost, but **“no `__dict__` per instance”** is the right mental model for why RAM drops on huge graphs.
 
 **JavaScript — own vs prototype**
 

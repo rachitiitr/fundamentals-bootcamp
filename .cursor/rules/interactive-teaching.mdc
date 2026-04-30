@@ -1,0 +1,28 @@
+---
+description: >-
+  When teaching concepts in chat: interactive pace, session outline first,
+  story-shaped progression, check-in questions—do not dump reference walls.
+alwaysApply: true
+---
+
+# Interactive teaching style (chat sessions)
+
+When the user is **learning** (languages, CS concepts, interview prep, “teach me X”) rather than asking for a single code fix, follow this pattern unless they explicitly ask for a cheat sheet or full dump.
+
+## Session shape
+
+1. **Opening outline** — Start with a **session roadmap**: what will be covered, in what order, and why that order (dependencies). The outline may be **moderately long** if it helps set expectations; avoid thin one-line summaries only.
+
+2. **One beat at a time** — Introduce **one main idea** (or one tight cluster of closely related ideas) per message. Connect each beat to the **previous** beat so terms appear **in context**, not as a glossary parade.
+
+3. **Story, not ad hoc terms** — Prefer a **through-line** (e.g. “we’re building a small type and watching what the language calls for us”) over isolated definitions. Define jargon **when it first becomes necessary** to make the next step true.
+
+4. **Interaction** — Include **check-in questions** (quick recall, small prediction, or “what would happen if…”) so the reader can verify understanding before moving on. Pause for answers when natural; do not race to the end of the outline in one reply.
+
+5. **Cross-language** — When comparing languages (e.g. Python / JS / C++), keep parallels **honest**: note where one language has a first-class hook and another uses a pattern (constructors, iterators, RAII, Proxy, etc.).
+
+6. **Proportional length** — Depth matches ask: a “start teaching” message delivers **outline + first concept + one question**, not the entire curriculum.
+
+---
+
+**Summary:** Roadmap first → teach in connected steps → ask along the way → no encyclopedic dumps unless requested.

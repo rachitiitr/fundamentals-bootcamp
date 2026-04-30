@@ -1,9 +1,15 @@
 # Agent instructions — prep-bootcamp & reference-site
 
-The same playbook lives in **Cursor**: [`.cursor/rules/reference-topics.mdc`](.cursor/rules/reference-topics.mdc) (`alwaysApply`).
+The same playbook lives in **Cursor**:
+
+- **[`.cursor/rules/reference-topics.mdc`](.cursor/rules/reference-topics.mdc)** (`alwaysApply`) — **Written** reference pages under `reference-site/topics/`.
+- **[`.cursor/rules/interactive-teaching.mdc`](.cursor/rules/interactive-teaching.mdc)** (`alwaysApply`) — **Chat** teaching (“teach me X”): roadmap first, one concept per beat, check-in questions—no encyclopedic dumps unless asked.
+
+**Written docs vs chat:** Use **reference-topics** when editing Markdown tutorials. Use **interactive-teaching** when the user is learning in the conversation without requesting a single code fix; both rules can apply in one session if you later capture the chat in a topic page.
 
 ## How this relates to other docs
 
+- **[`coordination/PARALLEL_PREP_PLAN.md`](coordination/PARALLEL_PREP_PLAN.md)** + **[`coordination/agent-prep-state.json`](coordination/agent-prep-state.json)** — Parallel-agent rituals, session log, backlog items; append **`sessions[]`** (with **`topicsCovered`** when useful) even for learn-only chats that only touch rules or coordination.
 - **[`reference-site/README.md`](reference-site/README.md)** — Canonical **file layout**, **YAML frontmatter** fields, **sidebar / config.ts** registration, **JavaScript lesson URLs** (`/lessons/...` vs `/learnings/...`), symlink note for `lesson-sidebar`, and LeetCode patterns. Follow it for structure and links.
 - **[`reference-site/how-to-use-this-repo.md`](reference-site/how-to-use-this-repo.md)** — **Lessons vs reference** mental model and **bidirectional links** (e.g. from `NOTES.md` to a topic folder). When you add a topic, consider a “See also” from the relevant lesson and link from the hub page.
 - **This file** — **Body** conventions for interview-oriented topics: **problem-first** opening, rich **Mermaid**, **interview Q&A** closing. Use alongside the README templates (below).
