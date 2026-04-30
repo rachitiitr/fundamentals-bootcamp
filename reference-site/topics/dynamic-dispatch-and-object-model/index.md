@@ -402,6 +402,7 @@ Detached **prototype methods** (`const f = obj.m; f()`) lose the **`this`** rece
 
 ## See also
 
+- [JavaScript `this` binding](../javascript-this-binding/) — default / implicit / explicit / `new`, arrows, prototype receivers
 - [Virtual tables (vtables) in C++](../cpp-vtables/) — vptr, ABI sketch, hand-rolled C/C++
 - [Iterators & generators](../iterators-and-generators/) — protocols across languages
 - [Interview syllabus (master list)](../interview-syllabus/)

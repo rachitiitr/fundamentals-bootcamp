@@ -39,6 +39,10 @@ const mainSidebar = [
         text: 'Object APIs, descriptors, Proxy & cloning',
         link: '/topics/javascript-objects-interview/',
       },
+      {
+        text: '`this` binding (four rules, arrows, prototypes)',
+        link: '/topics/javascript-this-binding/',
+      },
     ],
   },
   {

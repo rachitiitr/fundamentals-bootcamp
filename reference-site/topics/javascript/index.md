@@ -22,6 +22,7 @@ Cross-language:
 
 ## Interview refresh
 
+- [**`this` binding**](../javascript-this-binding/) — default / implicit / explicit (`call`/`apply`/`bind`) / `new`, precedence, lexical arrows, prototype receivers, interview Q&A
 - [**Object APIs, descriptors, `Proxy`, cloning**](../javascript-objects-interview/) — static `Object.*` helpers (`assign`, `keys` / `for...in`), `Object.create`, `defineProperty`, `freeze` / `seal`, `Reflect`/`receiver`, `structuredClone` vs JSON, interview Q&A
 
 ## Good candidates for JS-only pages
