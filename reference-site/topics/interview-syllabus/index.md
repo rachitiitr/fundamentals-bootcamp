@@ -160,6 +160,12 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [ ] `unknown` vs `any`, type narrowing (`typeof`, `in`, predicates)
 - [ ] Declaration merging, ambient modules (awareness)
 
+### React (library patterns)
+
+<!-- Anchor for cross-links: #react-library-patterns -->
+
+- [x] **`cloneElement` + `Children`** — slot-style parents, shallow prop merge, tabs exercise — [React: cloneElement & tab injection](../react-clone-element/)
+
 ### Browser / runtime (when “frontend” or Node appears)
 
 - [ ] DOM events — bubbling vs capturing, delegation, `preventDefault` / `stopPropagation`

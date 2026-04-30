@@ -113,3 +113,7 @@ You already did ~40–50 problems (LC75-style). Use **`dsa`** workstream for **g
 ```
 
 Add new **`items[]`** rows when you discover gaps; keep **`id`** kebab-case and stable so sessions can reference them.
+
+## Recently shipped (pointers)
+
+- **2026-04-30** — React **`cloneElement`** reference topic ([`reference-site/topics/react-clone-element/`](../reference-site/topics/react-clone-element/index.md)); session **`sess-2026-04-30-react-clone-element-topic`** in [`agent-prep-state.json`](./agent-prep-state.json).

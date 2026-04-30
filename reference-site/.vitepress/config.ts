@@ -46,6 +46,15 @@ const mainSidebar = [
     ],
   },
   {
+    text: 'React topics',
+    items: [
+      {
+        text: '`cloneElement` & slot-style parents (tabs)',
+        link: '/topics/react-clone-element/',
+      },
+    ],
+  },
+  {
     text: 'Python topics',
     items: [
       {

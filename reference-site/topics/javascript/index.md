@@ -25,6 +25,10 @@ Cross-language:
 - [**`this` binding**](../javascript-this-binding/) — default / implicit / explicit (`call`/`apply`/`bind`) / `new`, precedence, lexical arrows, prototype receivers, interview Q&A
 - [**Object APIs, descriptors, `Proxy`, cloning**](../javascript-objects-interview/) — static `Object.*` helpers (`assign`, `keys` / `for...in`), `Object.create`, `defineProperty`, `freeze` / `seal`, `Reflect`/`receiver`, `structuredClone` vs JSON, interview Q&A
 
+## React (library patterns)
+
+- [**`cloneElement` — prop injection, tabs, wrap vs clone**](../react-clone-element/) — `Children` / `isValidElement`, shallow merge, refs, when to prefer context or render props
+
 ## Good candidates for JS-only pages
 
 - Module graphs, ESM vs CJS
