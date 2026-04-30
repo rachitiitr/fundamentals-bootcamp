@@ -33,6 +33,15 @@ const mainSidebar = [
     ],
   },
   {
+    text: 'JavaScript topics',
+    items: [
+      {
+        text: 'Object APIs, descriptors, Proxy & cloning',
+        link: '/topics/javascript-objects-interview/',
+      },
+    ],
+  },
+  {
     text: 'Python topics',
     items: [
       {

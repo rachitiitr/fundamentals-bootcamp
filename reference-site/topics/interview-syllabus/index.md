@@ -132,9 +132,9 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [ ] Private fields (`#`), static blocks
 - [ ] Destructuring, rest/spread, default values
 - [ ] `Array` methods — `map`/`filter`/`reduce`, mutating vs non-mutating
-- [ ] `Object.assign`, shallow copy, spread clone limits
+- [x] [`Object.assign`, shallow spread, enumeration, descriptors, `Proxy`, cloning](../javascript-objects-interview/) — static toolbox + interview Q&A
 - [ ] `Map` vs object, `Set`, `WeakMap` / `WeakSet` — use cases
-- [ ] `JSON.stringify` / `parse` — pitfalls (dates, `undefined`, cycles)
+- [ ] `JSON.stringify` / `parse` — pitfalls (dates, `undefined`, cycles); **`structuredClone`** contrast — see [JavaScript object APIs § JSON vs structuredClone](../javascript-objects-interview/#json-vs-structuredclone)
 - [ ] Modules — ESM vs CommonJS, static vs dynamic `import()`, default vs named exports
 - [ ] Strict mode — why it exists, top-level `this` in modules
 - [ ] Error types, `Promise` rejection vs sync throw in `async` functions  

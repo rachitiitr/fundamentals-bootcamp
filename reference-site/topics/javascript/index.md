@@ -20,6 +20,10 @@ Cross-language:
 
 **Construction & defaults:** [construction cheat sheet (cross-language)](../dynamic-dispatch-and-object-model/#construction-cheat-sheet--three-languages)
 
+## Interview refresh
+
+- [**Object APIs, descriptors, `Proxy`, cloning**](../javascript-objects-interview/) — static `Object.*` helpers (`assign`, `keys` / `for...in`), `Object.create`, `defineProperty`, `freeze` / `seal`, `Reflect`/`receiver`, `structuredClone` vs JSON, interview Q&A
+
 ## Good candidates for JS-only pages
 
 - Module graphs, ESM vs CJS
