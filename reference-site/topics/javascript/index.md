@@ -16,7 +16,9 @@ Language-specific topics and links to the main lesson track.
 
 Cross-language:
 
-- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — prototypes, `class` / `extends`, `super`, `this`, vs Python/C++
+- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — prototypes, `class` / `extends`, `super`, `this`, `static`, prototype vs arrow-method `this` & desugar sketch vs Python/C++
+
+**Construction & defaults:** [construction cheat sheet (cross-language)](../dynamic-dispatch-and-object-model/#construction-cheat-sheet--three-languages)
 
 ## Good candidates for JS-only pages
 

@@ -8,7 +8,7 @@ languages: [cpp, python, javascript]
 
 You need **one operation name** (`draw`, `speak`) with **different bodies** depending on the **actual** thing at runtime — e.g. a main loop over “drawables” without hardcoding every concrete type. Languages solve that **job** with different **machinery**: **vtables** (C++), **MRO + descriptors** (Python), **prototype chains** (JavaScript).
 
-This page ties those models together: **what “class” means**, **inheritance mechanics**, **where state and methods live**, and a **step-by-step compare** on one example. Deep C++ implementation detail stays on [Virtual tables (vtables) in C++](../cpp-vtables/).
+This page ties those models together: **what “class” means**, **inheritance mechanics**, **[how fields get their first values](#construction-cheat-sheet--three-languages)** (initializer lists vs Python defaults vs JS sugar), **where state and methods live**, and a **step-by-step compare** on one example. Deep C++ implementation detail stays on [Virtual tables (vtables) in C++](../cpp-vtables/).
 
 ## Mental model in one diagram
 
@@ -129,6 +129,129 @@ class Dog extends Animal {
 
 - **C++ / Python:** Supported (Python uses **MRO**; C++ has layout **adjustments**).
 - **JavaScript:** **No** multiple `extends`. Use **composition**, **mixins**, or **delegation**.
+
+## Construction cheat sheet — three languages
+
+Different languages put **first assignment** of instance state in different places — and **mistakes don’t always show up at compile time**. This section aligns **member initializer lists** (C++), **mutable defaults** (Python), and **`class` desugaring + method forms** (JavaScript).
+
+### C++ — initializer list, ctor body, in-class defaults, real init order
+
+- **Initializer list** (`: a(1), b(x)`) runs **before** the constructor **body**. Use it for **bases**, **`const`** members, **references**, and **efficient** construction (e.g. move into members) instead of default-constructing then assigning in the body.
+- **In-class member initializers** (C++11+, e.g. `int cached = 0`) are defaults when the member is **not** listed in the list (delegating/multiple ctor cases follow language rules — interviews usually stop at “default + override in list”).
+- **`static`** data members are **not** duplicated per instance; one storage site for the type (`inline static` in-class since C++17 is common).
+
+**Critical detail — initialization order**
+
+Members are initialized in **declaration order inside the struct/class**, **not** the order they appear in the initializer list. If those differ, compilers often warn (`-Wreorder`); trusting the list order across members can mean **reading uninitialized members**.
+
+```cpp
+struct BadOrder {
+  int b;
+  int a;
+
+  BadOrder()
+    // List *suggests* a before b — but reality is: b initializes first (declared first).
+    : a(1), b(a + 1) { // b reads `a` before `a`'s ctor runs → undefined behavior
+  }
+};
+
+struct GoodOrder {
+  int a;
+  int b;
+
+  GoodOrder() : a(1), b(a + 1) { // a initialized first → b sees valid a
+  }
+};
+```
+
+**Reasonable sketch with `static` + list + defaults**
+
+```cpp
+#include <string>
+
+struct Counter {
+  static inline int instances = 0;
+
+  const int id;
+  std::string name;
+  int cached = 0; // default unless ctor list assigns
+
+  explicit Counter(std::string n)
+    : id(static_cast<int>(n.size())), name(std::move(n)) {
+    ++instances;
+    cached = id * 2; // body: assignment after construction
+  }
+};
+```
+
+### Python — no initializer list; watch **mutable defaults** and **class** attributes
+
+- **`__init__`** runs **per instance** after the instance exists; assignments create **instance** attributes.
+- **`def __init__(self, items=[]):`** — the **`[]`** is created **once** when the **`def`** runs (class definition time). Every call without `items` shares that **same list**.
+
+```python
+class BadDefault:
+    def __init__(self, items=[]):
+        self.items = items
+
+class GoodDefault:
+    def __init__(self, items=None):
+        self.items = [] if items is None else list(items)
+```
+
+- **Dataclasses:** use `field(default_factory=list)` for a **fresh** list per instance.
+
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class Bag:
+    items: list = field(default_factory=list)
+```
+
+A **mutable object** assigned in the **class body** (`tricks = []`) behaves the same “one object, shared across instances who don’t shadow it” pattern as **`static`**-ish state in other languages — see the **Gotcha — class body mutable** bullet under [Chapter 2 — Python](#chapter-2--inheritance-mechanics-constructors-parent-gotchas).
+
+### JavaScript — what `class` is, and prototype method vs arrow field
+
+**Sugar (conceptually):** `class C { … }`, `extends`, and `super` arrange **prototype links** (`C.prototype`), **`[[Prototype]]` on instances**, and **`C.__proto__` for static inheritance**. There is **no second object model** — engines implement the ES spec’s objects-and-prototypes story.
+
+**Rough desugaring shape** (for mental model; engines optimize and private fields differ):
+
+```javascript
+function Timer(label) {
+  this.tag = label; // instance field initializers conceptually run in instance setup
+  // constructor body …
+}
+Timer.prototype.tick = function () {
+  console.log(this.label);
+};
+```
+
+**Prototype method** `tick() { }` — **one** function on **`Timer.prototype`**; **`this`** is the **call site**’s receiver (`t.tick()` vs `const f = t.tick; f()` loses `this` in strict mode).
+
+**Arrow as instance field** `tick = () => { }` — typically **one closure per instance**, **`this`** **lexically** tied to the instance constructed in that scope — handy for **`setTimeout` / handlers**, more **allocation** if you create huge numbers of instances.
+
+```javascript
+class Timer {
+  label = "t";
+
+  protoTick() {
+    console.log(this?.label);
+  }
+
+  arrowTick = () => {
+    console.log(this?.label);
+  };
+}
+
+const t = new Timer();
+const p = t.protoTick;
+const a = t.arrowTick;
+// p(); // strict: `this` wrong — TypeError or undefined
+a(); // still logs — lexical `this`
+```
+
+**`static count = 0` / `static instances()`** live on the **constructor function** object (shared, not per instance), analogous to **C++ `static`** or **Python class attributes**.
 
 ## Chapter 3 — Where things live
 
@@ -267,7 +390,15 @@ Python **always** uses runtime lookup on **the class of the instance** for norma
 
 ### Class field `tag = this.id` in JS vs C++/Python?
 
-Instance fields run **after `super()`** in subclass construction — **`this`** and base-assigned fields exist. C++ uses **ctor initializer lists** / member order; Python sets attributes in **`__init__`**.
+Instance fields run **after `super()`** in subclass construction — **`this`** and base-assigned fields exist. C++ uses **ctor initializer lists** / member order; Python sets attributes in **`__init__`**. Expanded patterns: [Construction cheat sheet — three languages](#construction-cheat-sheet--three-languages).
+
+### In C++, does the ctor initializer list set the initialization order?
+
+**No** — actual member initialization order follows **declaration order** in the class. The list order only controls **which initializer runs for each member**; mismatch with declaration order yields warnings and subtle bugs (see **`BadOrder` / `GoodOrder`** under [Construction cheat sheet — three languages](#construction-cheat-sheet--three-languages)).
+
+### Why pass `dog.bark` to `setTimeout` but use an arrow property for callbacks?
+
+Detached **prototype methods** (`const f = obj.m; f()`) lose the **`this`** receiver unless **bound** (`bind`) or wrapped. **`m = () => {}`** captures **lexical `this`** per instance — trade **memory** (per-instance function) for **ergonomics**. See the **JavaScript** subsection of [Construction cheat sheet — three languages](#construction-cheat-sheet--three-languages).
 
 ## See also
 

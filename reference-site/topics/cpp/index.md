@@ -14,6 +14,8 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 - [Struct layout, padding & alignment — `sizeof`, `alignof`, reordering, interview Q&A](../cpp-struct-layout/)
 - [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — vtables vs Python MRO vs JS prototypes (cross-language)
 
+**Ctor lists vs member declaration order:** [construction cheat sheet (cross-language)](../dynamic-dispatch-and-object-model/#construction-cheat-sheet--three-languages)
+
 ## Ideas for dedicated pages
 
 - `std::multiset` / `std::multimap` when you need sorted duplicates

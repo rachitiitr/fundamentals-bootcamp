@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-04-30T16:30:00Z",
+  "updatedAt": "2026-04-30T20:00:00Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -208,7 +208,25 @@
   "activeClaims": [],
   "sessions": [
     {
-      "id": "sess-2026-04-30-python-dunder-methods-topic",
+      "id": "sess-2026-04-30-construction-cheat-sheet-cross-lang",
+      "endedAt": "2026-04-30T20:00:00Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": [],
+      "topicsCovered": [
+        "cross-lang: ctor initializer lists vs Python __init__/defaults vs JS class sugar",
+        "C++ member init order follows declaration order; BadOrder/GoodOrder",
+        "Python mutable default []; default_factory",
+        "JS prototype methods vs arrow field this; static on constructor sketch"
+      ],
+      "summary": "Extended dynamic-dispatch topic with Construction cheat sheet (C++/Python/JS), interview Q&A. Linked anchors from Python, JavaScript, and C++ hubs.",
+      "artifactPaths": [
+        "reference-site/topics/dynamic-dispatch-and-object-model/index.md",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/javascript/index.md",
+        "reference-site/topics/cpp/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
       "endedAt": "2026-04-30T16:30:00Z",
       "workstreamId": "py",
       "itemIdsTouched": ["py-dunder-methods-cross-lang"],

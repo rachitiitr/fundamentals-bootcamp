@@ -15,7 +15,9 @@ Use this hub for **Python-only** reference pages (stdlib idioms that do not map 
 
 Cross-language (includes Python sections):
 
-- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — MRO, `super()`, instance vs class attributes, vs C++/JS
+- [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — MRO, `super()`, instance vs class attributes, mutable-default / `default_factory` gotchas vs C++/JS
+
+**Construction & defaults:** [construction cheat sheet (cross-language)](../dynamic-dispatch-and-object-model/#construction-cheat-sheet--three-languages)
 
 ## Ideas for dedicated pages
 
