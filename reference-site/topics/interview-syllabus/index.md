@@ -87,12 +87,12 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Concurrency & I/O
 
-- [ ] GIL — what it does and does **not** guarantee; when threads still help (I/O)
+- [x] GIL — what it does and does **not** guarantee; when threads still help (I/O) — [Python GIL: what it protects, when threads still help](../python-gil/)
 - [ ] `threading` — locks, `RLock`, `Event`, `Condition`, deadlocks
 - [ ] `concurrent.futures` — `ThreadPoolExecutor`, `ProcessPoolExecutor`, `as_completed`
 - [ ] `multiprocessing` — pickling constraints, `spawn` vs `fork` (platform)
-- [ ] `asyncio` — event loop, `async` / `await`, tasks, `gather`, cancellation
-- [ ] `asyncio` locks, queues, producers/consumers
+- [x] `asyncio` — event loop, `async` / `await`, tasks, `gather`, cancellation — [Python asyncio: loop, tasks, cancellation, queues](../python-asyncio/)
+- [x] `asyncio` locks, queues, producers/consumers — [§ asyncio.Queue producer-consumer](../python-asyncio/#asyncio-queue-producer-consumer-the-interview-kata) and [§ Locks, semaphores, events](../python-asyncio/#locks-semaphores-events-yes-you-still-need-them)
 - [ ] Async context managers and iterables (`async with`, `async for`)
 
 ### Memory, performance & C API (high level)
@@ -142,12 +142,14 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Event loop & asynchrony
 
-- [ ] Call stack, task queues, macrotasks vs microtasks (`queueMicrotask`, `Promise.then`)
-- [ ] `setTimeout` / `setInterval` — timing guarantees (none), throttling
+- [x] Call stack, task queues, macrotasks vs microtasks (`queueMicrotask`, `Promise.then`) — [Browser event loop](../browser-event-loop/)
+- [x] `setTimeout` / `setInterval` — timing guarantees (none), throttling — same page (Q&A "Are timers accurate?")
 - [ ] Promises — states, chaining, error propagation, `Promise.all` / `race` / `allSettled`
 - [ ] `async` / `await` — desugaring mental model
 - [ ] Async iteration — `Symbol.asyncIterator`, `for await...of`
 - [ ] `AbortController` — canceling `fetch` and other async work
+- [x] React 18 automatic batching, `flushSync`, render-commit timing — [Browser event loop § Where rendering fits in](../browser-event-loop/#where-rendering-fits-in)
+- [x] Layout thrashing, `requestAnimationFrame`, coalescing high-frequency events — [Browser event loop § Layout thrash](../browser-event-loop/#layout-thrash-sync-read-after-sync-write) and § HRT pattern
 
 ### TypeScript (if the loop includes TS)
 
@@ -169,7 +171,7 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 ### Browser / runtime (when “frontend” or Node appears)
 
 - [ ] DOM events — bubbling vs capturing, delegation, `preventDefault` / `stopPropagation`
-- [ ] Layout thrashing, `requestAnimationFrame` (high level)
+- [x] Layout thrashing, `requestAnimationFrame` (high level) — [Browser event loop](../browser-event-loop/) (deeper coverage in § Layout thrash and § The HRT pattern)
 - [ ] `fetch`, CORS — simple vs preflight, credentials
 - [ ] `localStorage` / `sessionStorage` vs cookies — security sketch
 - [ ] Web Workers — isolation, `postMessage`, transferable objects (lesson track exists)
@@ -332,16 +334,34 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Distributed systems (concept checklist)
 
-- [ ] Latency vs throughput, tail latency
-- [ ] Timeouts, retries, exponential backoff, jitter
-- [ ] Idempotency keys — duplicate requests
+- [x] Latency vs throughput, tail latency — covered in [System design: stock price fan-out](../system-design-stock-notifications/#41-how-many-ticks-per-second-fermi-method) and [Beat 1 — Foundations](../system-design-foundations/)
+- [x] Timeouts, retries, exponential backoff, jitter — [Beat 5 — Reliability](../system-design-reliability/#1-timeouts-the-most-under-used-primitive)
+- [x] Idempotency keys — duplicate requests — see [Delivery semantics & idempotency](../distributed-delivery-and-idempotency/), [Beat 5 — Reliability § idempotency](../system-design-reliability/#3-idempotency-the-precondition-for-safe-retries), and [§ 12.10 threshold-alerts variant](../system-design-stock-notifications/#1210-what-would-you-change-for-threshold-alerts-instead-of-raw-ticks)
 - [ ] Load balancing — layer 4 vs layer 7 (names)
-- [ ] CAP theorem — relaxed interpretations in practice
-- [ ] Linearizability vs eventual consistency (definitions)
-- [ ] Leader election, consensus — Raft/Paxos “what problem they solve”
-- [ ] Heartbeats, failure detection, split-brain (conceptual)
-- [ ] Message queues — at-least-once vs at-most-once vs exactly-once (marketing vs reality)
-- [ ] Rate limiting — token bucket vs leaky bucket (names + behavior)
+- [x] CAP theorem — relaxed interpretations in practice — [Beat 1 — Foundations § CAP / PACELC](../system-design-foundations/#1-cap-the-partition-time-tradeoff)
+- [x] Linearizability vs eventual consistency (definitions) — [Beat 2 — Data & storage § consistency spectrum](../system-design-data-storage/#4-the-consistency-spectrum)
+- [x] Leader election, consensus — Raft/Paxos “what problem they solve” — [Beat 6 — Coordination](../system-design-coordination/) + [Distributed message queues § replication and the leader story](../distributed-message-queues/#replication-and-the-leader-story)
+- [x] Heartbeats, failure detection, split-brain (conceptual) — [Beat 6 — Coordination § leader election](../system-design-coordination/#2-leader-election-the-most-useful-kind-of-consensus) + [Distributed batch & stream compute § what happens when one worker fails](../distributed-batch-and-stream-compute/#what-happens-when-one-worker-fails)
+- [x] Message queues — at-least-once vs at-most-once vs exactly-once — [Beat 4 — Async messaging](../system-design-async-messaging/), [Distributed message queues](../distributed-message-queues/), [Delivery semantics & idempotency](../distributed-delivery-and-idempotency/); also [System design: stock price fan-out § 9.4](../system-design-stock-notifications/#94-at-least-once-vs-exactly-once-vs-at-most-once)
+- [x] Rate limiting — token bucket vs leaky bucket (names + behavior) — [Beat 8 — Cross-cutting § rate limiting](../system-design-cross-cutting/#4-rate-limiting-algorithms-and-where-they-live)
+- [x] Caching — cache-aside, write-through, invalidation, stampedes, hot keys — [Beat 3 — Caching](../system-design-caching/)
+- [x] Sharding strategies — hash, range, directory, consistent hashing — [Beat 2 — Data & storage § sharding](../system-design-data-storage/#6-sharding-and-why-its-the-hardest-to-undo)
+- [x] Circuit breakers, bulkheads, graceful degradation — [Beat 5 — Reliability](../system-design-reliability/#4-circuit-breakers-fail-fast-when-downstream-is-sick)
+- [x] Sagas vs 2PC — distributed transactions — [Beat 6 — Coordination § sagas](../system-design-coordination/#5-sagas-the-practical-alternative)
+- [x] Cell-based architecture, blast radius, shuffle sharding — [Beat 5 — Reliability § blast radius](../system-design-reliability/#7-blast-radius-and-cell-based-architecture) + [Beat 7 — Scale & topology](../system-design-scale-topology/#4-cell-based-architecture-the-modern-ap-scale-answer)
+- [x] Push vs pull, fan-out on read vs write, client API styles (SSE, WebSockets) — [Beat 8 — Cross-cutting](../system-design-cross-cutting/)
+- [x] Observability — logs / metrics / traces, golden signals, SLO burn rate — [Beat 8 — Cross-cutting § observability](../system-design-cross-cutting/#5-observability-logs-metrics-traces)
+- [x] Distributed batch / stream compute — DAG, lineage, shuffle, worker failure recovery, speculative execution — [Distributed batch & stream compute](../distributed-batch-and-stream-compute/)
+- [x] Transactional outbox + idempotent receivers (dual-write pattern) — [Delivery semantics & idempotency § recipe 2 — transactional outbox](../distributed-delivery-and-idempotency/#recipe-2-transactional-outbox)
+- [x] Consumer groups, partitions, rebalances, offset commits — [Distributed message queues](../distributed-message-queues/)
+
+### System design walkthroughs
+
+- [x] **System design tradeoffs (Principal series)** — [9-part hub](../system-design-tradeoffs/) — Foundations (CAP/PACELC), Data & storage, Caching, Async messaging, Reliability, Coordination, Scale & topology, Cross-cutting patterns, and the Interview framework. Designed for Principal-level loops.
+- [x] **Stock price fan-out (HRT-flavored)** — [System design: stock price fan-out](../system-design-stock-notifications/) — full walkthrough: clarification, Fermi estimation, fan-out patterns, backpressure & conflation, snapshot+delta reconnect, interview Q&A.
+- [x] **Distributed message queues** — [topic page](../distributed-message-queues/) — log vs queue, partitions, consumer groups, rebalance & failover stories.
+- [x] **Delivery semantics & idempotency** — [topic page](../distributed-delivery-and-idempotency/) — at-least-once is the default; idempotency-key recipes; transactional outbox; bank-transfer trace.
+- [x] **Distributed batch & stream compute** — [topic page](../distributed-batch-and-stream-compute/) — MapReduce → Spark DAG → worker failure recovery → speculative execution → streaming watermarks.
 
 ### Data structures & algorithms (cross-language meta)
 

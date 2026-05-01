@@ -12,6 +12,8 @@ Use this hub for **Python-only** reference pages (stdlib idioms that do not map 
 
 - [Dunder methods — hooks & cross-language parallels](../python-dunder-methods/) — `__init__`/`__new__`, `str`/`repr`, `eq`/`hash`, `len`, `[]`, iteration, `with`, `__call__`, operators (`__radd__`)
 - [with & context managers (`contextlib`)](../python-context-managers/) — `__enter__` / `__exit__`, `@contextmanager`, `ExitStack`, `async with`
+- [GIL — what it protects, when threads still help](../python-gil/) — what's actually locked, when CPython releases it, threads vs processes vs asyncio decision script
+- [asyncio — loop, tasks, cancellation, queues](../python-asyncio/) — `await` semantics, `Task` vs coroutine, `gather` / `wait_for` / `as_completed` / `TaskGroup`, cancellation + `shield`, `asyncio.Queue` producer-consumer with bounded backpressure, when asyncio misleads (blocking calls, CPU work), `Lock` / `Semaphore`
 
 Cross-language (includes Python sections):
 
