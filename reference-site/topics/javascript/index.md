@@ -31,6 +31,15 @@ Cross-language:
 
 - [**`cloneElement` — prop injection, tabs, wrap vs clone**](../react-clone-element/) — `Children` / `isValidElement`, shallow merge, refs, when to prefer context or render props
 
+## Frontend security (4-beat series)
+
+Senior / staff-level security topics for FE loops — problem-first tutorials with attack traces, Mermaid diagrams, and a Q&A section per page.
+
+- [**Series hub**](../frontend-security/) — threat model, the 3 trust boundaries, how the beats connect.
+- [**Beat 1 — XSS & injection**](../frontend-security-xss/) — reflected / stored / DOM / mutation, React-specific traps (`dangerouslySetInnerHTML`, `javascript:` URLs, SSR JSON injection), DOMPurify, Trusted Types.
+- [**Beat 2 — Cross-origin attacks**](../frontend-security-cross-origin/) — same-origin policy, CORS preflight, CSRF + `SameSite`, clickjacking + `frame-ancestors`, `postMessage` abuse.
+- [**Beat 3+4 — Auth, sessions, security headers & supply chain**](../frontend-security-auth-and-headers/) — cookies vs `localStorage`, JWT pitfalls, OAuth + PKCE, CSP / HSTS / COOP-COEP, SRI, npm hygiene, prototype pollution.
+
 ## Good candidates for JS-only pages
 
 - Module graphs, ESM vs CJS

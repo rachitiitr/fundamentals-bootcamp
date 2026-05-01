@@ -67,6 +67,27 @@ const mainSidebar = [
     ],
   },
   {
+    text: 'Frontend security (4-beat series)',
+    items: [
+      {
+        text: 'Series hub — threat model & roadmap',
+        link: '/topics/frontend-security/',
+      },
+      {
+        text: 'Beat 1 — XSS & injection',
+        link: '/topics/frontend-security-xss/',
+      },
+      {
+        text: 'Beat 2 — Cross-origin (SOP, CORS, CSRF, clickjacking)',
+        link: '/topics/frontend-security-cross-origin/',
+      },
+      {
+        text: 'Beat 3+4 — Auth, headers & supply chain',
+        link: '/topics/frontend-security-auth-and-headers/',
+      },
+    ],
+  },
+  {
     text: 'Python topics',
     items: [
       {

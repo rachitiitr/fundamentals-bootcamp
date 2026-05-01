@@ -172,8 +172,8 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 - [ ] DOM events — bubbling vs capturing, delegation, `preventDefault` / `stopPropagation`
 - [x] Layout thrashing, `requestAnimationFrame` (high level) — [Browser event loop](../browser-event-loop/) (deeper coverage in § Layout thrash and § The HRT pattern)
-- [ ] `fetch`, CORS — simple vs preflight, credentials
-- [ ] `localStorage` / `sessionStorage` vs cookies — security sketch
+- [x] `fetch`, CORS — simple vs preflight, credentials — [Frontend security Beat 2 § CORS](../frontend-security-cross-origin/#cors--the-controlled-hole-in-sop)
+- [x] `localStorage` / `sessionStorage` vs cookies — security sketch — [Frontend security Beat 3 § debate](../frontend-security-auth-and-headers/#the-localstorage-vs-cookie-debate-the-staple-staff-question)
 - [ ] Web Workers — isolation, `postMessage`, transferable objects (lesson track exists)
 - [ ] Node.js — event loop phases vs browser, libuv at a high level
 - [ ] Streams in Node — backpressure concept
@@ -380,11 +380,24 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Security basics (systems-facing)
 
-- [ ] Same-origin policy, CSRF, XSS — what they are mitigations names
-- [ ] SQL injection — parameterized queries
+- [x] **Frontend security (4-beat series)** — [series hub](../frontend-security/), [Beat 1 — XSS & injection](../frontend-security-xss/), [Beat 2 — cross-origin (SOP, CORS, CSRF, clickjacking, `postMessage`)](../frontend-security-cross-origin/), [Beat 3+4 — auth, sessions, security headers, supply chain](../frontend-security-auth-and-headers/).
+- [x] Same-origin policy & origins — [Beat 2 § Foundation](../frontend-security-cross-origin/#foundation--origins-and-the-same-origin-policy)
+- [x] CORS — simple vs preflight, credentials, `*` + credentials pitfall — [Beat 2 § CORS](../frontend-security-cross-origin/#cors--the-controlled-hole-in-sop)
+- [x] XSS — reflected / stored / DOM / mutation, React traps, DOMPurify, Trusted Types — [Beat 1](../frontend-security-xss/)
+- [x] CSRF — `SameSite` cookies, tokens, double-submit, custom-header trick — [Beat 2 § CSRF](../frontend-security-cross-origin/#csrf--cross-site-request-forgery)
+- [x] Clickjacking — `frame-ancestors`, `X-Frame-Options` — [Beat 2 § Clickjacking](../frontend-security-cross-origin/#clickjacking-ui-redress)
+- [x] `postMessage` — `targetOrigin`, `event.origin` checks — [Beat 2 § postMessage](../frontend-security-cross-origin/#postmessage--the-cross-origin-telephone-with-no-caller-id)
+- [x] Cookies — `HttpOnly`, `Secure`, `SameSite`, `__Host-` prefix — [Beat 3 § Cookies](../frontend-security-auth-and-headers/#cookies--the-three-flags-that-matter)
+- [x] localStorage vs cookie for tokens — [Beat 3 § debate](../frontend-security-auth-and-headers/#the-localstorage-vs-cookie-debate-the-staple-staff-question)
+- [x] JWT pitfalls (`alg: none`, HS/RS confusion, no revocation) — [Beat 3 § JWT pitfalls](../frontend-security-auth-and-headers/#jwt-pitfalls)
+- [x] OAuth 2.0 + PKCE on a SPA — [Beat 3 § OAuth + PKCE](../frontend-security-auth-and-headers/#oauth-20--pkce-on-a-spa)
+- [x] CSP — nonces, `'strict-dynamic'`, anti-patterns — [Beat 4 § CSP](../frontend-security-auth-and-headers/#csp--content-security-policy)
+- [x] HSTS, Referrer-Policy, Permissions-Policy, COOP/COEP/CORP — [Beat 4 § header belt](../frontend-security-auth-and-headers/#part-2--the-security-header-belt)
+- [x] Supply chain — SRI, npm hygiene, source maps, prototype pollution, ReDoS — [Beat 4 § supply chain](../frontend-security-auth-and-headers/#part-3--supply-chain--loose-ends)
+- [ ] SQL injection — parameterized queries (server-side)
 - [ ] AuthN vs AuthZ
 - [ ] Symmetric vs asymmetric crypto — TLS uses both (hand-wavy OK)
-- [ ] Hashing for passwords — why not plain SHA-256 alone
+- [ ] Hashing for passwords — why not plain SHA-256 alone (bcrypt / scrypt / Argon2)
 
 ### Tooling & practical systems
 
