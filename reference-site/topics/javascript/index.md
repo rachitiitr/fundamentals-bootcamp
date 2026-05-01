@@ -24,6 +24,8 @@ Cross-language:
 
 - [**`this` binding**](../javascript-this-binding/) — default / implicit / explicit (`call`/`apply`/`bind`) / `new`, precedence, lexical arrows, prototype receivers, interview Q&A
 - [**Object APIs, descriptors, `Proxy`, cloning**](../javascript-objects-interview/) — static `Object.*` helpers (`assign`, `keys` / `for...in`), `Object.create`, `defineProperty`, `freeze` / `seal`, `Reflect`/`receiver`, `structuredClone` vs JSON, interview Q&A
+- [**Event loop, microtasks & real-time UIs**](../browser-event-loop/) — task vs microtask, render step, `requestAnimationFrame`, React 18 batching, layout thrash, coalescing high-frequency ticks (HRT-style price grid), interview Q&A
+- [**Frame pipeline — `rAF`, `rIC` & `useLayoutEffect`**](../browser-frame-pipeline/) — where each scheduling API lives in the per-frame pipeline, flicker-free measurement, idle background work, decision tree, interview Q&A
 
 ## React (library patterns)
 
@@ -32,7 +34,6 @@ Cross-language:
 ## Good candidates for JS-only pages
 
 - Module graphs, ESM vs CJS
-- Event loop microtasks vs macrotasks
 - `Symbol.iterator` / async iterators in the browser
 
 Add a new `.md` file under `topics/` and link it from this hub (and from `.vitepress/config.ts` when it should appear in the sidebar).
