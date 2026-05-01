@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-04-30T23:59:00Z",
+  "updatedAt": "2026-04-30T19:30:00Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -98,23 +98,38 @@
       "id": "py-asyncio-core",
       "workstreamId": "py",
       "title": "asyncio: loop, tasks, gather, cancellation (interview depth)",
-      "status": "backlog",
+      "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → asyncio",
       "targetArtifacts": ["reference-site/topics/python-asyncio/index.md"],
-      "artifactPaths": [],
-      "notes": "Contrast with threads; when asyncio misleads."
+      "artifactPaths": [
+        "reference-site/topics/python-asyncio/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/browser-event-loop/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-04-30-python-asyncio-topic",
+      "notes": "Day 2 afternoon (paired with browser-event-loop morning). Problem-first asyncio tutorial framed against an HRT-style 200-feed market data ingestion service. Mental model (one loop, ready vs waiting, selectors) with mermaid; what `await` actually does (suspension + continuation, generator desugar nod); coroutine vs Task interview distinction with the never-awaited footgun; gather/wait/wait_for/as_completed/TaskGroup table + structured-concurrency note (3.11+); cancellation as cooperative + CancelledError injection at next suspension + shield + asyncio.timeout; producer-consumer kata with bounded asyncio.Queue (explicit backpressure framing); when-asyncio-misleads section (blocking requests, time.sleep vs asyncio.sleep, CPU-bound work, sync handlers); Lock/Semaphore/Event with read-modify-write race example and bounded-concurrency Semaphore kata; cross-language comparison table (asyncio vs JS event loop); 9 interview Q&As including the architecture-of-an-ingestion-service question. Wired Python sidebar group, Python hub, two interview-syllabus checkboxes (asyncio core + locks/queues with deep section anchors). Cross-linked from browser-event-loop See also (same-shape note)."
     },
     {
       "id": "py-gil-story",
       "workstreamId": "py",
       "title": "GIL: what it does/does not guarantee + I/O vs CPU",
-      "status": "backlog",
+      "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → GIL",
       "targetArtifacts": ["reference-site/topics/python-gil/index.md"],
-      "artifactPaths": [],
-      "notes": "Short; link to multiprocessing pitfalls if page exists later."
+      "artifactPaths": [
+        "reference-site/topics/python-gil/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-04-30-python-gil-topic",
+      "notes": "Problem-first GIL page: what's locked (interpreter internals), when released (I/O syscalls, C extensions, 5ms switch interval), threads/processes/asyncio decision script, two worked examples (CPU vs I/O timing), atomic-ops footgun, NumPy/hashlib release table, PEP 703 awareness, cross-language note, 8 interview Q&As. Forward-links to ../python-asyncio/ (page coming from parallel agent)."
     },
     {
       "id": "react-hooks-rendering",
@@ -160,23 +175,36 @@
       "id": "browser-event-loop-dom",
       "workstreamId": "react-ts",
       "title": "Browser: event loop, microtasks, rAF, layout thrashing (DOM 'when it updates')",
-      "status": "backlog",
+      "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → event loop & asynchrony",
       "targetArtifacts": ["reference-site/topics/browser-event-loop/index.md"],
-      "artifactPaths": [],
-      "notes": "Connect to stock tick / high-frequency UI updates."
+      "artifactPaths": [
+        "reference-site/topics/browser-event-loop/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/javascript/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-04-30-browser-event-loop-topic",
+      "notes": "Problem-first event-loop tutorial framed against an HRT-style WebSocket price grid that freezes at 200 ticks/sec. Mental model (one thread, two queues, render step) with mermaid; what-goes-where source table; canonical `Promise.then` vs `setTimeout(0)` trace + microtask-schedules-microtask variant; render fit (rAF, React 18 automatic batching, `flushSync`); layout-thrash read-after-write example with the read-then-write fix; coalescing pattern (`useRef` buffer + one rAF flush per frame) explicitly tied to HRT real-time UI; latency tradeoff named; throttle/microtask/idleCallback variants; 8 interview Q&As. Sidebar JavaScript group + JS hub interview-refresh + four syllabus checkboxes flipped. Cross-link to React hooks page (parallel agent) deferred to that page's session."
     },
     {
       "id": "sysdesign-stock-notifications",
       "workstreamId": "sysdesign",
       "title": "System design: stock / price notification service (fan-out, WS, backpressure, SLAs)",
-      "status": "backlog",
+      "status": "done",
       "priority": 1,
       "syllabusHint": "distributed + WebSockets sections",
       "targetArtifacts": ["reference-site/topics/system-design-stock-notifications/index.md"],
-      "artifactPaths": [],
-      "notes": "Include rough QPS, dedup, idempotency, at-least-once delivery story."
+      "artifactPaths": [
+        "reference-site/topics/system-design-stock-notifications/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-04-30-sysdesign-stock-fanout-tutorial",
+      "notes": "Long-form tutorial pivoted from interactive teaching when user got lost on Fermi math. HRT-flavored fan-out walkthrough: 5-min framing method, FR/NFR taxonomy, full Fermi estimation (1M ticks/sec, hot-symbol skew → 15M deliveries/sec, 6 Gbps fan-out), 5 architecture decisions forced by numbers, three fan-out patterns (per-symbol shard / broadcast+local-filter / hybrid) with hot-symbol problem made concrete, full backpressure section centered on conflation (the trading-system signature pattern) with Python sketch, sequence numbers + snapshot+delta reconnect, at-least-once vs exactly-once, human-UI variant linking apps/shared-rpc-ticker, interview moves with phrases-that-sound-senior + common pitfalls, 11 interview Q&As, cheat sheet, one-paragraph revision summary. Wired System design sidebar group, two distributed-systems syllabus checkboxes (latency/tail + at-least-once anchored deep) + new System design walkthroughs subsection."
     },
     {
       "id": "sysdesign-idempotency-retries",
@@ -240,10 +268,230 @@
       ],
       "lastSessionId": "sess-2026-04-30-python-dunder-methods-topic",
       "notes": "Full tutorial: problem-first, per-hook JS/C++ table, Mermaid, interview Q&A. Syllabus + Python hub + sidebar wired."
+    },
+    {
+      "id": "sysdesign-distributed-message-queues",
+      "workstreamId": "sysdesign",
+      "title": "Distributed message queues — log vs queue, partitions, consumer groups (reference topic)",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → Distributed systems → message queues",
+      "targetArtifacts": ["reference-site/topics/distributed-message-queues/index.md"],
+      "artifactPaths": [
+        "reference-site/topics/distributed-message-queues/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/interview-syllabus/index.md"
+      ],
+      "lastSessionId": "sess-2026-04-30-distributed-systems-trio",
+      "notes": "Kafka-style log vs RabbitMQ/SQS classic queue; partitions, consumer groups, rebalances; replication + ISR + leader election; six concrete failure scenarios; Python kafka-python producer/consumer; tool-picking table; six interview Q&As."
+    },
+    {
+      "id": "sysdesign-delivery-and-idempotency",
+      "workstreamId": "sysdesign",
+      "title": "Delivery semantics & idempotency — defeating double-processing (reference topic)",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → Distributed systems → idempotency keys + at-least-once vs exactly-once",
+      "targetArtifacts": ["reference-site/topics/distributed-delivery-and-idempotency/index.md"],
+      "artifactPaths": [
+        "reference-site/topics/distributed-delivery-and-idempotency/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/interview-syllabus/index.md"
+      ],
+      "lastSessionId": "sess-2026-04-30-distributed-systems-trio",
+      "notes": "Three semantics table; five sources of duplicates; truth about exactly-once; idempotency key recipe (Redis SETNX + DB unique constraint); transactional outbox; bank-transfer trace; third-party idempotency-key + reconciliation; complete at-least-once consumer code; seven interview Q&As. Also subsumes/upgrades older sysdesign-idempotency-retries item."
+    },
+    {
+      "id": "sysdesign-distributed-batch-stream-compute",
+      "workstreamId": "sysdesign",
+      "title": "Distributed batch & stream compute — MapReduce, Spark, worker failure (reference topic)",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → Distributed systems → batch / stream compute",
+      "targetArtifacts": ["reference-site/topics/distributed-batch-and-stream-compute/index.md"],
+      "artifactPaths": [
+        "reference-site/topics/distributed-batch-and-stream-compute/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/interview-syllabus/index.md"
+      ],
+      "lastSessionId": "sess-2026-04-30-distributed-systems-trio",
+      "notes": "MapReduce mental model; Spark DAG narrow vs wide; word-count; worker-death recovery (lineage + shuffle output loss); speculative execution; checkpointing; streaming watermarks + stateful operators; PySpark sketch; eight-piece in-house framework recipe; seven interview Q&As."
     }
   ],
   "activeClaims": [],
   "sessions": [
+    {
+      "id": "sess-2026-04-30-distributed-systems-trio",
+      "endedAt": "2026-04-30T19:30:00Z",
+      "workstreamId": "sysdesign",
+      "itemIdsTouched": [
+        "sysdesign-distributed-message-queues",
+        "sysdesign-delivery-and-idempotency",
+        "sysdesign-distributed-batch-stream-compute"
+      ],
+      "topicsCovered": [
+        "distributed: Kafka-style log vs RabbitMQ/SQS classic queue (storage, replay, parallelism unit)",
+        "distributed: partitions + consumer groups + rebalancing trace",
+        "distributed: replication, ISR, leader election, acks=all durability dial",
+        "distributed: six failure scenarios (consumer crash, broker crash, slow consumer, producer retry dup, rebalance storm, hot partition)",
+        "distributed: at-most-once vs at-least-once vs 'exactly-once' table; truth about Kafka EOS",
+        "distributed: five sources of duplicates",
+        "distributed: idempotency key recipe (Redis SETNX + TTL; race condition fix via DB unique constraint in same tx)",
+        "distributed: transactional outbox pattern + CDC variant",
+        "distributed: bank-transfer naive vs idempotent trace; complete at-least-once consumer code",
+        "distributed: third-party idempotency keys + record-then-act + reconciliation",
+        "distributed: MapReduce map/shuffle/reduce; word-count walkthrough",
+        "distributed: Spark DAG, stages, narrow vs wide deps, broadcast join",
+        "distributed: worker death recovery — task reschedule + shuffle output recompute via lineage",
+        "distributed: speculative execution as the dual of failure recovery (both rely on pure tasks)",
+        "distributed: checkpointing for long lineages and iterative ML training",
+        "distributed: streaming watermarks + stateful operators (Flink/Structured Streaming)",
+        "distributed: word-count with one worker dying, step-by-step state table",
+        "distributed: 'how would you build an in-house compute framework' eight-piece recipe",
+        "interview-prep: HRT phone-screen system-design coverage; direct answers to 'what if 1 worker fails' and 'how to avoid double-processing'"
+      ],
+      "summary": "Shipped three new reference topics covering the distributed-systems spine of a quant/trading-firm system-design loop: distributed-message-queues (broker model, partitions, consumer groups, failover), distributed-delivery-and-idempotency (at-least-once truth, idempotency-key recipes, transactional outbox, bank-transfer trace), distributed-batch-and-stream-compute (MapReduce, Spark DAG, worker failure recovery via lineage, speculative execution, streaming watermarks). Added a Distributed systems sidebar group, flipped six syllabus checkboxes with deep-link anchors, registered three new items[] rows. Pages are problem-first, heavy on Mermaid + traced examples + Python code, each closing with 6-7 interview Q&As. The user (HRT fullstack phone-screen prep) explicitly asked how to defend 'what if a worker fails' and 'how do you avoid double processing' — both questions are answered head-on in the new pages.",
+      "artifactPaths": [
+        "reference-site/topics/distributed-message-queues/index.md",
+        "reference-site/topics/distributed-delivery-and-idempotency/index.md",
+        "reference-site/topics/distributed-batch-and-stream-compute/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-04-30-sysdesign-stock-fanout-tutorial",
+      "endedAt": "2026-04-30T18:50:00Z",
+      "workstreamId": "sysdesign",
+      "itemIdsTouched": ["sysdesign-stock-notifications"],
+      "topicsCovered": [
+        "sysdesign method: clarify-restate-estimate-tradeoff; first 5 minutes wins or loses the loop",
+        "sysdesign: FR vs NFR question taxonomy; 'for every what question, ask one how-much/how-strict'",
+        "sysdesign: recovery line for 'I don't know' — never say 'you pick'; Fermi reasoning out loud always beats silence",
+        "estimation: 1M ticks/sec at peak (US equities Fermi from 10B shares/day, quotes ≫ trades)",
+        "estimation: hot-symbol skew (top 100 ≈ 50% of volume × 30 teams = 20× higher fan-out than naive uniform calc)",
+        "estimation: 15M deliveries/sec, ~50B per binary message, ~6 Gbps fan-out vs 400 Mbps ingest",
+        "sysdesign: 5 architecture decisions forced by the math (single DC, no sync DB on hot path, binary protocol, multiple egress nodes, broadcast-vs-shard)",
+        "sysdesign: three fan-out patterns — per-symbol shard / broadcast+local-filter / hybrid replicated hot shards — with hot-symbol-melts-one-node concrete math",
+        "sysdesign: real-world choice — UDP multicast inside DC + Aeron-style reliability + TCP/gRPC last hop",
+        "backpressure: 4 policies (block / unbounded buffer / bounded+drop / conflate); conflation as the trading-system signature pattern",
+        "backpressure: conflation Python sketch (latest-per-symbol dict, drain returns list); disconnect-on-lag for non-conflatable streams",
+        "reliability: per-symbol monotonic seq numbers, gap detection, snapshot+delta reconnect protocol; mermaid sequence diagram",
+        "reliability: at-least-once + (symbol, seq) dedup beats exactly-once theatre; idempotency keys for the threshold-alert variant",
+        "human UI variant: WS, conflation always, SharedWorker browser-tab dedup, stale-price badge UX (don't show spinner over old prices), ~30Hz render coalescing — direct link to apps/shared-rpc-ticker",
+        "interview moves: 45-min spoken arc table; 'phrases that make you sound senior' (8 lines); 7 common pitfalls table",
+        "Q&A: 11 — Kafka vs hot path, gRPC streaming end-to-end, gateway crash recovery, bus message loss, slow subscriber, at-least-once choice, scaling 10x, human consumers diff, most expensive component, threshold-alert variant change, 2-week MVP",
+        "meta: pivoted from interactive Beat 1 → Beat 2 (user got lost on Fermi math); honored user request to deliver long-form tutorial they can refer back to vs forced live drills; followed reference-topics rule (problem-first → mechanics → practice → interview Q&A) + AGENTS.md (Mermaid liberally)"
+      ],
+      "summary": "Day 3 afternoon. Pivoted from interactive system-design teaching after the user got lost on Fermi math during Beat 2 (estimation). Delivered a single comprehensive tutorial at reference-site/topics/system-design-stock-notifications/index.md covering the entire HRT-flavored stock-price fan-out design end-to-end: the 5-minute framing method (clarify/restate/estimate/tradeoff with FR vs NFR taxonomy and the 'I don't know but let me reason' recovery line), full Fermi estimation walking from 'I don't know the tick rate' to 1M/sec peak with the hot-symbol skew revelation (20× higher than naive uniform calc), the 5 architecture decisions forced by the math, the three fan-out patterns with the hot-symbol-melts-one-node math made concrete, the four backpressure policies centered on conflation as the trading-system signature (with Python sketch), sequence numbers + snapshot+delta reconnect with mermaid sequence diagram, at-least-once with (symbol, seq) dedup, the human-UI variant tying back to apps/shared-rpc-ticker, interview moves (45-min spoken arc, phrases that sound senior, 7 common pitfalls), 11 Q&As, cheat sheet, and a 200-word one-paragraph revision summary. Wired System design sidebar group in VitePress config, added a System design walkthroughs subsection to the interview syllabus, and flipped two distributed-systems syllabus checkboxes (tail latency + at-least-once) with deep section anchors. Marked sysdesign-stock-notifications done.",
+      "artifactPaths": [
+        "reference-site/topics/system-design-stock-notifications/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-04-30-day2-review-polish",
+      "endedAt": "2026-04-30T18:35:00Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": [],
+      "topicsCovered": [
+        "review: rubric pass on browser-event-loop and python-asyncio (depth, readability, connectedness, examples, diagrams, Q&A, length)",
+        "browser-event-loop: added second mermaid (sequenceDiagram) for click → handler → React schedule → microtask drain → reconcile → commit → paint",
+        "browser-event-loop: converted 'Variants worth knowing' bullets into a comparison table (rAF / queueMicrotask / setInterval / requestIdleCallback) with latency floor and use-when columns",
+        "browser-event-loop: fixed broken Practice repo-bridge link (was pointing to async-generators NOTES; ticker app is not mounted on site, so reframed as 'clone repo and run' + worker-lessons followup)",
+        "python-asyncio: added second mermaid (sequenceDiagram) showing two tasks interleaving at await — register callback, suspend, selector wakes, resume, return — to make 'voluntary hand-back' concrete",
+        "verification: npm run build passed twice (post-events polish, post-asyncio polish); ReadLints clean; no broken anchors"
+      ],
+      "summary": "Critical review pass on Day 2 outputs (browser-event-loop and python-asyncio). Both pages scored strong on depth, readability, examples, Q&A, and length, but had the same structural gap: only one mermaid each. Added a sequence-style mermaid to each — for browser-event-loop, a click→handler→microtask→commit→paint timeline that makes React 18 automatic batching visually obvious; for python-asyncio, a two-task interleave at await that makes 'voluntary suspension' concrete. Also converted browser-event-loop's coalescing-variants bullets into a comparison table with latency floor and use-when columns, and fixed a broken Practice link that pointed to the wrong lesson. Verified with two fresh builds. No new backlog items; the review surfaced no follow-up gaps.",
+      "artifactPaths": [
+        "reference-site/topics/browser-event-loop/index.md",
+        "reference-site/topics/python-asyncio/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-04-30-python-asyncio-topic",
+      "endedAt": "2026-04-30T18:20:00Z",
+      "workstreamId": "py",
+      "itemIdsTouched": ["py-asyncio-core"],
+      "topicsCovered": [
+        "asyncio: one event loop on one thread, ready queue + waiting set + OS selectors (epoll/kqueue/IOCP)",
+        "asyncio: what await actually does (suspension + continuation; generator-machinery sugar)",
+        "asyncio: coroutine object (unstarted) vs Task (scheduled); RuntimeWarning never-awaited footgun",
+        "asyncio: gather (default raises first exception, return_exceptions=True for partial), wait (done/pending sets), wait_for (per-call deadline), as_completed (streaming), TaskGroup (3.11+ structured)",
+        "asyncio: cancellation is cooperative — CancelledError injected at next suspension; tight no-await loops are uncancellable; shield + asyncio.timeout (3.11+)",
+        "asyncio: bounded asyncio.Queue for backpressure; producer-consumer kata with sentinels + task_done; HRT-flavored ingestion framing",
+        "asyncio: when it misleads — blocking requests/psycopg2 freezes the loop, time.sleep vs asyncio.sleep, CPU-bound needs run_in_executor or processes, mixing sync handlers",
+        "asyncio: Lock/Semaphore/Event despite single thread because awaits interleave; read-modify-write race example; bounded-concurrency Semaphore kata for HTTP rate limit",
+        "cross-lang: asyncio vs JS event loop table — same shape, different runtime, AbortController vs Task.cancel",
+        "interview Q&A: 9 — what await does, CPU-bound asyncio limit, coro vs Task, cancellation mechanics, backpressure, common bugs, gather vs alternatives, asyncio Lock necessity, ingestion-service architecture answer",
+        "reference: python-asyncio topic + python sidebar group + python hub + two syllabus checkboxes with section anchors + browser-event-loop see-also cross-link"
+      ],
+      "summary": "Day 2 afternoon (paired with morning browser-event-loop). Shipped reference-site/topics/python-asyncio/index.md as a problem-first interview tutorial framed against a 200-feed market data ingestion service. Mental model with mermaid (ready/waiting/selectors); precise `await` semantics; coroutine-vs-Task with the never-awaited bug; comparison table for gather/wait/wait_for/as_completed plus TaskGroup section; cooperative cancellation including shield and asyncio.timeout; producer-consumer kata with bounded queue and explicit backpressure framing; the when-asyncio-misleads section (blocking calls, time.sleep, CPU work, mixed sync handlers); Lock/Semaphore section with race example and Semaphore-bounded HTTP kata; cross-language table vs JS event loop; 9 interview Q&As ending with the canonical 'architect an ingestion service' answer that interviewers actually want. Wired Python sidebar (after GIL), Python hub topic list, two syllabus checkboxes (asyncio core + locks/queues with deep anchors), and added a See also link from browser-event-loop pointing here. JSON updated with completed item + session; cross-references with the parallel agent's GIL session in place.",
+      "artifactPaths": [
+        "reference-site/topics/python-asyncio/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/browser-event-loop/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-04-30-browser-event-loop-topic",
+      "endedAt": "2026-04-30T18:00:00Z",
+      "workstreamId": "react-ts",
+      "itemIdsTouched": ["browser-event-loop-dom"],
+      "topicsCovered": [
+        "browser: one thread, task queue (macrotasks) vs microtask queue, render step",
+        "browser: source-of-events table (timers, WS, click, Promise.then, queueMicrotask, MutationObserver, rAF)",
+        "browser: canonical Promise.then vs setTimeout(0) trace; A D C B reasoning",
+        "browser: microtask-schedules-microtask drains to empty; UI starvation mode",
+        "browser: render is opportunistic (~60 fps), rAF runs just before paint",
+        "react: React 18 automatic batching schedules render via microtask; flushSync escape hatch",
+        "browser: layout thrash — sync read after write forces reflow; reads-then-writes fix",
+        "real-time UI: coalescing pattern — useRef buffer + one rAF flush per frame for HRT-style price grid; latency-vs-throughput tradeoff named",
+        "browser: variants — fixed-interval throttle, queueMicrotask coalescing, requestIdleCallback",
+        "browser: timer accuracy — setTimeout is a lower bound, background-tab clamps, nested-timeout 4ms clamp",
+        "reference: browser-event-loop topic + JS hub interview-refresh + JS sidebar group + four interview-syllabus checkboxes flipped"
+      ],
+      "summary": "Day 2 morning (parallel with another agent on Day 1 react-hooks). Shipped reference-site/topics/browser-event-loop/index.md as a problem-first interview tutorial framed around an HRT WebSocket price grid that freezes at 200 ticks/sec. Mental model with mermaid; queue source table; two trace variants (basic and microtask-schedules-microtask); render-fit section covering rAF, React 18 automatic batching, and flushSync; layout-thrash example (offsetWidth read inside write loop) with the reads-then-writes fix; coalescing pattern as the headline answer to 'how would you render 1000 ticks/sec' — useRef buffer + one rAF flush per frame, mentioning latency tradeoff, throttle/microtask/idleCallback variants, virtualization, and Worker offload as escalation. 8 interview Q&As. Wired VitePress JavaScript topics group, JavaScript hub interview-refresh list, and flipped four interview-syllabus checkboxes (event-loop section + the duplicate layout-thrashing line in Browser/runtime). Did not edit Python sidebar/syllabus regions — left clean for the parallel agent who shipped python-gil at 17:57Z.",
+      "artifactPaths": [
+        "reference-site/topics/browser-event-loop/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/javascript/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-04-30-python-gil-topic",
+      "endedAt": "2026-04-30T17:57:00Z",
+      "workstreamId": "py",
+      "itemIdsTouched": ["py-gil-story"],
+      "topicsCovered": [
+        "python: GIL is a mutex on the bytecode interpreter (per process), protects refcounts/dict resizes/GC bookkeeping",
+        "python: GIL released around blocking I/O syscalls and C extensions (NumPy/hashlib) that opt in via Py_BEGIN_ALLOW_THREADS",
+        "python: ~5ms switch interval (3.2+), sys.setswitchinterval; pre-3.2 was N bytecodes",
+        "python: threads vs processes vs asyncio decision script with mermaid flowchart",
+        "python: worked timing example — threads slower than serial for CPU-bound pure Python; processes ~4x; threads win for I/O",
+        "python: atomic-ops footgun — counter += 1 racy under GIL; need Lock/Queue for compound state",
+        "python: PEP 703 / 3.13 free-threaded build awareness",
+        "cross-lang: JS single-thread (no GIL needed), C++/Java/C# true multithreading, Ruby MRI has GVL",
+        "reference: python-gil topic + sidebar + python hub + syllabus checkbox"
+      ],
+      "summary": "Day 3 morning (split with parallel agent on Days 1-2). Shipped reference-site/topics/python-gil/index.md as a problem-first interview tutorial: precise definition (mutex on bytecode interpreter), when CPython releases the GIL (I/O syscalls, C extensions, 5ms switch interval), three concurrency shapes table, mermaid decision tree + two-thread sequence diagram, two timing-annotated worked examples (CPU-bound threads slower than serial vs I/O threads ~Nx), atomic-ops footgun, GIL-releasing C extensions table, PEP 703 awareness, cross-language comparison, 8 interview Q&As. Forward-linked to ../python-asyncio/ (parallel agent's page). Wired VitePress Python sidebar group, Python hub topic list, and flipped interview-syllabus GIL checkbox.",
+      "artifactPaths": [
+        "reference-site/topics/python-gil/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/python/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
     {
       "id": "sess-2026-04-30-react-clone-element-topic",
       "endedAt": "2026-04-30T23:59:00Z",
