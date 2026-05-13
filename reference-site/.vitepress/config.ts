@@ -222,6 +222,7 @@ export default withMermaid(
   title: 'Prep Bootcamp — Reference',
   description:
     'Quick refresh notes across JavaScript, Python, and C++ — topics, comparisons, and interview patterns.',
+  base: '/fundamentals-bootcamp/',
   cleanUrls: true,
   ignoreDeadLinks: true,
   /** Optional Mermaid defaults for all ```mermaid``` blocks in Markdown */

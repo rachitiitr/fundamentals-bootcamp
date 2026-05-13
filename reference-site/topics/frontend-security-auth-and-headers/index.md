@@ -1,8 +1,8 @@
 ---
-
-## title: 'Frontend security: auth, sessions, security headers & supply chain'
+title: 'Frontend security: auth, sessions, security headers & supply chain'
 sidebar_order: 33
 languages: [javascript, html]
+---
 
 # Frontend security — Beat 3 + 4: Auth, sessions, headers & supply chain
 
