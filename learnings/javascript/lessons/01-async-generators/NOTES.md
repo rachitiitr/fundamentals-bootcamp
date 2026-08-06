@@ -1,6 +1,6 @@
 # Lesson 1 — Async Generators, the Event Loop, and Push→Pull Bridges
 
-> Foundations needed before we touch Workers. By the end of this you can read every line of [`apps/shared-rpc-ticker/src/data/binanceTradeStream.ts`](../../../../apps/shared-rpc-ticker/src/data/binanceTradeStream.ts) and explain why it works.
+> Foundations needed before we touch Workers. By the end of this you can read every line of [`apps/shared-rpc-ticker/src/data/binanceTradeStream.ts`](/apps/shared-rpc-ticker/src/data/binanceTradeStream.ts/) and explain why it works.
 
 ---
 
