@@ -195,17 +195,17 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Types, lifetimes & safety
 
-- [ ] Value categories — lvalue, xvalue, prvalue; glvalue vs rvalue
-- [ ] References — lvalue ref, const ref, rvalue ref, ref collapsing, forwarding refs
-- [ ] `std::move` — cast to rvalue; does not move by itself
-- [ ] Rule of Zero / Three / Five — when to write special members
-- [ ] Copy vs move constructors/assignment; when move is implicitly deleted
-- [ ] Copy elision, RVO, NRVO — mandatory elision cases (C++17+)
+- [x] [Value categories — lvalue, xvalue, prvalue; glvalue vs rvalue](../cpp-move-semantics/#the-complete-taxonomy—without-the-mystery)
+- [x] [References — lvalue ref, const ref, rvalue ref, ref collapsing, forwarding refs](../cpp-move-semantics/#references-select-policy-they-do-not-transfer-resources)
+- [x] [`std::move` — cast to rvalue; does not move by itself](../cpp-move-semantics/#std-move-is-an-unconditional-cast)
+- [x] [Rule of Zero / Three / Five — when to write special members](../cpp-move-semantics/#rule-of-zero-three-and-five)
+- [x] [Copy vs move constructors/assignment; suppression and implicit deletion](../cpp-move-semantics/#suppressed-versus-implicitly-deleted-operations)
+- [x] [Copy elision, RVO, NRVO — guaranteed prvalue cases vs optional NRVO (C++17+)](../cpp-move-semantics/#copy-elision-guaranteed-prvalues-versus-optional-nrvo)
 - [ ] RAII — constructors acquire, destructors release
 - [ ] Smart pointers — `unique_ptr`, `shared_ptr`, `weak_ptr`, deleters, `make_shared` / `make_unique`
 - [ ] Circular `shared_ptr` + `weak_ptr` fix
 - [ ] `const`, `constexpr`, `consteval`, `constinit` — interview-level distinctions
-- [ ] `noexcept` — move in containers, optimization + termination
+- [x] [`noexcept` — move in containers and exception guarantees](../cpp-move-semantics/#why-noexcept-changes-container-behavior)
 - [ ] `static` local initialization, destruction order fiasco (awareness)
 
 ### Memory model & objects

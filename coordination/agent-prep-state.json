@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-08-06T08:04:24Z",
+  "updatedAt": "2026-08-06T10:48:07Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -335,6 +335,24 @@
       ],
       "lastSessionId": "sess-2026-04-30-distributed-systems-trio",
       "notes": "MapReduce mental model; Spark DAG narrow vs wide; word-count; worker-death recovery (lineage + shuffle output loss); speculative execution; checkpointing; streaming watermarks + stateful operators; PySpark sketch; eight-piece in-house framework recipe; seven interview Q&As."
+    },
+    {
+      "id": "meta-cpp-move-semantics",
+      "workstreamId": "meta",
+      "title": "C++ move semantics and value categories — reference topic",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → C++ → move semantics and value categories",
+      "targetArtifacts": ["reference-site/topics/cpp-move-semantics/index.md"],
+      "artifactPaths": [
+        "reference-site/topics/cpp-move-semantics/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-08-06-cpp-move-semantics",
+      "notes": "Interactive lesson plus self-contained tutorial: expressions vs objects; usable lvalue/xvalue/prvalue taxonomy; reference binding vs construction; std::move; copy/move special members and Rule of Zero/Three/Five; suppression/deletion; moved-from state; noexcept container behavior; forwarding and collapsing; C++17 guaranteed prvalue elision vs optional NRVO; overload traces and interview Q&A."
     }
   ],
   "activeClaims": [],
@@ -715,6 +733,34 @@
         "reference-site/topics/javascript/index.md",
         "reference-site/topics/interview-syllabus/index.md",
         "reference-site/topics/javascript-this-binding/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-08-06-cpp-move-semantics",
+      "endedAt": "2026-08-06T10:48:07Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": ["meta-cpp-move-semantics"],
+      "topicsCovered": [
+        "C++: expressions versus objects; reusable named values versus disposable values",
+        "C++: lvalue, xvalue, prvalue and the glvalue/rvalue umbrella taxonomy",
+        "C++: rvalue-reference binding does not construct or transfer; named rvalue references are lvalues",
+        "C++: std::move as an unconditional cast; actual transfer belongs to a move operation",
+        "C++: copy/move special members; Rule of Zero, Three, and Five",
+        "C++: implicit move suppression versus generated operations defined as deleted",
+        "C++: valid-but-unspecified moved-from state and type-specific stronger guarantees",
+        "C++: noexcept move construction and vector reallocation exception guarantees",
+        "C++: forwarding references, reference collapsing, and std::forward",
+        "C++: C++17 guaranteed same-type prvalue elision versus optional NRVO",
+        "C++: traced overload resolution for named, moved, temporary, aliased, and const expressions",
+        "reference: cpp-move-semantics tutorial, C++ sidebar and hub, seven syllabus links"
+      ],
+      "summary": "Taught move semantics interactively from the ownership problem upward, repeatedly simplifying the terminology and correcting the key misconception that binding a T&& parameter transfers ownership. Shipped a problem-first C++ tutorial with a three-situation mental model, expression taxonomy, three focused Mermaid diagrams, a complete resource owner, special-member suppression/deletion rules, moved-from and noexcept guidance, forwarding traces, precise C++17 copy-elision versus NRVO coverage, runnable overload practice, failure modes, and 14 interview Q&As. Wired the C++ sidebar and hub, checked seven matching syllabus bullets, and verified the reference site with a successful production build.",
+      "artifactPaths": [
+        "reference-site/topics/cpp-move-semantics/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
         "coordination/agent-prep-state.json"
       ]
     }

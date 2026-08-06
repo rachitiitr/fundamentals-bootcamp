@@ -10,6 +10,7 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 
 ## Topics
 
+- [Move semantics & value categories](../cpp-move-semantics/) — `std::move`, special members, forwarding, `noexcept`, and copy elision
 - [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
 - [Struct layout, padding & alignment — `sizeof`, `alignof`, reordering, interview Q&A](../cpp-struct-layout/)
 - [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — vtables vs Python MRO vs JS prototypes (cross-language)

@@ -122,6 +122,10 @@ const mainSidebar = [
     text: 'C++ topics',
     items: [
       {
+        text: 'Move semantics & value categories',
+        link: '/topics/cpp-move-semantics/',
+      },
+      {
         text: 'Virtual tables (vtables)',
         link: '/topics/cpp-vtables/',
       },
