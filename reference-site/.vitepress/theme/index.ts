@@ -2,13 +2,18 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Layout from './Layout.vue'
 
-function isLearningsNavigation(href: string): boolean {
+/** Path prefixes served as real files (middleware in dev, static files in the build). */
+const STATIC_SEGMENTS = ['learnings', 'apps'] as const
+
+function isStaticFileNavigation(href: string): boolean {
   const pathOnly = href.split('#')[0]?.split('?')[0] ?? ''
-  return pathOnly.includes('/learnings/') || pathOnly.endsWith('/learnings')
+  return STATIC_SEGMENTS.some(
+    (seg) => pathOnly.includes(`/${seg}/`) || pathOnly.endsWith(`/${seg}`),
+  )
 }
 
 /**
- * `/learnings/*` is served by the dev middleware as real files, not VitePress routes.
+ * `/learnings/*` and `/apps/*` are served as real files, not VitePress routes.
  * VitePress uses a custom `router` (not vue-router): use `onBeforeRouteChange`, not `beforeEach`.
  */
 export default {
@@ -18,7 +23,7 @@ export default {
     if (typeof window === 'undefined' || !router) return
     const prev = router.onBeforeRouteChange
     router.onBeforeRouteChange = async (href: string) => {
-      if (isLearningsNavigation(href)) {
+      if (isStaticFileNavigation(href)) {
         window.location.assign(href)
         return false
       }

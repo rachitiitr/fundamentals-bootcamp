@@ -72,6 +72,7 @@ Use the [Python hub](./topics/python/index.md) pattern: motivation, minimal exam
 - **Worker exercises (`index.html`, `.js`)** — link to **`/learnings/javascript/lessons/<lesson>/<exercise>/index.html`** on the same dev/preview port. Those URLs use the [static middleware](./.vitepress/learnings-static-plugin.ts); `router.onBeforeRouteChange` in [`.vitepress/theme/index.ts`](./.vitepress/theme/index.ts) forces a **full page load** for `/learnings/...` so the dev server can answer.
 - **Legacy `/learnings/javascript/lessons/.../*.md` URLs** — redirected with **302** to the matching `/lessons/javascript/...` page.
 - **`?raw=1`** on other `/learnings/**/*.md` (if any) still returns raw `text/markdown`.
+- **App sources (`/apps/**`)** — every file under the repo's `apps/` workspaces is browsable as syntax-highlighted HTML via [`apps-source-plugin.ts`](./.vitepress/apps-source-plugin.ts). Start at **`/apps/`** for a directory listing. Because GitHub Pages picks `Content-Type` from the extension (a `.ts` file would download, not render), each source file is emitted as a **directory** holding `index.html` (highlighted view) and `raw.txt` (plain text) — so `/apps/<app>/src/foo.ts` redirects to `/apps/<app>/src/foo.ts/` and renders. `node_modules`, `dist` and lockfiles are excluded; the dev middleware mirrors the static layout exactly.
 
 Examples:
 

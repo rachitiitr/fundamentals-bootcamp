@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import { buildJavascriptLessonSidebar } from './lesson-sidebar'
 import { learningsStaticPlugin } from './learnings-static-plugin'
+import { appsSourcePlugin } from './apps-source-plugin'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(__dirname, '../..')
@@ -22,6 +23,7 @@ const mainSidebar = [
         text: 'JavaScript lessons (sidebar)',
         link: '/lessons/javascript/01-async-generators/NOTES',
       },
+      { text: 'App source browser', link: '/apps/' },
     ],
   },
   {
@@ -241,7 +243,7 @@ export default withMermaid(
         allow: [path.resolve(__dirname, '..'), repoRoot],
       },
     },
-    plugins: [learningsStaticPlugin()],
+    plugins: [learningsStaticPlugin(), appsSourcePlugin()],
   },
   themeConfig: {
     nav: [
@@ -249,6 +251,7 @@ export default withMermaid(
       { text: 'Syllabus', link: '/topics/interview-syllabus/' },
       { text: 'Topics', link: '/topics/iterators-and-generators/' },
       { text: 'JS lessons', link: '/lessons/javascript/01-async-generators/NOTES' },
+      { text: 'App source', link: '/apps/' },
     ],
     sidebar: {
       '/lessons/': buildJavascriptLessonSidebar(),

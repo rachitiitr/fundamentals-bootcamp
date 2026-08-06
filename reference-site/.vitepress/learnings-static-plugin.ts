@@ -61,7 +61,7 @@ function findLearningsRoot(viteRoot: string): string {
   return path.resolve(viteRoot, '../learnings')
 }
 
-function stripViteBase(urlPath: string, base: string): string {
+export function stripViteBase(urlPath: string, base: string): string {
   if (!base || base === '/') return urlPath
   const nb = base.replace(/\/+$/, '')
   if (!nb || nb === '/') return urlPath
@@ -114,7 +114,7 @@ const mime: Record<string, string> = {
 }
 
 type StackLayer = { route: string; handle: ConnectLikeHandle }
-type ConnectLikeHandle = (
+export type ConnectLikeHandle = (
   req: IncomingMessage,
   res: ServerResponse,
   next: (err?: unknown) => void,
@@ -182,7 +182,7 @@ function createLearningsHandler(getRoot: () => string, getBase: () => string): C
   }
 }
 
-function prependMiddleware(
+export function prependMiddleware(
   server: { middlewares: { use: (h: ConnectLikeHandle) => void; stack: StackLayer[] } },
   handler: ConnectLikeHandle,
 ) {
