@@ -123,9 +123,9 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 - [ ] Primitives vs objects, boxing, `typeof` quirks
 - [ ] `==` vs `===`, type coercion rules (high level)
-- [ ] `var` / `let` / `const`, temporal dead zone, block scope
-- [ ] Hoisting — functions vs `var`; `let`/`const` not hoisted like `var`
-- [ ] Closures — lexical environment, common loop/callback bugs, fixes
+- [x] [`var` / `let` / `const`, temporal dead zone, block scope](../javascript-closures-scope/#declaration-instantiation-what-hoisting-really-means)
+- [x] [Hoisting — functions vs `var`; `let`/`const` are hoisted but uninitialized](../javascript-closures-scope/#the-temporal-dead-zone-hoisted-but-inaccessible)
+- [x] [Closures — lexical environments, lifetime, loop/callback bugs, and fixes](../javascript-closures-scope/#closure-creation-and-lifetime)
 - [x] [`this` — default, implicit, explicit (`call`/`apply`/`bind`), arrow functions](../javascript-this-binding/)
 - [ ] `new`, constructors, `class`, `extends`, `super` — see [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) Chapter 2–4
 - [x] Prototypes — `__proto__` vs `prototype` (conceptual); delegation — [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/)

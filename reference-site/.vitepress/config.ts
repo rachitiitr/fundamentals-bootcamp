@@ -38,6 +38,10 @@ const mainSidebar = [
     text: 'JavaScript topics',
     items: [
       {
+        text: 'Closures, lexical scope & hoisting',
+        link: '/topics/javascript-closures-scope/',
+      },
+      {
         text: 'Object APIs, descriptors, Proxy & cloning',
         link: '/topics/javascript-objects-interview/',
       },

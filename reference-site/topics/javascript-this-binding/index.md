@@ -245,3 +245,8 @@ Advanced: bound functions can interact with **`new`** in specified ways; default
 
 - Kyle Simpson -- *You Don't Know JS* (this & object prototypes / this & object foundations) -- the **four binding rules** framing used widely in interviews.
 - MDN -- [`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this), [`Function.prototype.call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call), [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
+
+## See also
+
+- [Closures, lexical scope & hoisting](../javascript-closures-scope/) — ordinary lexical capture, arrow-function scope, declaration semantics, and React stale closures
+- [JavaScript hub](../javascript/)
