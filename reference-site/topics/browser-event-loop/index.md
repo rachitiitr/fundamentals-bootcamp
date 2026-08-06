@@ -345,6 +345,7 @@ No. `setTimeout(fn, 50)` is a **lower bound**: at least 50 ms before `fn` become
 
 ## See also
 
+- [Promises and `async` / `await`](../javascript-promises-async-await/) — Promise settlement, chaining, `await` continuations, combinators, floating errors, and cancellation awareness; this page supplies its surrounding queue and render model.
 - [Frame pipeline — `rAF`, `rIC` & `useLayoutEffect`](../browser-frame-pipeline/) — the next layer above this: where each scheduling API sits in the per-frame pipeline, flicker-free measurement, and idle background work.
 - [`this` binding](../javascript-this-binding/) — how event-handler `this` interacts with the task that fired it.
 - [Iterators & generators](../iterators-and-generators/) — `for await` consumes microtasks per yield.

@@ -137,17 +137,17 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [ ] `JSON.stringify` / `parse` — pitfalls (dates, `undefined`, cycles); **`structuredClone`** contrast — see [JavaScript object APIs § JSON vs structuredClone](../javascript-objects-interview/#json-vs-structuredclone)
 - [ ] Modules — ESM vs CommonJS, static vs dynamic `import()`, default vs named exports
 - [ ] Strict mode — why it exists, top-level `this` in modules
-- [ ] Error types, `Promise` rejection vs sync throw in `async` functions  
+- [x] Error types, `Promise` rejection vs sync throw in `async` functions — [Promises and `async` / `await` § async functions](../javascript-promises-async-await/#_4-async-functions-and-the-await-mental-model)
   - [x] Cross-language hub: [Iterators & generators](../iterators-and-generators/) — `Symbol.iterator`, `function*`, `for await`
 
 ### Event loop & asynchrony
 
 - [x] Call stack, task queues, macrotasks vs microtasks (`queueMicrotask`, `Promise.then`) — [Browser event loop](../browser-event-loop/)
 - [x] `setTimeout` / `setInterval` — timing guarantees (none), throttling — same page (Q&A "Are timers accurate?")
-- [ ] Promises — states, chaining, error propagation, `Promise.all` / `race` / `allSettled`
-- [ ] `async` / `await` — desugaring mental model
+- [x] Promises — states, chaining, error propagation, `all` / `allSettled` / `race` / `any` — [Promises and `async` / `await`](../javascript-promises-async-await/)
+- [x] `async` / `await` — return semantics and desugaring mental model — [§ `async` functions and the `await` mental model](../javascript-promises-async-await/#_4-async-functions-and-the-await-mental-model)
 - [ ] Async iteration — `Symbol.asyncIterator`, `for await...of`
-- [ ] `AbortController` — canceling `fetch` and other async work
+- [x] `AbortController` — canceling `fetch` and other cooperative async work — [§ Fail-fast is not cancellation](../javascript-promises-async-await/#_7-fail-fast-is-not-cancellation)
 - [x] React 18 automatic batching, `flushSync`, render-commit timing — [Browser event loop § Where rendering fits in](../browser-event-loop/#where-rendering-fits-in)
 - [x] Layout thrashing, `requestAnimationFrame`, coalescing high-frequency events — [Browser event loop § Layout thrash](../browser-event-loop/#layout-thrash-sync-read-after-sync-write) and § HRT pattern
 

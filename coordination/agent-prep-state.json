@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-04-30T19:30:00Z",
+  "updatedAt": "2026-08-06T06:45:32Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -42,6 +42,25 @@
     }
   ],
   "items": [
+    {
+      "id": "react-ts-js-promises-async-await",
+      "workstreamId": "react-ts",
+      "title": "JavaScript Promises and async/await — semantics, composition, cancellation awareness",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → JavaScript / TypeScript → Promises and async/await",
+      "targetArtifacts": ["reference-site/topics/javascript-promises-async-await/index.md"],
+      "artifactPaths": [
+        "reference-site/topics/javascript-promises-async-await/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/javascript/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/browser-event-loop/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-08-06-javascript-promises-async-await",
+      "notes": "Interactive lesson followed by a problem-first reference tutorial: settlement vs resolution, thenable assimilation, chaining and error ownership, microtask queue traces, async/await return and suspension semantics, sequential vs concurrent starts, all four combinators including AggregateError, floating promises, explicit AbortController cancellation, production failures, practice, and interview Q&A. Wired sidebar, JavaScript hub, syllabus, and event-loop back-link; production build passed."
+    },
     {
       "id": "meta-js-this-binding-topic",
       "workstreamId": "meta",
@@ -647,6 +666,33 @@
         "reference-site/topics/interview-syllabus/index.md",
         "reference-site/topics/cpp/index.md",
         "reference-site/.vitepress/config.ts"
+      ]
+    },
+    {
+      "id": "sess-2026-08-06-javascript-promises-async-await",
+      "endedAt": "2026-08-06T06:45:32Z",
+      "workstreamId": "react-ts",
+      "itemIdsTouched": ["react-ts-js-promises-async-await"],
+      "topicsCovered": [
+        "javascript: pending, fulfilled, rejected, settled, and resolved-to-pending distinctions",
+        "javascript: Promise resolution procedure and thenable assimilation",
+        "javascript: chain return/throw/adoption behavior, catch recovery, finally cleanup, and rejection-handler placement",
+        "javascript: Promise reactions, pending-handler registration, FIFO microtask traces, and await continuation timing",
+        "javascript: async function return/throw semantics and await desugaring mental model",
+        "javascript: sequential waits vs concurrent starts and bounded-concurrency awareness",
+        "javascript: Promise.all, allSettled, race, any, AggregateError, empty-input edges, and input-order guarantees",
+        "javascript: fail-fast is not cancellation; AbortController, cooperative cancellation, and timeout cleanup",
+        "javascript: floating and unhandled Promises, deliberate fire-and-forget, and production failure modes",
+        "reference: Promises and async/await topic, JavaScript sidebar and hub, syllabus checks, browser-event-loop bidirectional link"
+      ],
+      "summary": "Interactive lesson taught Promises one conceptual beat at a time, with corrections centered on when reactions enter the microtask queue and why try/catch only observes connected rejections. Shipped a self-contained tutorial with three small Mermaid diagrams, runnable examples, two interview traces, combinator and production-failure tables, practice, and 13 interview Q&As. Wired the JavaScript sidebar and hub, checked the matching syllabus items, and added a reciprocal link from the browser event-loop page. Installed locked workspace dependencies in an isolated npm cache and verified the reference site with a successful production build.",
+      "artifactPaths": [
+        "reference-site/topics/javascript-promises-async-await/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/javascript/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/browser-event-loop/index.md",
+        "coordination/agent-prep-state.json"
       ]
     }
   ]

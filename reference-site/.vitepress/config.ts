@@ -50,6 +50,10 @@ const mainSidebar = [
         link: '/topics/browser-event-loop/',
       },
       {
+        text: 'Promises & async/await',
+        link: '/topics/javascript-promises-async-await/',
+      },
+      {
         text: 'Frame pipeline — rAF, rIC & useLayoutEffect',
         link: '/topics/browser-frame-pipeline/',
       },
