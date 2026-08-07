@@ -10,6 +10,7 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 
 ## Topics
 
+- [RAII, ownership & smart pointers — deterministic cleanup, `unique_ptr`, shared control blocks, cycles](../cpp-raii-smart-pointers/)
 - [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
 - [Struct layout, padding & alignment — `sizeof`, `alignof`, reordering, interview Q&A](../cpp-struct-layout/)
 - [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — vtables vs Python MRO vs JS prototypes (cross-language)

@@ -228,7 +228,7 @@ async def fetch_status(session, url: str) -> int:
 
 ## How this differs from other languages (one line each)
 
-- **C++:** RAII destructors — no `with` keyword; scope ends → destructor runs.
+- **C++:** [RAII destructors and smart-pointer ownership](../cpp-raii-smart-pointers/) — no `with` keyword; scope ends → destructor runs.
 - **Java:** `try-with-resources` (`AutoCloseable`).
 - **JavaScript:** no direct equivalent in older JS; `using` / explicit `try/finally` in modern patterns.
 

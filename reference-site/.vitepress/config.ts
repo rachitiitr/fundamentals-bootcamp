@@ -118,6 +118,10 @@ const mainSidebar = [
     text: 'C++ topics',
     items: [
       {
+        text: 'RAII, ownership & smart pointers',
+        link: '/topics/cpp-raii-smart-pointers/',
+      },
+      {
         text: 'Virtual tables (vtables)',
         link: '/topics/cpp-vtables/',
       },

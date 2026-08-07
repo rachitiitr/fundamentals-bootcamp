@@ -198,12 +198,12 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 - [ ] Value categories — lvalue, xvalue, prvalue; glvalue vs rvalue
 - [ ] References — lvalue ref, const ref, rvalue ref, ref collapsing, forwarding refs
 - [ ] `std::move` — cast to rvalue; does not move by itself
-- [ ] Rule of Zero / Three / Five — when to write special members
+- [x] [Rule of Zero / Three / Five — when to write special members](../cpp-raii-smart-pointers/#rule-of-zero-delegate-ownership-to-members)
 - [ ] Copy vs move constructors/assignment; when move is implicitly deleted
 - [ ] Copy elision, RVO, NRVO — mandatory elision cases (C++17+)
-- [ ] RAII — constructors acquire, destructors release
-- [ ] Smart pointers — `unique_ptr`, `shared_ptr`, `weak_ptr`, deleters, `make_shared` / `make_unique`
-- [ ] Circular `shared_ptr` + `weak_ptr` fix
+- [x] [RAII — constructors acquire, destructors release](../cpp-raii-smart-pointers/#raii-cleanup-follows-lifetime)
+- [x] [Smart pointers — `unique_ptr`, `shared_ptr`, `weak_ptr`, deleters, `make_shared` / `make_unique`](../cpp-raii-smart-pointers/)
+- [x] [Circular `shared_ptr` + `weak_ptr` fix](../cpp-raii-smart-pointers/#breaking-ownership-cycles)
 - [ ] `const`, `constexpr`, `consteval`, `constinit` — interview-level distinctions
 - [ ] `noexcept` — move in containers, optimization + termination
 - [ ] `static` local initialization, destruction order fiasco (awareness)

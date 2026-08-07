@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-08-06T06:45:32Z",
+  "updatedAt": "2026-08-07T13:41:31Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -335,6 +335,25 @@
       ],
       "lastSessionId": "sess-2026-04-30-distributed-systems-trio",
       "notes": "MapReduce mental model; Spark DAG narrow vs wide; word-count; worker-death recovery (lineage + shuffle output loss); speculative execution; checkpointing; streaming watermarks + stateful operators; PySpark sketch; eight-piece in-house framework recipe; seven interview Q&As."
+    },
+    {
+      "id": "meta-cpp-raii-smart-pointers",
+      "workstreamId": "meta",
+      "title": "C++ RAII, ownership, and smart pointers — reference topic",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → C++ → RAII and smart pointers",
+      "targetArtifacts": ["reference-site/topics/cpp-raii-smart-pointers/index.md"],
+      "artifactPaths": [
+        "reference-site/topics/cpp-raii-smart-pointers/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/python-context-managers/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-08-07-cpp-raii-smart-pointers",
+      "notes": "Interactive lesson followed by a problem-first tutorial: deterministic cleanup and unwinding; Rule of Zero; owner/observer semantics; unique/shared/weak pointers; control blocks; cycles; make_shared retention; advanced APIs at awareness level; exception safety; AST/tree ownership walkthrough and interview exercises."
     }
   ],
   "activeClaims": [],
@@ -692,6 +711,31 @@
         "reference-site/topics/javascript/index.md",
         "reference-site/topics/interview-syllabus/index.md",
         "reference-site/topics/browser-event-loop/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-08-07-cpp-raii-smart-pointers",
+      "endedAt": "2026-08-07T13:41:31Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": ["meta-cpp-raii-smart-pointers"],
+      "topicsCovered": [
+        "cpp: deterministic destruction, reverse construction order, and exception stack unwinding",
+        "cpp: Rule of Zero as default; ordinary constructors versus user-declared destructor effects on implicit moves",
+        "cpp: owner versus observer semantics; raw references and pointers as valid non-owning views",
+        "cpp: unique_ptr transfer, make_unique, get/reset/release, and custom C-resource deleters",
+        "cpp: shared_ptr control block, strong ownership counts, thread-safety boundary, and double-control-block failure",
+        "cpp: weak_ptr lock/expiration, cycle breaking, and make_shared single-allocation versus weak-retention tradeoff",
+        "cpp: enable_shared_from_this and aliasing constructors at awareness level",
+        "cpp: exception guarantees, no-throw destructors, prepare-then-commit, and AST/tree ownership design"
+      ],
+      "summary": "Taught RAII and smart-pointer ownership interactively, slowing down around control blocks and parent/child graphs. The final AST example established the central invariant: unique_ptr ownership flows downward while a raw parent pointer observes upward; shared_ptr plus weak_ptr is reserved for nodes that may independently outlive parents. Shipped a self-contained C++ tutorial with worked lifetime traces, three small Mermaid diagrams, concise code, failure modes, practice prompts, and 15 interview Q&As. Wired the C++ sidebar and hub, checked four matching syllabus rows, added a reciprocal Python context-manager link, and verified the VitePress production build.",
+      "artifactPaths": [
+        "reference-site/topics/cpp-raii-smart-pointers/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/python-context-managers/index.md",
         "coordination/agent-prep-state.json"
       ]
     }
