@@ -123,9 +123,9 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 - [ ] Primitives vs objects, boxing, `typeof` quirks
 - [ ] `==` vs `===`, type coercion rules (high level)
-- [ ] `var` / `let` / `const`, temporal dead zone, block scope
-- [ ] Hoisting — functions vs `var`; `let`/`const` not hoisted like `var`
-- [ ] Closures — lexical environment, common loop/callback bugs, fixes
+- [x] [`var` / `let` / `const`, temporal dead zone, block scope](../javascript-closures-scope/#declaration-instantiation-what-hoisting-really-means)
+- [x] [Hoisting — functions vs `var`; `let`/`const` are hoisted but uninitialized](../javascript-closures-scope/#the-temporal-dead-zone-hoisted-but-inaccessible)
+- [x] [Closures — lexical environments, lifetime, loop/callback bugs, and fixes](../javascript-closures-scope/#closure-creation-and-lifetime)
 - [x] [`this` — default, implicit, explicit (`call`/`apply`/`bind`), arrow functions](../javascript-this-binding/)
 - [ ] `new`, constructors, `class`, `extends`, `super` — see [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) Chapter 2–4
 - [x] Prototypes — `__proto__` vs `prototype` (conceptual); delegation — [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/)
@@ -195,17 +195,17 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### Types, lifetimes & safety
 
-- [ ] Value categories — lvalue, xvalue, prvalue; glvalue vs rvalue
-- [ ] References — lvalue ref, const ref, rvalue ref, ref collapsing, forwarding refs
-- [ ] `std::move` — cast to rvalue; does not move by itself
-- [x] [Rule of Zero / Three / Five — when to write special members](../cpp-raii-smart-pointers/#rule-of-zero-delegate-ownership-to-members)
-- [ ] Copy vs move constructors/assignment; when move is implicitly deleted
-- [ ] Copy elision, RVO, NRVO — mandatory elision cases (C++17+)
+- [x] [Value categories — lvalue, xvalue, prvalue; glvalue vs rvalue](../cpp-move-semantics/#the-complete-taxonomy—without-the-mystery)
+- [x] [References — lvalue ref, const ref, rvalue ref, ref collapsing, forwarding refs](../cpp-move-semantics/#references-select-policy-they-do-not-transfer-resources)
+- [x] [`std::move` — cast to rvalue; does not move by itself](../cpp-move-semantics/#std-move-is-an-unconditional-cast)
+- [x] [Rule of Zero / Three / Five — when to write special members](../cpp-move-semantics/#rule-of-zero-three-and-five)
+- [x] [Copy vs move constructors/assignment; suppression and implicit deletion](../cpp-move-semantics/#suppressed-versus-implicitly-deleted-operations)
+- [x] [Copy elision, RVO, NRVO — guaranteed prvalue cases vs optional NRVO (C++17+)](../cpp-move-semantics/#copy-elision-guaranteed-prvalues-versus-optional-nrvo)
 - [x] [RAII — constructors acquire, destructors release](../cpp-raii-smart-pointers/#raii-cleanup-follows-lifetime)
 - [x] [Smart pointers — `unique_ptr`, `shared_ptr`, `weak_ptr`, deleters, `make_shared` / `make_unique`](../cpp-raii-smart-pointers/)
 - [x] [Circular `shared_ptr` + `weak_ptr` fix](../cpp-raii-smart-pointers/#breaking-ownership-cycles)
 - [ ] `const`, `constexpr`, `consteval`, `constinit` — interview-level distinctions
-- [ ] `noexcept` — move in containers, optimization + termination
+- [x] [`noexcept` — move in containers and exception guarantees](../cpp-move-semantics/#why-noexcept-changes-container-behavior)
 - [ ] `static` local initialization, destruction order fiasco (awareness)
 
 ### Memory model & objects

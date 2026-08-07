@@ -7,27 +7,42 @@
     {
       "id": "dsa",
       "label": "Data structures & algorithms (meta + gaps post-LC75)",
-      "pathHints": ["reference-site/topics/", "learnings/python/exercises/"]
+      "pathHints": [
+        "reference-site/topics/",
+        "learnings/python/exercises/"
+      ]
     },
     {
       "id": "py",
       "label": "Python internals, stdlib, concurrency",
-      "pathHints": ["reference-site/topics/", "learnings/python/"]
+      "pathHints": [
+        "reference-site/topics/",
+        "learnings/python/"
+      ]
     },
     {
       "id": "react-ts",
       "label": "React, TypeScript, browser semantics",
-      "pathHints": ["reference-site/topics/", "apps/shared-rpc-ticker/"]
+      "pathHints": [
+        "reference-site/topics/",
+        "apps/shared-rpc-ticker/"
+      ]
     },
     {
       "id": "sysdesign",
       "label": "System design (real-time, fan-out, reliability)",
-      "pathHints": ["reference-site/topics/"]
+      "pathHints": [
+        "reference-site/topics/"
+      ]
     },
     {
       "id": "workers",
       "label": "Workers, SharedWorker, RPC lesson track",
-      "pathHints": ["learnings/javascript/lessons/", "apps/shared-rpc-ticker/", "reference-site/topics/javascript/"]
+      "pathHints": [
+        "learnings/javascript/lessons/",
+        "apps/shared-rpc-ticker/",
+        "reference-site/topics/javascript/"
+      ]
     },
     {
       "id": "meta",
@@ -49,7 +64,9 @@
       "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → JavaScript / TypeScript → Promises and async/await",
-      "targetArtifacts": ["reference-site/topics/javascript-promises-async-await/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/javascript-promises-async-await/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/javascript-promises-async-await/index.md",
         "reference-site/.vitepress/config.ts",
@@ -68,7 +85,9 @@
       "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → Core JS semantics → this",
-      "targetArtifacts": ["reference-site/topics/javascript-this-binding/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/javascript-this-binding/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/javascript-this-binding/index.md",
         "reference-site/.vitepress/config.ts",
@@ -87,7 +106,9 @@
       "status": "backlog",
       "priority": 1,
       "syllabusHint": "interview-syllabus → heapq, heaps / priority queues (meta)",
-      "targetArtifacts": ["reference-site/topics/heap-patterns/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/heap-patterns/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Link 2–3 LeetCode problems; compare to sorted list / bisect tradeoffs."
     },
@@ -98,7 +119,9 @@
       "status": "backlog",
       "priority": 1,
       "syllabusHint": "interview-syllabus → graphs",
-      "targetArtifacts": ["reference-site/topics/graph-algorithms-interview/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/graph-algorithms-interview/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Adjacency list in Python; complexity; one grid BFS example."
     },
@@ -109,7 +132,9 @@
       "status": "backlog",
       "priority": 2,
       "syllabusHint": "interview-syllabus → binary search variants",
-      "targetArtifacts": ["reference-site/topics/binary-search-variants/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/binary-search-variants/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Pair with bisect stdlib sidebar."
     },
@@ -120,7 +145,9 @@
       "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → asyncio",
-      "targetArtifacts": ["reference-site/topics/python-asyncio/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/python-asyncio/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/python-asyncio/index.md",
         "reference-site/.vitepress/config.ts",
@@ -139,7 +166,9 @@
       "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → GIL",
-      "targetArtifacts": ["reference-site/topics/python-gil/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/python-gil/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/python-gil/index.md",
         "reference-site/.vitepress/config.ts",
@@ -157,7 +186,9 @@
       "status": "backlog",
       "priority": 1,
       "syllabusHint": "interview-syllabus → hooks implied under JS/React sections",
-      "targetArtifacts": ["reference-site/topics/react-hooks-interview/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/react-hooks-interview/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Tie to event loop microtasks at high level; optional link to ticker app."
     },
@@ -168,7 +199,9 @@
       "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → React library patterns → cloneElement",
-      "targetArtifacts": ["reference-site/topics/react-clone-element/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/react-clone-element/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/react-clone-element/index.md",
         "reference-site/.vitepress/config.ts",
@@ -186,7 +219,9 @@
       "status": "backlog",
       "priority": 1,
       "syllabusHint": "interview-syllabus → TypeScript section",
-      "targetArtifacts": ["reference-site/topics/typescript-interview-patterns/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/typescript-interview-patterns/index.md"
+      ],
       "artifactPaths": [],
       "notes": "unknown vs any; one small API-typing example."
     },
@@ -197,7 +232,9 @@
       "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → event loop & asynchrony",
-      "targetArtifacts": ["reference-site/topics/browser-event-loop/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/browser-event-loop/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/browser-event-loop/index.md",
         "reference-site/.vitepress/config.ts",
@@ -215,7 +252,9 @@
       "status": "done",
       "priority": 1,
       "syllabusHint": "distributed + WebSockets sections",
-      "targetArtifacts": ["reference-site/topics/system-design-stock-notifications/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/system-design-stock-notifications/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/system-design-stock-notifications/index.md",
         "reference-site/.vitepress/config.ts",
@@ -232,7 +271,9 @@
       "status": "backlog",
       "priority": 2,
       "syllabusHint": "interview-syllabus → distributed systems",
-      "targetArtifacts": ["reference-site/topics/distributed-retries-idempotency/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/distributed-retries-idempotency/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Keep under ~200 lines; heavy on Q&A."
     },
@@ -243,7 +284,11 @@
       "status": "backlog",
       "priority": 1,
       "syllabusHint": "README lessons table v1",
-      "targetArtifacts": ["learnings/javascript/lessons/02-workers/", "apps/shared-rpc-ticker/", "README.md"],
+      "targetArtifacts": [
+        "learnings/javascript/lessons/02-workers/",
+        "apps/shared-rpc-ticker/",
+        "README.md"
+      ],
       "artifactPaths": [],
       "notes": "Coordinate with any active work on same app paths."
     },
@@ -254,7 +299,9 @@
       "status": "backlog",
       "priority": 2,
       "syllabusHint": "interview-syllabus → Web Workers",
-      "targetArtifacts": ["reference-site/topics/sharedworker-multitab/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/sharedworker-multitab/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Neutral naming; optional \"further reading\" links only, not source of truth."
     },
@@ -265,7 +312,9 @@
       "status": "backlog",
       "priority": 2,
       "syllabusHint": "interview-syllabus/index.md",
-      "targetArtifacts": ["reference-site/topics/interview-syllabus/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/interview-syllabus/index.md"
+      ],
       "artifactPaths": [],
       "notes": "Run after first wave of topic pages exist to avoid dead links."
     },
@@ -276,7 +325,9 @@
       "status": "done",
       "priority": 2,
       "syllabusHint": "interview-syllabus → Python / OOP hooks",
-      "targetArtifacts": ["reference-site/topics/python-dunder-methods/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/python-dunder-methods/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/python-dunder-methods/index.md",
         "reference-site/.vitepress/config.ts",
@@ -295,7 +346,9 @@
       "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → Distributed systems → message queues",
-      "targetArtifacts": ["reference-site/topics/distributed-message-queues/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/distributed-message-queues/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/distributed-message-queues/index.md",
         "reference-site/.vitepress/config.ts",
@@ -311,7 +364,9 @@
       "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → Distributed systems → idempotency keys + at-least-once vs exactly-once",
-      "targetArtifacts": ["reference-site/topics/distributed-delivery-and-idempotency/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/distributed-delivery-and-idempotency/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/distributed-delivery-and-idempotency/index.md",
         "reference-site/.vitepress/config.ts",
@@ -327,7 +382,9 @@
       "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → Distributed systems → batch / stream compute",
-      "targetArtifacts": ["reference-site/topics/distributed-batch-and-stream-compute/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/distributed-batch-and-stream-compute/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/distributed-batch-and-stream-compute/index.md",
         "reference-site/.vitepress/config.ts",
@@ -337,13 +394,35 @@
       "notes": "MapReduce mental model; Spark DAG narrow vs wide; word-count; worker-death recovery (lineage + shuffle output loss); speculative execution; checkpointing; streaming watermarks + stateful operators; PySpark sketch; eight-piece in-house framework recipe; seven interview Q&As."
     },
     {
+      "id": "meta-cpp-move-semantics",
+      "workstreamId": "meta",
+      "title": "C++ move semantics and value categories — reference topic",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → C++ → move semantics and value categories",
+      "targetArtifacts": [
+        "reference-site/topics/cpp-move-semantics/index.md"
+      ],
+      "artifactPaths": [
+        "reference-site/topics/cpp-move-semantics/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-08-06-cpp-move-semantics",
+      "notes": "Interactive lesson plus self-contained tutorial: expressions vs objects; usable lvalue/xvalue/prvalue taxonomy; reference binding vs construction; std::move; copy/move special members and Rule of Zero/Three/Five; suppression/deletion; moved-from state; noexcept container behavior; forwarding and collapsing; C++17 guaranteed prvalue elision vs optional NRVO; overload traces and interview Q&A."
+    },
+    {
       "id": "meta-cpp-raii-smart-pointers",
       "workstreamId": "meta",
       "title": "C++ RAII, ownership, and smart pointers — reference topic",
       "status": "done",
       "priority": 1,
       "syllabusHint": "interview-syllabus → C++ → RAII and smart pointers",
-      "targetArtifacts": ["reference-site/topics/cpp-raii-smart-pointers/index.md"],
+      "targetArtifacts": [
+        "reference-site/topics/cpp-raii-smart-pointers/index.md"
+      ],
       "artifactPaths": [
         "reference-site/topics/cpp-raii-smart-pointers/index.md",
         "reference-site/.vitepress/config.ts",
@@ -402,7 +481,9 @@
       "id": "sess-2026-04-30-sysdesign-stock-fanout-tutorial",
       "endedAt": "2026-04-30T18:50:00Z",
       "workstreamId": "sysdesign",
-      "itemIdsTouched": ["sysdesign-stock-notifications"],
+      "itemIdsTouched": [
+        "sysdesign-stock-notifications"
+      ],
       "topicsCovered": [
         "sysdesign method: clarify-restate-estimate-tradeoff; first 5 minutes wins or loses the loop",
         "sysdesign: FR vs NFR question taxonomy; 'for every what question, ask one how-much/how-strict'",
@@ -454,7 +535,9 @@
       "id": "sess-2026-04-30-python-asyncio-topic",
       "endedAt": "2026-04-30T18:20:00Z",
       "workstreamId": "py",
-      "itemIdsTouched": ["py-asyncio-core"],
+      "itemIdsTouched": [
+        "py-asyncio-core"
+      ],
       "topicsCovered": [
         "asyncio: one event loop on one thread, ready queue + waiting set + OS selectors (epoll/kqueue/IOCP)",
         "asyncio: what await actually does (suspension + continuation; generator-machinery sugar)",
@@ -482,7 +565,9 @@
       "id": "sess-2026-04-30-browser-event-loop-topic",
       "endedAt": "2026-04-30T18:00:00Z",
       "workstreamId": "react-ts",
-      "itemIdsTouched": ["browser-event-loop-dom"],
+      "itemIdsTouched": [
+        "browser-event-loop-dom"
+      ],
       "topicsCovered": [
         "browser: one thread, task queue (macrotasks) vs microtask queue, render step",
         "browser: source-of-events table (timers, WS, click, Promise.then, queueMicrotask, MutationObserver, rAF)",
@@ -509,7 +594,9 @@
       "id": "sess-2026-04-30-python-gil-topic",
       "endedAt": "2026-04-30T17:57:00Z",
       "workstreamId": "py",
-      "itemIdsTouched": ["py-gil-story"],
+      "itemIdsTouched": [
+        "py-gil-story"
+      ],
       "topicsCovered": [
         "python: GIL is a mutex on the bytecode interpreter (per process), protects refcounts/dict resizes/GC bookkeeping",
         "python: GIL released around blocking I/O syscalls and C extensions (NumPy/hashlib) that opt in via Py_BEGIN_ALLOW_THREADS",
@@ -534,7 +621,9 @@
       "id": "sess-2026-04-30-react-clone-element-topic",
       "endedAt": "2026-04-30T23:59:00Z",
       "workstreamId": "react-ts",
-      "itemIdsTouched": ["react-ts-clone-element-topic"],
+      "itemIdsTouched": [
+        "react-ts-clone-element-topic"
+      ],
       "topicsCovered": [
         "React: cloneElement shallow merge; when vs wrapper DOM",
         "React: Children.toArray, isValidElement, slot-style Tab list",
@@ -555,7 +644,9 @@
       "id": "sess-2026-04-30-javascript-this-binding-topic",
       "endedAt": "2026-04-30T23:45:00Z",
       "workstreamId": "meta",
-      "itemIdsTouched": ["meta-js-this-binding-topic"],
+      "itemIdsTouched": [
+        "meta-js-this-binding-topic"
+      ],
       "topicsCovered": [
         "JS: implicit vs explicit vs default vs new binding (Simpson / YDKJS four rules)",
         "JS: call vs apply vs bind; precedence when rules compete",
@@ -621,7 +712,9 @@
       "id": "sess-2026-04-30-python-dunder-methods-topic",
       "endedAt": "2026-04-30T16:30:00Z",
       "workstreamId": "py",
-      "itemIdsTouched": ["py-dunder-methods-cross-lang"],
+      "itemIdsTouched": [
+        "py-dunder-methods-cross-lang"
+      ],
       "topicsCovered": [
         "reference: python-dunder-methods page (full chat summary as tutorial)"
       ],
@@ -691,7 +784,9 @@
       "id": "sess-2026-08-06-javascript-promises-async-await",
       "endedAt": "2026-08-06T06:45:32Z",
       "workstreamId": "react-ts",
-      "itemIdsTouched": ["react-ts-js-promises-async-await"],
+      "itemIdsTouched": [
+        "react-ts-js-promises-async-await"
+      ],
       "topicsCovered": [
         "javascript: pending, fulfilled, rejected, settled, and resolved-to-pending distinctions",
         "javascript: Promise resolution procedure and thenable assimilation",
@@ -715,10 +810,65 @@
       ]
     },
     {
+      "id": "sess-2026-08-06-javascript-closures-scope-topic",
+      "endedAt": "2026-08-06T08:04:24Z",
+      "workstreamId": "react-ts",
+      "itemIdsTouched": [],
+      "topicsCovered": [
+        "JavaScript: execution contexts, lexical environments, and source-defined scope-chain lookup",
+        "JavaScript: var/function/let/const declaration instantiation, TDZ, and block vs function scope",
+        "JavaScript: closure creation, captured bindings, lifetime, and independent factory environments",
+        "JavaScript: loop and callback capture bugs, per-iteration let bindings, and IIFE fixes",
+        "React: render-specific environments, stale closures, functional updates, dependencies, refs, and cleanup",
+        "Interview practice: systematic declaration and closure tracing"
+      ],
+      "summary": "Taught JavaScript scope and closures interactively, then captured the lesson as a self-contained reference tutorial. Added exact let/const hoisting and TDZ semantics, declaration and scope tables, worked traces, loop fixes, arrow-function clarification, React stale-closure guidance, tradeoffs, practice answers, and interview Q&A; wired the sidebar, JavaScript hub, syllabus, and a bidirectional this-binding link.",
+      "artifactPaths": [
+        "reference-site/topics/javascript-closures-scope/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/javascript/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/javascript-this-binding/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-08-06-cpp-move-semantics",
+      "endedAt": "2026-08-06T10:48:07Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": [
+        "meta-cpp-move-semantics"
+      ],
+      "topicsCovered": [
+        "C++: expressions versus objects; reusable named values versus disposable values",
+        "C++: lvalue, xvalue, prvalue and the glvalue/rvalue umbrella taxonomy",
+        "C++: rvalue-reference binding does not construct or transfer; named rvalue references are lvalues",
+        "C++: std::move as an unconditional cast; actual transfer belongs to a move operation",
+        "C++: copy/move special members; Rule of Zero, Three, and Five",
+        "C++: implicit move suppression versus generated operations defined as deleted",
+        "C++: valid-but-unspecified moved-from state and type-specific stronger guarantees",
+        "C++: noexcept move construction and vector reallocation exception guarantees",
+        "C++: forwarding references, reference collapsing, and std::forward",
+        "C++: C++17 guaranteed same-type prvalue elision versus optional NRVO",
+        "C++: traced overload resolution for named, moved, temporary, aliased, and const expressions",
+        "reference: cpp-move-semantics tutorial, C++ sidebar and hub, seven syllabus links"
+      ],
+      "summary": "Taught move semantics interactively from the ownership problem upward, repeatedly simplifying the terminology and correcting the key misconception that binding a T&& parameter transfers ownership. Shipped a problem-first C++ tutorial with a three-situation mental model, expression taxonomy, three focused Mermaid diagrams, a complete resource owner, special-member suppression/deletion rules, moved-from and noexcept guidance, forwarding traces, precise C++17 copy-elision versus NRVO coverage, runnable overload practice, failure modes, and 14 interview Q&As. Wired the C++ sidebar and hub, checked seven matching syllabus bullets, and verified the reference site with a successful production build.",
+      "artifactPaths": [
+        "reference-site/topics/cpp-move-semantics/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
       "id": "sess-2026-08-07-cpp-raii-smart-pointers",
       "endedAt": "2026-08-07T13:41:31Z",
       "workstreamId": "meta",
-      "itemIdsTouched": ["meta-cpp-raii-smart-pointers"],
+      "itemIdsTouched": [
+        "meta-cpp-raii-smart-pointers"
+      ],
       "topicsCovered": [
         "cpp: deterministic destruction, reverse construction order, and exception stack unwinding",
         "cpp: Rule of Zero as default; ordinary constructors versus user-declared destructor effects on implicit moves",

@@ -38,6 +38,10 @@ const mainSidebar = [
     text: 'JavaScript topics',
     items: [
       {
+        text: 'Closures, lexical scope & hoisting',
+        link: '/topics/javascript-closures-scope/',
+      },
+      {
         text: 'Object APIs, descriptors, Proxy & cloning',
         link: '/topics/javascript-objects-interview/',
       },
@@ -120,6 +124,10 @@ const mainSidebar = [
       {
         text: 'RAII, ownership & smart pointers',
         link: '/topics/cpp-raii-smart-pointers/',
+      },
+      {
+        text: 'Move semantics & value categories',
+        link: '/topics/cpp-move-semantics/',
       },
       {
         text: 'Virtual tables (vtables)',

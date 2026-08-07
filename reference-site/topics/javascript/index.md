@@ -22,6 +22,7 @@ Cross-language:
 
 ## Interview refresh
 
+- [**Closures, lexical scope & hoisting**](../javascript-closures-scope/) — execution and lexical environments, scope-chain lookup, `var` / function / `let` / `const`, precise TDZ semantics, loop callbacks, lifetime, React stale closures, tracing drills
 - [**`this` binding**](../javascript-this-binding/) — default / implicit / explicit (`call`/`apply`/`bind`) / `new`, precedence, lexical arrows, prototype receivers, interview Q&A
 - [**Object APIs, descriptors, `Proxy`, cloning**](../javascript-objects-interview/) — static `Object.*` helpers (`assign`, `keys` / `for...in`), `Object.create`, `defineProperty`, `freeze` / `seal`, `Reflect`/`receiver`, `structuredClone` vs JSON, interview Q&A
 - [**Event loop, microtasks & real-time UIs**](../browser-event-loop/) — task vs microtask, render step, `requestAnimationFrame`, React 18 batching, layout thrash, coalescing high-frequency ticks (HRT-style price grid), interview Q&A
