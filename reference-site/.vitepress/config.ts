@@ -130,6 +130,10 @@ const mainSidebar = [
         link: '/topics/cpp-raii-smart-pointers/',
       },
       {
+        text: 'Polymorphism & ownership pitfalls',
+        link: '/topics/cpp-polymorphism-ownership/',
+      },
+      {
         text: 'Move semantics & value categories',
         link: '/topics/cpp-move-semantics/',
       },

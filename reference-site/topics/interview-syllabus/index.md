@@ -239,13 +239,13 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 ### Object model & polymorphism
 
 - [x] [Object layout, padding, alignment (`alignof`, `alignas`)](../cpp-struct-layout/)
-- [ ] Virtual functions, dynamic dispatch, vptr/vtable  
+- [x] [Virtual functions and dynamic dispatch](../cpp-polymorphism-ownership/#virtual-functions-the-bridge-to-runtime-behavior), vptr/vtable
   - [x] [Virtual tables (vtables)](../cpp-vtables/)
   - [x] [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — C++ vs Python vs JavaScript
-- [ ] Pure virtual, abstract classes, interfaces
-- [ ] `override` / `final` — catch errors at compile time
-- [ ] Slicing — why polymorphism + value semantics hurts
-- [ ] `dynamic_cast` — RTTI cost and failure modes
+- [x] [Pure virtual functions, abstract classes, and interfaces](../cpp-polymorphism-ownership/#abstract-classes-pure-virtual-functions-override-and-final)
+- [x] [`override` / `final` — catch errors at compile time](../cpp-polymorphism-ownership/#abstract-classes-pure-virtual-functions-override-and-final)
+- [x] [Slicing — why polymorphism plus base values lose derived state](../cpp-polymorphism-ownership/#object-slicing-a-value-cannot-preserve-an-unknown-derived-part)
+- [x] [`dynamic_cast` — RTTI, failure modes, cost, and design tradeoffs](../cpp-polymorphism-ownership/#downcasting-and-dynamic-cast)
 
 ### Concurrency & memory order
 

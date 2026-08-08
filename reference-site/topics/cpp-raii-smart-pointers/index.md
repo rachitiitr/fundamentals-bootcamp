@@ -537,5 +537,6 @@ Awareness answer: the former lets a shared-owned object safely obtain another ow
 ## See also
 
 - [C++ hub](../cpp/)
+- [C++ polymorphism & ownership pitfalls](../cpp-polymorphism-ownership/) — `unique_ptr<Base>` owning `Derived`, virtual destruction, factories, and cloning
 - [Python context managers](../python-context-managers/) — explicit `with` cleanup compared with scope-driven C++ RAII
 - [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — ownership is separate from runtime polymorphism

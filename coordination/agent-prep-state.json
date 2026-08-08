@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-08-08T09:31:45Z",
+  "updatedAt": "2026-08-08T15:25:27Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -454,6 +454,28 @@
       ],
       "lastSessionId": "sess-2026-08-08-cpp-containers-iterator-invalidation",
       "notes": "Interactive lesson followed by a problem-first tutorial: owner/observer handles, vector size/capacity and address traces, sequence/tree/hash storage models, precise invalidation and erase rules, safe erasure loops, iterator categories, string_view/span lifetime traps, nested unique_ptr ownership, container-choice exercises, failure modes, and interview Q&A."
+    },
+    {
+      "id": "meta-cpp-polymorphism-ownership",
+      "workstreamId": "meta",
+      "title": "C++ polymorphism and ownership pitfalls — reference topic",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → C++ → Object model & polymorphism",
+      "targetArtifacts": [
+        "reference-site/topics/cpp-polymorphism-ownership/index.md"
+      ],
+      "artifactPaths": [
+        "reference-site/topics/cpp-polymorphism-ownership/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/cpp-vtables/index.md",
+        "reference-site/topics/cpp-raii-smart-pointers/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-08-08-cpp-polymorphism-ownership",
+      "notes": "Interactive lesson followed by a problem-first tutorial: static interface versus dynamic object versus owner; virtual dispatch bridge; abstract classes and override/final; slicing; unique_ptr<Base> ownership; virtual destruction; factories; dynamic_cast tradeoffs; cloning; ownership/API design; failure traces; exercises; and interview Q&A."
     }
   ],
   "activeClaims": [],
@@ -937,6 +959,37 @@
         "reference-site/topics/cpp/index.md",
         "reference-site/topics/interview-syllabus/index.md",
         "reference-site/topics/iterators-and-generators/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-08-08-cpp-polymorphism-ownership",
+      "endedAt": "2026-08-08T15:25:27Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": [
+        "meta-cpp-polymorphism-ownership"
+      ],
+      "topicsCovered": [
+        "cpp: static interface type versus dynamic object type and lifetime owner",
+        "cpp: virtual functions, dynamic dispatch, and vtable implementation bridge",
+        "cpp: abstract classes, pure virtual functions, override, and final",
+        "cpp: object slicing through base values and heterogeneous container alternatives",
+        "cpp: unique_ptr<Base> owning Derived and move-converting ownership handles",
+        "cpp: virtual destructor requirement and undefined deletion through a non-virtual base",
+        "cpp: factories returning unique_ptr<Base> and explicit unknown-kind policies",
+        "cpp: dynamic_cast pointer/reference failures, RTTI cost, and design coupling",
+        "cpp: polymorphic clone returning unique_ptr<Base> and deep-versus-shallow copy invariants",
+        "cpp: ownership-versus-polymorphism API design, dangling observers, and shared control-block failure",
+        "reference: cpp-polymorphism-ownership tutorial, C++ sidebar and hub, five syllabus links, vtable and RAII backlinks"
+      ],
+      "summary": "Taught C++ polymorphism and ownership interactively, correcting two high-value misconceptions: override exposes a removed/non-matching virtual function at compile time, and a base handle exposes only the base interface even when it owns a derived object. Shipped a self-contained tutorial with the three-type mental model, three focused Mermaid diagrams, virtual-dispatch and slicing traces, abstract interfaces, unique_ptr<Base>, virtual destruction, factories, downcasting tradeoffs, cloning, a Document design, four failure traces, six exercises, and 14 interview Q&As. Wired the C++ sidebar and hub, checked five syllabus rows, added reciprocal vtable and RAII links, and verified the VitePress production build.",
+      "artifactPaths": [
+        "reference-site/topics/cpp-polymorphism-ownership/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/cpp-vtables/index.md",
+        "reference-site/topics/cpp-raii-smart-pointers/index.md",
         "coordination/agent-prep-state.json"
       ]
     }

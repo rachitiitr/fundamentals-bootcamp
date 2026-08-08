@@ -229,4 +229,5 @@ When studying for interviews, focus on: **vptr + vtable**, **virtual destructor*
 
 ## See also (cross-language)
 
+- [C++ polymorphism & ownership pitfalls](../cpp-polymorphism-ownership/) — apply virtual dispatch safely with slicing, virtual destructors, factories, downcasting, and cloning.
 - [Dynamic dispatch & object models (C++, Python, JavaScript)](../dynamic-dispatch-and-object-model/) — compares **vtable** dispatch with **Python MRO** lookup and **JavaScript prototype** chains on the same “polymorphic call” problem.

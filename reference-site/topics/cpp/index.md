@@ -11,6 +11,7 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 ## Topics
 
 - [RAII, ownership & smart pointers — deterministic cleanup, `unique_ptr`, shared control blocks, cycles](../cpp-raii-smart-pointers/)
+- [Polymorphism & ownership pitfalls](../cpp-polymorphism-ownership/) — virtual interfaces, slicing, virtual destructors, `unique_ptr<Base>`, factories, downcasting, and cloning
 - [Move semantics & value categories](../cpp-move-semantics/) — `std::move`, special members, forwarding, `noexcept`, and copy elision
 - [Containers, ownership & iterator invalidation](../cpp-containers-iterator-invalidation/) — vector growth and address traces, deque/list/tree/hash stability, safe erasure, iterator categories, `string_view`/`span`, and container choice
 - [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
