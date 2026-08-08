@@ -61,6 +61,10 @@ const mainSidebar = [
         text: 'Frame pipeline — rAF, rIC & useLayoutEffect',
         link: '/topics/browser-frame-pipeline/',
       },
+      {
+        text: 'Script loading — defer, async & modules',
+        link: '/topics/script-loading/',
+      },
     ],
   },
   {

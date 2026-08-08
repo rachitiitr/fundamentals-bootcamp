@@ -28,6 +28,7 @@ Cross-language:
 - [**Event loop, microtasks & real-time UIs**](../browser-event-loop/) — task vs microtask, render step, `requestAnimationFrame`, React 18 batching, layout thrash, coalescing high-frequency ticks (HRT-style price grid), interview Q&A
 - [**Promises and `async` / `await`**](../javascript-promises-async-await/) — settlement and assimilation, chaining, `await` continuations, combinators, floating errors, fail-fast vs cancellation, `AbortController`, interview traces
 - [**Frame pipeline — `rAF`, `rIC` & `useLayoutEffect`**](../browser-frame-pipeline/) — where each scheduling API lives in the per-frame pipeline, flicker-free measurement, idle background work, decision tree, interview Q&A
+- [**Script loading — `defer`, `async` & `type="module"`**](../script-loading/) — render-blocking scripts, parallel download strategies, execution ordering, inline script gotchas, `DOMContentLoaded` vs `load`, interview Q&A
 
 ## React (library patterns)
 
