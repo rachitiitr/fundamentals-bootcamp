@@ -226,15 +226,15 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 ### STL containers & iterators
 
-- [ ] `vector`, `deque`, `list`, `forward_list` — iterator invalidation rules
-- [ ] `map` / `multimap` / `set` / `multiset` — ordering, complexity  
+- [x] [`vector`, `deque`, `list`, `forward_list` — iterator invalidation rules](../cpp-containers-iterator-invalidation/#sequence-containers-storage-shape-explains-the-tradeoffs)
+- [x] [`map` / `multimap` / `set` / `multiset` — ordering, complexity](../cpp-containers-iterator-invalidation/#ordered-associative-containers-stable-tree-nodes)
   - [x] [Multiset & ordered duplicates](../multiset/) — `std::multiset` patterns
-- [ ] `unordered_map` / `unordered_set` — hashing, rehash, iterator invalidation
+- [x] [`unordered_map` / `unordered_set` — hashing, rehash, iterator invalidation](../cpp-containers-iterator-invalidation/#unordered-containers-stable-nodes-replaceable-buckets)
 - [ ] `priority_queue` — underlying container, comparator, `pair` tricks
 - [ ] `stack`, `queue`, `priority_queue` adapters
-- [ ] Iterator categories — input/output/forward/bidirectional/random access
+- [x] [Iterator categories — input/output/forward/bidirectional/random access/contiguous](../cpp-containers-iterator-invalidation/#iterator-categories-capability-and-complexity-contracts)
 - [ ] `algorithm` — `lower_bound` / `upper_bound`, `sort`, `nth_element`, `partition`
-- [ ] `string_view` — non-owning, lifetime pitfalls
+- [x] [`string_view` — non-owning, lifetime pitfalls](../cpp-containers-iterator-invalidation/#string-view-lifetime-traps)
 
 ### Object model & polymorphism
 
@@ -259,7 +259,7 @@ One **backlog-style** list for SWE-style interviews: language internals, standar
 
 - [ ] Lambdas — captures, default captures, mutable, generic lambdas
 - [ ] `std::optional`, `std::variant`, `std::any` — when and tradeoffs
-- [ ] `std::span` — non-owning range over contiguous memory
+- [x] [`std::span` — non-owning range over contiguous memory](../cpp-containers-iterator-invalidation/#span-views-contiguous-elements)
 - [ ] Ranges (C++20) — `views`, laziness (name-level)
 - [ ] Coroutines (C++20) — co_await mental model vs JS/Python generators
 

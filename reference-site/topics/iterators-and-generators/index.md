@@ -113,6 +113,8 @@ Here “iterator” usually means a **pointer-like object** into a container: `b
 - **Categories (interview sketch):** *input* (read once, single pass), *forward*, *bidirectional* (`--`), *random access* (`it + n`, `it[n]`). Algorithms document which category they require.
 - **Invalidation** — e.g. reallocation can invalidate `vector` iterators; `erase` returns the next valid iterator. Different from JS/Python “protocol” iterators; still the same **pull head, advance** mental model for merge / stream algorithms.
 
+For the full C++ treatment—address traces, sequence/tree/hash-container guarantees, safe erasure, categories, `string_view`, and `span`—see [C++ containers, ownership & iterator invalidation](../cpp-containers-iterator-invalidation/).
+
 **C++20 coroutines** can implement **lazy generators** (`co_yield` in library helpers); pre-coroutine C++ has no single built-in `yield` like JS/Python — you hand-roll iterators or use ranges/views.
 
 ```cpp

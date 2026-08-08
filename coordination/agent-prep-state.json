@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-08-07T13:41:31Z",
+  "updatedAt": "2026-08-08T09:31:45Z",
   "planDocument": "coordination/PARALLEL_PREP_PLAN.md",
   "goalSummary": "Interview prep (Python, React/TS, DSA, system design, workers) with repo tutorials as the sink; interview-syllabus remains the concept master list.",
   "workstreams": [
@@ -433,6 +433,27 @@
       ],
       "lastSessionId": "sess-2026-08-07-cpp-raii-smart-pointers",
       "notes": "Interactive lesson followed by a problem-first tutorial: deterministic cleanup and unwinding; Rule of Zero; owner/observer semantics; unique/shared/weak pointers; control blocks; cycles; make_shared retention; advanced APIs at awareness level; exception safety; AST/tree ownership walkthrough and interview exercises."
+    },
+    {
+      "id": "meta-cpp-containers-iterator-invalidation",
+      "workstreamId": "meta",
+      "title": "C++ STL container ownership, iterators, and invalidation — reference topic",
+      "status": "done",
+      "priority": 1,
+      "syllabusHint": "interview-syllabus → C++ → STL containers & iterators; string_view and span",
+      "targetArtifacts": [
+        "reference-site/topics/cpp-containers-iterator-invalidation/index.md"
+      ],
+      "artifactPaths": [
+        "reference-site/topics/cpp-containers-iterator-invalidation/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/iterators-and-generators/index.md",
+        "coordination/agent-prep-state.json"
+      ],
+      "lastSessionId": "sess-2026-08-08-cpp-containers-iterator-invalidation",
+      "notes": "Interactive lesson followed by a problem-first tutorial: owner/observer handles, vector size/capacity and address traces, sequence/tree/hash storage models, precise invalidation and erase rules, safe erasure loops, iterator categories, string_view/span lifetime traps, nested unique_ptr ownership, container-choice exercises, failure modes, and interview Q&A."
     }
   ],
   "activeClaims": [],
@@ -886,6 +907,36 @@
         "reference-site/topics/cpp/index.md",
         "reference-site/topics/interview-syllabus/index.md",
         "reference-site/topics/python-context-managers/index.md",
+        "coordination/agent-prep-state.json"
+      ]
+    },
+    {
+      "id": "sess-2026-08-08-cpp-containers-iterator-invalidation",
+      "endedAt": "2026-08-08T09:31:45Z",
+      "workstreamId": "meta",
+      "itemIdsTouched": [
+        "meta-cpp-containers-iterator-invalidation"
+      ],
+      "topicsCovered": [
+        "cpp: containers own their direct elements while pointers, references, iterators, string_view, and span observe",
+        "cpp: vector size versus capacity, growth reallocation, shifting, old end iterators, reserve, resize, clear, and shrink_to_fit",
+        "cpp: deque block-map model and why end insertion invalidates iterators but preserves existing references and pointers",
+        "cpp: list versus forward_list node layout, bidirectional versus forward traversal, size bookkeeping, and stability tradeoffs",
+        "cpp: ordered map/set tree-node stability and immutable keys",
+        "cpp: unordered buckets, load factor, rehash, iterator invalidation, and pointer/reference stability",
+        "cpp: safe erase loops, forward_list predecessor pattern, erase_if, and erase-remove",
+        "cpp: input/output/forward/bidirectional/random-access/contiguous iterator categories and algorithm complexity",
+        "cpp: string_view and span non-owning lifetime traps",
+        "cpp: vector<T> versus vector<unique_ptr<T>> two-layer ownership and pointee address stability",
+        "cpp: container-choice exercises, failure modes, and interview reasoning"
+      ],
+      "summary": "Taught C++ STL ownership and invalidation interactively, slowing down around deque block maps, list/forward_list size bookkeeping, and unordered rehashing. Shipped a self-contained tutorial with concrete address traces, six focused Mermaid diagrams, precise mutation tables, safe erasure code, iterator-category contracts, string_view/span lifetime examples, five container-choice exercises, failure modes, and 14 interview Q&As. Wired the C++ sidebar and hub, checked six syllabus rows with deep links, and added a reciprocal link from the cross-language iterator page.",
+      "artifactPaths": [
+        "reference-site/topics/cpp-containers-iterator-invalidation/index.md",
+        "reference-site/.vitepress/config.ts",
+        "reference-site/topics/cpp/index.md",
+        "reference-site/topics/interview-syllabus/index.md",
+        "reference-site/topics/iterators-and-generators/index.md",
         "coordination/agent-prep-state.json"
       ]
     }

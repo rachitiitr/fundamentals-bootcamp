@@ -12,6 +12,7 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 
 - [RAII, ownership & smart pointers — deterministic cleanup, `unique_ptr`, shared control blocks, cycles](../cpp-raii-smart-pointers/)
 - [Move semantics & value categories](../cpp-move-semantics/) — `std::move`, special members, forwarding, `noexcept`, and copy elision
+- [Containers, ownership & iterator invalidation](../cpp-containers-iterator-invalidation/) — vector growth and address traces, deque/list/tree/hash stability, safe erasure, iterator categories, `string_view`/`span`, and container choice
 - [Virtual tables (vtables) — dynamic dispatch, C analog, interview Q&A](../cpp-vtables/)
 - [Struct layout, padding & alignment — `sizeof`, `alignof`, reordering, interview Q&A](../cpp-struct-layout/)
 - [Dynamic dispatch & object models](../dynamic-dispatch-and-object-model/) — vtables vs Python MRO vs JS prototypes (cross-language)
@@ -21,7 +22,6 @@ Use this hub for **C++-only** notes (RAII, move semantics, STL implementation an
 ## Ideas for dedicated pages
 
 - `std::multiset` / `std::multimap` when you need sorted duplicates
-- iterators invalidation rules for `vector` vs `deque`
 - coroutines (C++20) vs generators in other languages
 
 Cross-language “what is a multiset-like structure?” lives on [Multiset & ordered duplicates](../multiset/).

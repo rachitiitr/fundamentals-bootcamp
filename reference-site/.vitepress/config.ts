@@ -134,6 +134,10 @@ const mainSidebar = [
         link: '/topics/cpp-move-semantics/',
       },
       {
+        text: 'Containers, ownership & iterator invalidation',
+        link: '/topics/cpp-containers-iterator-invalidation/',
+      },
+      {
         text: 'Virtual tables (vtables)',
         link: '/topics/cpp-vtables/',
       },
